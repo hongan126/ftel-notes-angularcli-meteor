@@ -1,14 +1,32 @@
 <mat-toolbar>
-  <a routerLink="/" href="/" class="toolbar-title">FTEL Notes</a>
+  <!--Title-->
+  <a routerLink="/" class="toolbar-title">
+    <i style="color: white; font-size: 2em;" class="material-icons">view_list</i>
+  </a>
+  <a routerLink="/" class="toolbar-title">
+    <span>FTEL Notes</span>
+  </a>
+
+  <!--Search box-->
+  <input class="search-box" type="text" placeholder="search">
+  <button mat-button class="search-btn"><i class="material-icons white">search</i></button>
+
+
   <span class="fill-remaining-space"></span>
-  <div>
-    <button mat-button routerLink="/login" class="white">Login</button>
-    <button mat-button routerLink="/signup" class="white">Sign up</button>
+
+  <!--Login/Sign up-->
+  <div [hidden]="user">
+    <button mat-button routerLink="/login" class="white"><p>Login</p></button>
+    <button mat-button routerLink="/signup" class="white"><p>Sign up</p></button>
   </div>
-  <!--<div [hidden]="!user">-->
-  <!--<span>{{ user | displayName }}</span>-->
-  <!--<button mat-button (click)="logout()">Logout</button>-->
-  <!--</div>-->
+
+  <!--User/Logout-->
+  <div [hidden]="!user">
+    <span class="white">{{ user }}</span>
+    <button class="white" mat-button (click)="logout()"><p>Logout</p></button>
+  </div>
 </mat-toolbar>
-  <router-outlet></router-outlet>
+
+<!--Content Route-->
+<router-outlet></router-outlet>
 

@@ -7,18 +7,23 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import {AppRoutingModule} from "./app.routing.module";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { NotesManagerComponent } from './notes-manager/notes-manager.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SignupComponent,
+    NotesManagerComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppMaterialModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,3 +1,99 @@
-<p>
-  signup works!
-</p>
+<!--(ngSubmit)="register()"-->
+<form novalidate name="form"
+      [formGroup]="fgSignup"
+      class="mdc-elevation--z5 register-form">
+
+  <h3 class="align-canter">Create new account</h3>
+
+  <mat-form-field class="full-width-signin">
+    <input type="text" matInput placeholder="Firstname" name="firstname"
+           [(ngModel)]="model.firstName"
+           formControlName="firstName"
+    />
+    <mat-error *ngIf="fgSignup.get('firstName').hasError('required')">
+      Firstname is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width-signin">
+    <input type="text" matInput placeholder="Lastname" name="lastname"
+           [(ngModel)]="model.lastName"
+           formControlName="lastName">
+    <mat-error *ngIf="fgSignup.get('lastName').hasError('required')">
+      Lastname is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width-signin">
+    <input type="text" matInput placeholder="Email" name="username"
+           [(ngModel)]="model.username"
+           formControlName="username"
+    />
+    <mat-error *ngIf="fgSignup.get('username').hasError('email') && !fgSignup.get('username').hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="fgSignup.get('username').hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
+    <mat-error *ngIf="fgSignup.get('username').hasError('invalid-username') && !fgSignup.get('username').hasError('email')">
+      Email is <strong>invalid</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width-signin">
+    <input matInput placeholder="Password" name="password"
+           [type]="hide ? 'password':'text'"
+           [(ngModel)]="confPass"
+           formControlName="password"
+           pattern="{{confPass}}"
+    />
+    <mat-icon
+      matSuffix (click)="hide = !hide">{{hide?'visibility':'visibility_off'}}
+    </mat-icon>
+    <mat-error *ngIf="fgSignup.get('password').hasError('required')">
+      Passs is <strong>required</strong>
+    </mat-error>
+    <mat-error *ngIf="fgSignup.get('password').hasError('minlength')">
+      The minimum number of characters is 8.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width-signin">
+    <input matInput placeholder="Confirm password" name="confirm-password"
+           [type]="hide ? 'password':'text'"
+           [(ngModel)]="model.confirmPassword"
+           formControlName="confirmPass"
+           pattern="{{confPass}}"
+    />
+    <mat-icon
+      matSuffix (click)="hide = !hide">{{hide?'visibility':'visibility_off'}}
+    </mat-icon>
+    <mat-error *ngIf="fgSignup.get('confirmPass').hasError('required')">
+      Passs is <strong>required</strong>
+    </mat-error>
+    <mat-error *ngIf="fgSignup.get('confirmPass').hasError('minlength')">
+      The minimum number of characters is 8.
+    </mat-error>
+    <mat-error *ngIf="fgSignup.get('confirmPass').hasError('pattern')">
+      Confirm new password <strong>do not match</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <div style="width: 100%; text-align: right;">
+    <button
+      class="signup-button"
+      [disabled]="
+      fgSignup.get('firstName').invalid ||
+      fgSignup.get('lastName').invalid ||
+      fgSignup.get('username').invalid ||
+      fgSignup.get('password').invalid ||
+      fgSignup.get('confirmPass').invalid"
+      type="submit" mat-raised-button color="default">
+      <b>Sign up</b>
+    </button>
+  </div>
+  <div style="width: 100%; text-align: right; margin-top: 10px;">
+    <a routerLink="/login">I have a account</a>
+  </div>
+
+</form>

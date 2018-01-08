@@ -1,45 +1,56 @@
-<form novalidate name="form" class="mdc-elevation--z5 register-form"
-      [formGroup]="loginFg">
+<div>
+  <form novalidate name="form" class="mdc-elevation--z5 register-form"
+        [formGroup]="loginFg">
 
-  <h2 class="align-canter">Login to your account</h2>
+    <h3 class="align-canter">Login to your account</h3>
 
-  <i class="material-icons">account_box</i>
-  <mat-form-field class="full-width">
-    <input type="text" matInput placeholder="Email" name="username"
-           [(ngModel)]="model.username"
-           formControlName="username"
-    />
-    <mat-error *ngIf="loginFg.get('username').hasError('email') && !loginFg.get('username').hasError('required')">
-      Please enter a valid email address
-    </mat-error>
-    <mat-error *ngIf="loginFg.get('username').hasError('required')">
-      Email is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
-  <br/>
+    <div>
+    <i class="material-icons">account_box</i>
+    <mat-form-field class="full-width">
+      <input type="text" matInput placeholder="Email" name="username"
+             [(ngModel)]="model.username"
+             formControlName="username"
+      />
+      <mat-error *ngIf="loginFg.get('username').hasError('email') && !loginFg.get('username').hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="loginFg.get('username').hasError('required')">
+        Email is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    </div>
 
-  <i class="material-icons">lock</i>
-  <mat-form-field class="full-width">
-    <input matInput placeholder="Password" name="password"
-           [type]="hide ? 'password':'text'" formControlName="password"
-           [(ngModel)]="model.password"
-    />
-    <mat-icon matSuffix (click)="hide = !hide">
-      {{hide?'visibility':'visibility_off'}}
-    </mat-icon>
-    <mat-error *ngIf="loginFg.get('password').hasError('required')">
-      Password is <strong>required</strong>
-    </mat-error>
-  </mat-form-field>
-  <br/>
+    <div>
+    <i class="material-icons">lock</i>
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Password" name="password"
+             [type]="hide ? 'password':'text'" formControlName="password"
+             [(ngModel)]="model.password"
+      />
+      <mat-icon matSuffix (click)="hide = !hide">
+        {{hide?'visibility':'visibility_off'}}
+      </mat-icon>
+      <mat-error *ngIf="loginFg.get('password').hasError('required')">
+        Password is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+    </div>
 
-  <div style="width: 100%; text-align: right;">
-    <button
-      type="submit" mat-raised-button color="primary"
-      [disabled]="loginFg.get('username').invalid || loginFg.get('password').invalid">
-      <i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;<b> Login</b>
-    </button>
-    or
-    <a [routerLink]="['/register']" class="btn btn-link">Register</a>
-  </div>
-</form>
+    <mat-checkbox color="primary">Remember my account</mat-checkbox>
+
+    <div style="width: 100%; text-align: center; margin-top: 10px;">
+      <button
+        style="width: 90%;"
+        type="submit" mat-raised-button color="primary"
+        [disabled]="loginFg.get('username').invalid || loginFg.get('password').invalid">
+        <b> Login</b>
+      </button>
+    </div>
+
+    <div style="width: 100%; margin-top: 10px;">
+      <a style="text-align: left;" [routerLink]="['/signup']" class="btn btn-link">Forgot password</a>
+      <span class="fill-remaining-space"></span>
+      <a style="float: right;" [routerLink]="['/signup']" class="btn btn-link">Create new account</a>
+    </div>
+  </form>
+</div>
