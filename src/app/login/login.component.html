@@ -1,0 +1,45 @@
+<form novalidate name="form" class="mdc-elevation--z5 register-form"
+      [formGroup]="loginFg">
+
+  <h2 class="align-canter">Login to your account</h2>
+
+  <i class="material-icons">account_box</i>
+  <mat-form-field class="full-width">
+    <input type="text" matInput placeholder="Email" name="username"
+           [(ngModel)]="model.username"
+           formControlName="username"
+    />
+    <mat-error *ngIf="loginFg.get('username').hasError('email') && !loginFg.get('username').hasError('required')">
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="loginFg.get('username').hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <br/>
+
+  <i class="material-icons">lock</i>
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Password" name="password"
+           [type]="hide ? 'password':'text'" formControlName="password"
+           [(ngModel)]="model.password"
+    />
+    <mat-icon matSuffix (click)="hide = !hide">
+      {{hide?'visibility':'visibility_off'}}
+    </mat-icon>
+    <mat-error *ngIf="loginFg.get('password').hasError('required')">
+      Password is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+  <br/>
+
+  <div style="width: 100%; text-align: right;">
+    <button
+      type="submit" mat-raised-button color="primary"
+      [disabled]="loginFg.get('username').invalid || loginFg.get('password').invalid">
+      <i class="fa fa-sign-in" aria-hidden="true"></i>&nbsp;<b> Login</b>
+    </button>
+    or
+    <a [routerLink]="['/register']" class="btn btn-link">Register</a>
+  </div>
+</form>
