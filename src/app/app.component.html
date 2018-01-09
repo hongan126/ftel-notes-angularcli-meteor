@@ -1,32 +1,76 @@
-<mat-toolbar>
-  <!--Title-->
-  <a routerLink="/" class="toolbar-title">
-    <i style="color: white; font-size: 2em;" class="material-icons">view_list</i>
-  </a>
-  <a routerLink="/" class="toolbar-title">
-    <span>FTEL Notes</span>
-  </a>
+<div class="demo-layout-waterfall mdl-layout mdl-js-layout layout">
+  <!--Header BEGIN-->
+  <mat-toolbar>
+    <!--Title-->
+    <a routerLink="/" class="toolbar-title">
+      <i style="color: white; font-size: 2em;" class="material-icons">view_list</i>
+    </a>
+    <a routerLink="/" class="toolbar-title">
+      <span>FTEL Notes</span>
+    </a>
 
-  <!--Search box-->
-  <input class="search-box" type="text" placeholder="search">
-  <button mat-button class="search-btn"><i class="material-icons white">search</i></button>
+    <!--Search box-->
+    <input class="search-box" type="text" placeholder="search">
+    <button mat-button class="search-btn"><i class="material-icons white">search</i></button>
 
 
-  <span class="fill-remaining-space"></span>
+    <span class="fill-remaining-space"></span>
 
-  <!--Login/Sign up-->
-  <div [hidden]="user">
-    <button mat-button routerLink="/login" class="white"><p>Login</p></button>
-    <button mat-button routerLink="/signup" class="white"><p>Sign up</p></button>
-  </div>
+    <!--Login/Sign up-->
+    <div [hidden]="user">
+      <button mat-button routerLink="/login" class="white">Login</button>
+      <button mat-button routerLink="/signup" class="white">Sign up</button>
+    </div>
 
-  <!--User/Logout-->
-  <div [hidden]="!user">
-    <span class="white">{{ user }}</span>
-    <button class="white" mat-button (click)="logout()"><p>Logout</p></button>
-  </div>
-</mat-toolbar>
+    <!--User/Logout-->
+    <div [hidden]="!user">
+      <span class="white">{{ user }}</span>
+      <button class="white" mat-button (click)="logout()"><p>Logout</p></button>
+    </div>
+  </mat-toolbar>
+  <!--Header END-->
 
-<!--Content Route-->
-<router-outlet></router-outlet>
+  <!--<header class="mdl-layout__header mdl-layout__header--waterfall">-->
+  <!--&lt;!&ndash; Top row, always visible &ndash;&gt;-->
+  <!--<div class="mdl-layout__header-row">-->
+  <!--&lt;!&ndash; Title &ndash;&gt;-->
+  <!--<span class="mdl-layout-title">Title</span>-->
+  <!--<div class="mdl-layout-spacer"></div>-->
+  <!--<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable-->
+  <!--mdl-textfield--floating-label mdl-textfield--align-right">-->
+  <!--<label class="mdl-button mdl-js-button mdl-button--icon"-->
+  <!--for="waterfall-exp">-->
+  <!--<i class="material-icons">search</i>-->
+  <!--</label>-->
+  <!--<div class="mdl-textfield__expandable-holder">-->
+  <!--<input class="mdl-textfield__input" type="text" name="sample"-->
+  <!--id="waterfall-exp">-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--<nav class="mdl-navigation">-->
+  <!--<a class="mdl-navigation__link" href="">Link</a>-->
+  <!--<a class="mdl-navigation__link" href="">Link</a>-->
+  <!--<a class="mdl-navigation__link" href="">Link</a>-->
+  <!--<a class="mdl-navigation__link" href="">Link</a>-->
+  <!--</nav>-->
+  <!--</div>-->
+  <!--</header>-->
+
+  <!--<div class="mdl-layout__drawer">-->
+  <!--<span class="mdl-layout-title">Title</span>-->
+  <!--<nav class="mdl-navigation">-->
+  <!--<a class="mdl-navigation__link" href="">Link</a>-->
+  <!--<a class="mdl-navigation__link" href="">Link</a>-->
+  <!--<a class="mdl-navigation__link" href="">Link</a>-->
+  <!--<a class="mdl-navigation__link" href="">Link</a>-->
+  <!--</nav>-->
+  <!--</div>-->
+
+  <!--Content-->
+  <main class="mdl-layout__content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
+
+
 

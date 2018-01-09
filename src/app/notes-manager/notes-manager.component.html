@@ -1,3 +1,133 @@
-<p>
-  notes-manager works!
-</p>
+<div class="mdl-grid mdl-grid--no-spacing">
+  <!--Group list-->
+  <div class="mdl-cell mdl-cell--3-col fill-available group-notes-slide">
+    <!--menu of Group-->
+    <div class="head-menu-bar" style="background-color: #E0E0E0;">
+      <span class="padding-left-font-bold">Group</span>
+      <div class="fill-remaining-space"></div>
+      <button mat-icon-button><i class="fa fa-minus icon-btn-size-m" aria-hidden="true"></i></button>
+      <button mat-icon-button><i class="fa fa-plus icon-btn-size-m" aria-hidden="true"></i></button>
+    </div>
+
+    <mat-selection-list color="primary" style="padding: 0;">
+      <mat-list-option>
+        Project 1
+      </mat-list-option>
+      <mat-list-option>
+        Project 2
+      </mat-list-option>
+      <mat-list-option>
+        Project 3
+      </mat-list-option>
+    </mat-selection-list>
+
+  </div><!--End of Group list-->
+
+  <!--Notes list-->
+  <div class="mdl-cell mdl-cell--9-col" style="overflow-y: auto;">
+    <!--Menu bar of Note list-->
+    <div class="head-menu-bar">
+      <span class="padding-left-font-bold">Project name</span>
+      <button mat-button [matMenuTriggerFor]="shareMenu" style="font-size: 1em;">
+        Public (2) <i class="fa fa-caret-down" aria-hidden="true"></i>
+      </button>
+      <mat-menu #shareMenu="matMenu">
+        <button mat-menu-item>
+          <span>Invite...</span>
+        </button>
+        <button mat-menu-item disabled>
+          <span>Set private</span>
+        </button>
+        <button mat-menu-item>
+          <span>Nguyễn Văn A</span>
+        </button>
+      </mat-menu>
+    </div>
+
+    <!--New note Button-->
+    <div style="display: inline;">
+      <button mat-raised-button class="btn-new-note">New note</button>
+    </div>
+
+    <!--List note-->
+    <div>
+      <div class="note-card">
+        <div class="note-card-title">
+          <div>
+            <span>Note 1 - text only</span><br/>
+            <span style="font-size: 0.9em; color: gray; font-style: italic;">01/01/2017</span>
+          </div>
+          <div class="fill-remaining-space"></div>
+          <button mat-icon-button [matMenuTriggerFor]="itemMenu" style="font-size: 1em;">
+            <i class="fa fa-ellipsis-v" style="font-size: 1.5em;" aria-hidden="true"></i>
+          </button>
+          <mat-menu #itemMenu="matMenu">
+            <button mat-menu-item>
+              <span>Move to top</span>
+            </button>
+            <button mat-menu-item>
+              <span>Move to bottom</span>
+            </button>
+            <button mat-menu-item>
+              <span>Edit</span>
+            </button>
+            <button mat-menu-item>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </div>
+        <div class="note-card-content">Content note 1: Click on the color wheel to choose a primary (1) and accent (2)
+          color to preview the theme below. When you’ve selected a color combination you like.
+        </div>
+      </div>
+
+      <div class="note-card">
+        <div class="note-card-title">
+          <div>
+            <span>Note 2 - todo list</span><br/>
+            <span style="font-size: 0.9em; color: gray; font-style: italic;">01/01/2017</span>
+          </div>
+          <div class="fill-remaining-space"></div>
+          <button mat-icon-button [matMenuTriggerFor]="itemMenu" style="font-size: 1em;">
+            <i class="fa fa-ellipsis-v" style="font-size: 1.5em;" aria-hidden="true"></i>
+          </button>
+          <mat-menu #itemMenu="matMenu">
+            <button mat-menu-item>
+              <span>Move to top</span>
+            </button>
+            <button mat-menu-item>
+              <span>Move to bottom</span>
+            </button>
+            <button mat-menu-item>
+              <span>Edit</span>
+            </button>
+            <button mat-menu-item>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </div>
+        <div class="note-card-content">
+          <div>
+            <mat-checkbox color="primary">
+              Todo somthing 1
+            </mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox color="primary" checked="true" style="text-decoration: line-through; font-style: italic;">
+              Todo somthing 3
+            </mat-checkbox>
+          </div>
+          <div>
+            <mat-checkbox color="primary">
+              Todo somthing 4
+            </mat-checkbox>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!--End of Notes list-->
+</div>
+
+
+

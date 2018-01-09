@@ -1,0 +1,67 @@
+
+.fill-available {
+  //height: -webkit-fill-available;
+  min-height: 300px;
+  max-height: 100%;
+}
+
+.head-menu-bar {
+  width: 100%;
+  background-color: white;
+  line-height: 40px;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.icon-btn-size-m {
+  color: black;
+  font-size: 1.2em;
+}
+
+.group-notes-slide {
+  background-color: rgba(255, 255, 255, 1);
+  overflow-y: auto;
+  border-right: 1px solid gray;
+}
+
+.padding-left-font-bold {
+  padding-left: 5px;
+  font-weight: bold;
+}
+
+.mat-accent .mat-pseudo-checkbox-checked, .mat-accent .mat-pseudo-checkbox-indeterminate, .mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-indeterminate {
+  background: #3f51b5;
+}
+
+.btn-new-note {
+  background-color: #33691E;
+  color: white;
+  margin: 10px;
+}
+
+.note-card {
+  margin: 15px;
+  border-radius: 2px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 1);
+  -webkit-transform: translateY(220px);
+  transform: translateY(220px);
+  -webkit-transition: transform .95s cubic-bezier(.55, 0, .1, 1), opacity .5s cubic-bezier(.55, 0, .1, 1), box-shadow .5s cubic-bezier(.55, 0, .1, 1);
+  transition: transform .95s cubic-bezier(.55, 0, .1, 1), opacity .5s cubic-bezier(.55, 0, .1, 1), box-shadow .5s cubic-bezier(.55, 0, .1, 1);
+}
+.note-card.loaded {
+  opacity: 1;
+  -webkit-transform: translateY(0px);
+  transform: translateY(0px);
+}
+
+.note-card-title {
+  display: flex;
+  padding-left: 5px;
+}
+
+.note-card-content{
+  padding-left: 5px;
+}
+
+
