@@ -6,9 +6,10 @@ import {AppMaterialModule} from './app.material.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
-import {AppRoutingModule} from "./app.routing.module";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {AppRoutingModule} from './app.routing.module';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NotesManagerComponent } from './notes-manager/notes-manager.component';
+import {NoteGroupAddComponent} from './note-group/note-group.add.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { NotesManagerComponent } from './notes-manager/notes-manager.component';
     LoginComponent,
     SignupComponent,
     NotesManagerComponent,
+    NoteGroupAddComponent
   ],
   imports: [
     BrowserModule,

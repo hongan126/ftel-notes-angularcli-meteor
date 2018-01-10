@@ -1,0 +1,10 @@
+<h3 mat-dialog-title>Add new notes group</h3>
+<div mat-dialog-content>
+  <mat-form-field style="width:100%;">
+    <input matInput tabindex="1" focus style="width:100%;" required placeholder="Group name" [(ngModel)]="data.groupName">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions style="float: right;">
+  <button tabindex="2" mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+  <button tabindex="3" mat-raised-button style="background-color: #33691E; color: white;" [mat-dialog-close]="data.groupName" cdkFocusInitial>Add</button>
+</div>

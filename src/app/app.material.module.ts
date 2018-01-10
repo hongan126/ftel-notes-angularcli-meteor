@@ -1,9 +1,11 @@
 import {NgModule} from '@angular/core';
 import {
-  MatButtonModule, MatCardModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule,
+  MatButtonModule, MatCheckboxModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule,
+  MatListModule,
   MatMenuModule, MatProgressSpinnerModule,
   MatToolbarModule
 } from '@angular/material';
+import {CdkTableModule} from '@angular/cdk/table';
 
 @NgModule({
   imports: [
@@ -16,8 +18,8 @@ import {
     MatCheckboxModule,
     MatMenuModule,
     MatListModule,
-    MatCardModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule
   ],
   exports: [
     MatButtonModule,
@@ -29,8 +31,9 @@ import {
     MatCheckboxModule,
     MatMenuModule,
     MatListModule,
-    MatCardModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    CdkTableModule
   ],
 })
 export class AppMaterialModule {

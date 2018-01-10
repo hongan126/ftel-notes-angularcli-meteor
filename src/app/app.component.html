@@ -1,33 +1,35 @@
-<div class="demo-layout-waterfall mdl-layout mdl-js-layout layout">
+<div class="mdl-layout mdl-js-layout layout all-of-page">
   <!--Header BEGIN-->
-  <mat-toolbar>
-    <!--Title-->
-    <a routerLink="/" class="toolbar-title">
-      <i style="color: white; font-size: 2em;" class="material-icons">view_list</i>
-    </a>
-    <a routerLink="/" class="toolbar-title">
-      <span>FTEL Notes</span>
-    </a>
+  <div>
+    <mat-toolbar>
+      <!--Title-->
+      <a routerLink="/" class="toolbar-title">
+        <i style="color: white; font-size: 2em;" class="material-icons">view_list</i>
+      </a>
+      <a routerLink="/" class="toolbar-title">
+        <span>FTEL Notes</span>
+      </a>
 
-    <!--Search box-->
-    <input class="search-box" type="text" placeholder="search">
-    <button mat-button class="search-btn"><i class="material-icons white">search</i></button>
+      <!--Search box-->
+      <input class="search-box" type="text" placeholder="search">
+      <button mat-button class="search-btn"><i class="material-icons white">search</i></button>
 
 
-    <span class="fill-remaining-space"></span>
+      <span class="fill-remaining-space"></span>
 
-    <!--Login/Sign up-->
-    <div [hidden]="user">
-      <button mat-button routerLink="/login" class="white">Login</button>
-      <button mat-button routerLink="/signup" class="white">Sign up</button>
-    </div>
+      <!--Login/Sign up-->
+      <div [hidden]="user">
+        <button mat-button routerLink="/login" class="white">Login</button>
+        <button mat-button routerLink="/signup" class="white">Sign up</button>
+      </div>
 
-    <!--User/Logout-->
-    <div [hidden]="!user">
-      <span class="white">{{ user }}</span>
-      <button class="white" mat-button (click)="logout()"><p>Logout</p></button>
-    </div>
-  </mat-toolbar>
+      <!--User/Logout-->
+      <div [hidden]="!user">
+        <span class="white">{{ user }}</span>
+        <button class="white" mat-button (click)="logout()"><p>Logout</p></button>
+      </div>
+    </mat-toolbar>
+  </div>
   <!--Header END-->
 
   <!--<header class="mdl-layout__header mdl-layout__header--waterfall">-->
@@ -67,7 +69,7 @@
   <!--</div>-->
 
   <!--Content-->
-  <main class="mdl-layout__content">
+  <main class="mdl-layout__content main-content">
     <router-outlet></router-outlet>
   </main>
 </div>

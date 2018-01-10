@@ -1,27 +1,65 @@
-
-.fill-available {
-  //height: -webkit-fill-available;
-  min-height: 300px;
-  max-height: 100%;
+app-notes-manager{
+  width: 100%;
 }
+
+// scroollbar
+//::-webkit-scrollbar
+//{
+//  width: 6px;
+//  height: 6px;
+//  background-color: #7e7e7e;
+//}
+
+.content-notes-manager{
+  display: flex;
+  flex:2;
+  height: 100%;
+  overflow: hidden;
+}
+
+.note-group-layout {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 1);
+  overflow-y: hidden;
+  border-right: 1px solid gray;
+  //height: -webkit-fill-available;
+}
+.note-group-list{
+  overflow-y: auto;
+  overflow-x: hidden;
+  //height: 100%;
+  position: inherit;
+}
+
+.notes-list-layout{
+  overflow-y: auto;
+  //background-color: red;
+}
+
+.notes-list{
+  //display: inherit;
+  //overflow-y: scroll;
+  //height: 100%;
+}
+
+//.fill-available {
+//  //height: -webkit-fill-available;
+//  //min-height: 300px;
+//  max-height: 100%;
+//}
 
 .head-menu-bar {
   width: 100%;
   background-color: white;
   line-height: 40px;
-  display: inline-flex;
+  display: -webkit-inline-box;
   vertical-align: middle;
 }
 
 .icon-btn-size-m {
   color: black;
   font-size: 1.2em;
-}
-
-.group-notes-slide {
-  background-color: rgba(255, 255, 255, 1);
-  overflow-y: auto;
-  border-right: 1px solid gray;
 }
 
 .padding-left-font-bold {
@@ -36,7 +74,8 @@
 .btn-new-note {
   background-color: #33691E;
   color: white;
-  margin: 10px;
+  margin-top: 15px;
+  margin-left: 15px;
 }
 
 .note-card {
@@ -44,6 +83,7 @@
   border-radius: 2px;
   padding: 10px;
   background-color: rgba(255, 255, 255, 1);
+  opacity: 0;
   -webkit-transform: translateY(220px);
   transform: translateY(220px);
   -webkit-transition: transform .95s cubic-bezier(.55, 0, .1, 1), opacity .5s cubic-bezier(.55, 0, .1, 1), box-shadow .5s cubic-bezier(.55, 0, .1, 1);
@@ -63,5 +103,7 @@
 .note-card-content{
   padding-left: 5px;
 }
+
+
 
 
