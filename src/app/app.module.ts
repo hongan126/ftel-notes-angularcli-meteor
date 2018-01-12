@@ -10,6 +10,9 @@ import {AppRoutingModule} from './app.routing.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NotesManagerComponent } from './notes-manager/notes-manager.component';
 import {NoteGroupAddComponent} from './note-group/note-group.add.component';
+import {NoteGroupRemoveComponent} from './note-group/note-group.remove.component';
+import {ShareManagerRemoveComponent} from "./share-manager/share-manager.remove.component";
+import {NoteDetailsComponent} from './note-details/note-details.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,10 @@ import {NoteGroupAddComponent} from './note-group/note-group.add.component';
     LoginComponent,
     SignupComponent,
     NotesManagerComponent,
-    NoteGroupAddComponent
+    NoteGroupAddComponent,
+    NoteGroupRemoveComponent,
+    ShareManagerRemoveComponent,
+    NoteDetailsComponent
   ],
   imports: [
     BrowserModule,

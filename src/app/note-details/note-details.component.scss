@@ -1,0 +1,53 @@
+.dialog-content{
+  height: -webkit-fill-available;
+}
+form {
+  width: 100%;
+  mat-form-field {
+    width: 100%;
+    //flex: 1 0 auto;
+    input {
+      //width: 100%;
+      //flex: 0 1 auto;
+    }
+  }
+}
+
+.mat-radio-button {
+  margin: 5px;
+}
+
+.todo-list-add {
+  display: flex;
+  flex-direction: column;
+}
+
+.todo-item {
+  display: inline-flex;
+  padding: 6px;
+  border-radius: 4px;
+  &:hover {
+    background-color: #cbcbcb;
+  }
+}
+
+.checked {
+  font-style: italic;
+  text-decoration: line-through;
+}
+
+.icon-btn-size-xm {
+  line-height: 24px;
+  width: 24px;
+  height: 24px;
+}
+.add-new-item-div{
+  display: inline-flex;
+}
+
+.add-new-item-btn{
+  line-height: 38px;
+  height: 38px;
+  width: 140px;
+}
+

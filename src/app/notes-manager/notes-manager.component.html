@@ -5,7 +5,7 @@
     <div class="head-menu-bar" style="background-color: #E0E0E0;">
       <span class="padding-left-font-bold">Group</span>
       <div class="fill-remaining-space"></div>
-      <button mat-icon-button><i class="fa fa-minus icon-btn-size-m" aria-hidden="true"></i></button>
+      <button mat-icon-button (click)="openNoteGroupRemoveDialog()"><i class="fa fa-minus icon-btn-size-m" aria-hidden="true"></i></button>
       <button mat-icon-button (click)="openNoteGroupAddDialog()"><i class="fa fa-plus icon-btn-size-m"
                                                                     aria-hidden="true"></i></button>
     </div>
@@ -34,7 +34,7 @@
         <button mat-menu-item disabled>
           <span>Set private</span>
         </button>
-        <button mat-menu-item>
+        <button mat-menu-item (click)="openShareManagerRemoveDialog()">
           <span>Nguyễn Văn A</span>
         </button>
       </mat-menu>
@@ -42,7 +42,7 @@
 
     <!--New note Button-->
     <div style="display: inline;">
-      <button mat-raised-button class="btn-new-note">New note</button>
+      <button mat-raised-button (click)="openNewNoteDialog()" class="btn-new-note">New note</button>
     </div>
 
     <!--List note-->
@@ -107,17 +107,17 @@
         <div class="note-card-content">
           <div>
             <mat-checkbox color="primary">
-              Todo somthing 1
+              Todo something 1
             </mat-checkbox>
           </div>
           <div>
             <mat-checkbox color="primary" checked="true" style="text-decoration: line-through; font-style: italic;">
-              Todo somthing 3
+              Todo something 3
             </mat-checkbox>
           </div>
           <div>
             <mat-checkbox color="primary">
-              Todo somthing 4
+              Todo something 4
             </mat-checkbox>
           </div>
         </div>

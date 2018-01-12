@@ -3,11 +3,11 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 @Component({
   selector: 'app-note-group-remove',
-  templateUrl: './note-group.remove.component.html',
+  templateUrl: './share-manager.remove.component.html',
 })
-export class NoteGroupRemoveComponent {
+export class ShareManagerRemoveComponent{
 
-  constructor(public dialogRef: MatDialogRef<NoteGroupRemoveComponent>,
+  constructor(public dialogRef: MatDialogRef<ShareManagerRemoveComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 

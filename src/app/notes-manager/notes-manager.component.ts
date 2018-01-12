@@ -1,6 +1,9 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NoteGroupAddComponent} from '../note-group/note-group.add.component';
 import {MatDialog} from '@angular/material';
+import {NoteGroupRemoveComponent} from "../note-group/note-group.remove.component";
+import {ShareManagerRemoveComponent} from "../share-manager/share-manager.remove.component";
+import {NoteDetailsComponent} from "../note-details/note-details.component";
 
 @Component({
   selector: 'app-notes-manager',
@@ -9,8 +12,9 @@ import {MatDialog} from '@angular/material';
   encapsulation: ViewEncapsulation.None
 })
 export class NotesManagerComponent implements OnInit {
-  noteGroups = ['Project A', 'Project B', 'Project C', 'Project B', 'Project C', 'Project B', 'Project C', 'Project B', 'Project C', 'Project B', 'Project C', 'Project B', 'Project C', 'Project B', 'Project C', 'Project B', 'Project C'];
+  noteGroups = ['Project A', 'Project B', 'Project C'];
   groupName;
+  projectName = 'Project A';
 
   constructor(public dialog: MatDialog) {
   }
@@ -26,11 +30,50 @@ export class NotesManagerComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      console.log('The Note Group Add dialog was closed');
       this.groupName = result;
       if (this.groupName) {
         this.noteGroups.unshift(this.groupName);
       }
+    });
+  }
+
+  openNoteGroupRemoveDialog(): void {
+    const dialogRef = this.dialog.open(NoteGroupRemoveComponent, {
+      width: '40%',
+      data: {projectName: this.projectName}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The Note Group Remove dialog was closed');
+      this.projectName = result;
+      this.noteGroups = this.noteGroups.filter(n => n !== this.projectName);
+    });
+  }
+
+  openShareManagerRemoveDialog(): void {
+    const dialogRef = this.dialog.open(ShareManagerRemoveComponent, {
+      width: '40%',
+      data: {personName: this.projectName}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The Share Manager Remove dialog was closed');
+      // this.projectName = result;
+
+    });
+  }
+
+  openNewNoteDialog(): void {
+    const dialogRef = this.dialog.open(NoteDetailsComponent, {
+      width: '40%',
+      data: {personName: this.projectName}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The New note dialog was closed');
+      // this.projectName = result;
+
     });
   }
 
