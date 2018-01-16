@@ -1,9 +1,12 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {NoteGroupAddComponent} from '../note-group/note-group.add.component';
 import {MatDialog} from '@angular/material';
-import {NoteGroupRemoveComponent} from "../note-group/note-group.remove.component";
-import {ShareManagerRemoveComponent} from "../share-manager/share-manager.remove.component";
-import {NoteDetailsComponent} from "../note-details/note-details.component";
+import {NoteGroupRemoveComponent} from '../note-group/note-group.remove.component';
+import {ShareManagerRemoveComponent} from '../share-manager/share-manager.remove.component';
+import {NoteDetailsComponent} from '../note-details/note-details.component';
+import {Note} from '../../../api/server/models';
+import {Notes} from "../../../api/server/collections";
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-notes-manager',
@@ -15,12 +18,15 @@ export class NotesManagerComponent implements OnInit {
   noteGroups = ['Project A', 'Project B', 'Project C'];
   groupName;
   projectName = 'Project A';
+  notesList: Note[];
 
   constructor(public dialog: MatDialog) {
   }
 
   ngOnInit() {
-
+    Notes.find({}).subscribe((notes: Note[]) => {
+      this.notesList = notes;
+    });
   }
 
   openNoteGroupAddDialog(): void {
@@ -77,4 +83,7 @@ export class NotesManagerComponent implements OnInit {
     });
   }
 
+  // findNote(): Observable<Note[]> {
+  //   return Notes.find();
+  // }
 }
