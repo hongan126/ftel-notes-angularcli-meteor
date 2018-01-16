@@ -3,11 +3,11 @@
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
+    "emitDecoratorMetadata": true,
     "baseUrl": ".",
     "declaration": false,
     "module": "commonjs",
     "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es5",
     "skipLibCheck": true,

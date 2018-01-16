@@ -1,24 +1,27 @@
 <div class="mdl-grid mdl-grid--no-spacing content-notes-manager">
-  <!--Group list-->
+  <!--NoteGroup list-->
   <div class="mdl-cell mdl-cell--3-col note-group-layout">
-    <!--menu of Group-->
+    <!--menu of NoteGroup-->
     <div class="head-menu-bar" style="background-color: #E0E0E0;">
       <span class="padding-left-font-bold">Group</span>
       <div class="fill-remaining-space"></div>
-      <button mat-icon-button (click)="openNoteGroupRemoveDialog()"><i class="fa fa-minus icon-btn-size-m" aria-hidden="true"></i></button>
-      <button mat-icon-button (click)="openNoteGroupAddDialog()"><i class="fa fa-plus icon-btn-size-m"
-                                                                    aria-hidden="true"></i></button>
+      <button mat-icon-button (click)="openNoteGroupRemoveDialog()">
+        <i class="fa fa-minus icon-btn-size-m" aria-hidden="true"></i>
+      </button>
+      <button mat-icon-button (click)="openNoteGroupAddDialog()">
+        <i class="fa fa-plus icon-btn-size-m" aria-hidden="true"></i>
+      </button>
     </div>
 
     <div class="note-group-list">
-      <mat-selection-list color="primary" >
+      <mat-selection-list color="primary">
         <mat-list-option *ngFor="let group of noteGroups">
-          {{group}}
+          {{group.name +" - "+ group._id}}
         </mat-list-option>
       </mat-selection-list>
     </div>
 
-  </div><!--End of Group list-->
+  </div><!--End of NoteGroup list-->
 
   <!--Notes list-->
   <div class="mdl-cell mdl-cell--9-col notes-list-layout">

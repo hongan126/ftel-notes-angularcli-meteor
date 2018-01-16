@@ -4,9 +4,9 @@ import {MatDialog} from '@angular/material';
 import {NoteGroupRemoveComponent} from '../note-group/note-group.remove.component';
 import {ShareManagerRemoveComponent} from '../share-manager/share-manager.remove.component';
 import {NoteDetailsComponent} from '../note-details/note-details.component';
-import {Note} from '../../../api/server/models';
-import {Notes} from "../../../api/server/collections";
-import {Observable} from "rxjs";
+import {Note, NoteGroup, NoteType} from '../../../api/server/models';
+import {Notes} from '../../../api/server/collections';
+import {NoteGroups} from '../../../api/server/collections/groups';
 
 @Component({
   selector: 'app-notes-manager',
@@ -15,7 +15,7 @@ import {Observable} from "rxjs";
   encapsulation: ViewEncapsulation.None
 })
 export class NotesManagerComponent implements OnInit {
-  noteGroups = ['Project A', 'Project B', 'Project C'];
+  noteGroups: NoteGroup[];
   groupName;
   projectName = 'Project A';
   notesList: Note[];
@@ -27,6 +27,9 @@ export class NotesManagerComponent implements OnInit {
     Notes.find({}).subscribe((notes: Note[]) => {
       this.notesList = notes;
     });
+    NoteGroups.find({}).subscribe((groups: Note[]) => {
+      this.noteGroups = groups;
+    });
   }
 
   openNoteGroupAddDialog(): void {
@@ -36,7 +39,7 @@ export class NotesManagerComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The Note Group Add dialog was closed');
+      console.log('The Note NoteGroup Add dialog was closed');
       this.groupName = result;
       if (this.groupName) {
         this.noteGroups.unshift(this.groupName);
@@ -51,7 +54,7 @@ export class NotesManagerComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The Note Group Remove dialog was closed');
+      console.log('The Note NoteGroup Remove dialog was closed');
       this.projectName = result;
       this.noteGroups = this.noteGroups.filter(n => n !== this.projectName);
     });
