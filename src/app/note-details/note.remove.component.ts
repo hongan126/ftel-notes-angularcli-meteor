@@ -2,13 +2,12 @@ import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 
 @Component({
-  selector: 'app-note-group-add',
-  templateUrl: './note-group.add.component.html',
+  selector: 'app-note-remove',
+  templateUrl: './note.remove.component.html',
 })
-export class NoteGroupAddComponent {
-  groupName: string;
+export class NoteRemoveComponent {
 
-  constructor(public dialogRef: MatDialogRef<NoteGroupAddComponent>,
+  constructor(public dialogRef: MatDialogRef<NoteRemoveComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 

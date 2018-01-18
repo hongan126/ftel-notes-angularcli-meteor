@@ -12,7 +12,7 @@ export interface NoteGroup {
 }
 
 export interface Todo {
-  _id?: string;
+  _id?: number;
   checked?: boolean;
   content?: string;
 }

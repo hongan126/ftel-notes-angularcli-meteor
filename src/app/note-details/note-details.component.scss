@@ -1,6 +1,8 @@
-.dialog-content{
+.dialog-content {
   height: -webkit-fill-available;
+  //flex: 2;
 }
+
 form {
   width: 100%;
   mat-form-field {
@@ -36,13 +38,22 @@ form {
   width: 24px;
   height: 24px;
 }
-.add-new-item-div{
+
+.add-new-item-div {
   display: inline-flex;
 }
 
-.add-new-item-btn{
+.add-new-item-btn {
   line-height: 38px;
   height: 38px;
   width: 140px;
+}
+
+.add-button {
+  background-color: #33691E;
+  color: white;
+}
+.add-button:disabled{
+  background-color: gray;
 }
 

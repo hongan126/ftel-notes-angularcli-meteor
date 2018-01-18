@@ -1,5 +1,5 @@
 <div class="mdl-grid mdl-grid--no-spacing content-notes-manager">
-  <!--NoteGroup list-->
+  <!--Note Group list DIV-->
   <div class="mdl-cell mdl-cell--3-col note-group-layout">
     <!--menu of NoteGroup-->
     <div class="head-menu-bar" style="background-color: #E0E0E0;">
@@ -14,19 +14,24 @@
     </div>
 
     <div class="note-group-list">
-      <mat-selection-list color="primary">
-        <mat-list-option *ngFor="let group of noteGroups">
+      <mat-selection-list aria-multiselectable="false" color="primary">
+        <mat-list-option *ngFor="let group of noteGroups"
+                         (click)="loadNoteList(group)"
+                         [selected]="group===selectedGroup"
+                         [class.selectedGroup]="group===selectedGroup">
           {{group.name +" - "+ group._id}}
         </mat-list-option>
       </mat-selection-list>
+      {{newNote|json}}
+      {{max}}
     </div>
 
   </div><!--End of NoteGroup list-->
 
-  <!--Notes list-->
-  <div class="mdl-cell mdl-cell--9-col notes-list-layout">
+  <!--Notes list DIV-->
+  <div class="mdl-cell mdl-cell--9-col notes-list-layout" [hidden]="!selectedGroup">
     <div class="head-menu-bar">
-      <span class="padding-left-font-bold">Project name</span>
+      <span class="padding-left-font-bold">{{selectedGroup.name}}</span>
       <button mat-button [matMenuTriggerFor]="shareMenu" style="font-size: 1em;">
         Public (2) <i class="fa fa-caret-down" aria-hidden="true"></i>
       </button>
@@ -51,14 +56,14 @@
     <!--List note-->
     <div class="notes-list">
       <div class="note-card" *ngFor="let note of notesList">
-        {{note|json}}
+        {{ note | json }}
         <div class="note-card-title">
           <div>
             <span>{{note.title}}</span><br/>
             <span style="font-size: 0.9em; color: gray; font-style: italic;">{{note.createdAt|date:"dd/MM/yyyy"}}</span>
           </div>
           <div class="fill-remaining-space"></div>
-          <mat-spinner *ngIf="!isTextNode(note.type)" mode="indeterminate" [diameter]="24"
+          <mat-spinner *ngIf="!isTextNote(note.type)" mode="indeterminate" [diameter]="24"
                        style="margin-top: auto; margin-bottom: auto;"></mat-spinner>
           <button mat-icon-button [matMenuTriggerFor]="itemMenu" style="font-size: 1em;">
             <i class="fa fa-ellipsis-v" style="font-size: 1.5em;" aria-hidden="true"></i>
@@ -73,15 +78,15 @@
             <button mat-menu-item>
               <span>Edit</span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="deleteNote(note._id)">
               <span>Delete</span>
             </button>
           </mat-menu>
         </div>
-        <div *ngIf="isTextNode(note.type)" class="note-card-content">
+        <div *ngIf="isTextNote(note.type)" class="note-card-content">
           {{note.content}}
         </div>
-        <div *ngIf="!isTextNode(note.type)" class="note-card-content">
+        <div *ngIf="!isTextNote(note.type)" class="note-card-content">
           <div *ngFor="let todo of note.todoList">
             <mat-checkbox color="primary" [checked]="todo.checked" [class.checked]="todo.checked"
                           (change)="todo.checked=!todo.checked">

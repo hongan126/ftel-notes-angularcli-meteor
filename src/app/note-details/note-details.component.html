@@ -1,8 +1,8 @@
-<h3 mat-dialog-title>Add new notes</h3>
+<h3 mat-dialog-title>Add new note to {{groupName}}</h3>
 <div mat-dialog-content class="dialog-content">
   <form novalidate name="form-note-details" [formGroup]="noteDetailsFg">
     <mat-form-field>
-      <input matInput placeholder="Title" formControlName="title" [(ngModel)]="data.groupName">
+      <input matInput placeholder="Title" formControlName="title" name="title" [(ngModel)]="model.title">
       <mat-error *ngIf="noteDetailsFg.get('title').hasError('required')">
         Title is <strong>required</strong>
       </mat-error>
@@ -18,7 +18,8 @@
 
     <div [hidden]="noteType!='text'">
       <mat-form-field>
-        <textarea rows="6" matInput placeholder="Content"></textarea>
+        <textarea formControlName="noteContent" [(ngModel)]="model.noteContent" rows="6" matInput
+                  placeholder="Content"></textarea>
       </mat-form-field>
     </div>
 
@@ -29,7 +30,7 @@
         <mat-checkbox [checked]="item.checked" (change)="item.checked = !item.checked"
                       [class.checked]="item.checked"
                       color="primary">
-          {{item.name}}
+          {{item.content}}
         </mat-checkbox>
         {{item.checked}}
         <div class="fill-remaining-space"></div>
@@ -41,7 +42,7 @@
       <!--Add new todo DIV-->
       <div class="add-new-item-div">
         <mat-form-field style="width: 50%;">
-          <input (keyup.enter)="addTodoItem(todoItem)" formControlName="todoName" [(ngModel)]="todoItem"
+          <input formControlName="todoName" [(ngModel)]="model.todoItem" (keyup.enter)="addTodoItem()"
                  matInput
                  placeholder="Type a todo">
           <mat-error *ngIf="noteDetailsFg.get('todoName').hasError('required')">
@@ -59,7 +60,7 @@
 </div>
 <div mat-dialog-actions style="float: right;">
   <button type="button" tabindex="2" mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
-  <button type="button" tabindex="3" mat-raised-button style="background-color: #33691E; color: white;"
-          [mat-dialog-close]="data.groupName" cdkFocusInitial>Add
+  <button type="button" [disabled]="noteDetailsFg.get('title').invalid" tabindex="3" mat-raised-button class="add-button"
+          [mat-dialog-close]="returnNote()" cdkFocusInitial>Add
   </button>
 </div>
