@@ -1,6 +1,6 @@
 export enum NoteType {
-  TEXT = <any>'Text Note',
-  TODO = <any>'Toto Note'
+  TEXT = 'text note',
+  TODO = 'todo note'
 }
 
 export interface NoteGroup {
@@ -8,6 +8,7 @@ export interface NoteGroup {
   ownerId?: string;
   memberIds?: string[];
   name?: string;
+  createdAt?: Date;
 }
 
 export interface Todo {
@@ -27,7 +28,6 @@ export interface Note {
   content?: string;
   todoList?: Todo[];
   createdAt?: Date;
-
 }
 
 

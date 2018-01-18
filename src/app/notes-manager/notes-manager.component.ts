@@ -7,6 +7,7 @@ import {NoteDetailsComponent} from '../note-details/note-details.component';
 import {Note, NoteGroup, NoteType} from '../../../api/server/models';
 import {Notes} from '../../../api/server/collections';
 import {NoteGroups} from '../../../api/server/collections/groups';
+import {delay} from 'rxjs/operators';
 
 @Component({
   selector: 'app-notes-manager',
@@ -16,9 +17,10 @@ import {NoteGroups} from '../../../api/server/collections/groups';
 })
 export class NotesManagerComponent implements OnInit {
   noteGroups: NoteGroup[];
+  notesList: Note[];
+
   groupName;
   projectName = 'Project A';
-  notesList: Note[];
 
   constructor(public dialog: MatDialog) {
   }
@@ -27,9 +29,10 @@ export class NotesManagerComponent implements OnInit {
     Notes.find({}).subscribe((notes: Note[]) => {
       this.notesList = notes;
     });
-    NoteGroups.find({}).subscribe((groups: Note[]) => {
+    NoteGroups.find({}).subscribe((groups: NoteGroup[]) => {
       this.noteGroups = groups;
     });
+    // console.log(toJSONValue);
   }
 
   openNoteGroupAddDialog(): void {
@@ -84,6 +87,18 @@ export class NotesManagerComponent implements OnInit {
       // this.projectName = result;
 
     });
+  }
+
+  isTextNode(type: NoteType): boolean {
+    if (type === NoteType.TEXT) {
+      return true;
+    }
+    return false;
+  }
+
+  loadNoteCard(): boolean {
+    delay(1000);
+    return true;
   }
 
   // findNote(): Observable<Note[]> {

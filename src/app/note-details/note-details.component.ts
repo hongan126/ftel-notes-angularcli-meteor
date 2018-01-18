@@ -1,11 +1,12 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-new-note',
   templateUrl: './note-details.component.html',
-  styleUrls: ['./note-details.component.scss']
+  styleUrls: ['./note-details.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class NoteDetailsComponent implements OnInit {
   todoItem: any;

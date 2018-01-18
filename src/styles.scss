@@ -34,4 +34,9 @@ body {
   background: #3f51b5;
 }
 
+.checked {
+  font-style: italic;
+  text-decoration: line-through;
+}
+
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";

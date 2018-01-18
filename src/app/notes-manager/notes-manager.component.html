@@ -50,44 +50,15 @@
 
     <!--List note-->
     <div class="notes-list">
-      <div class="note-card">
+      <div class="note-card" *ngFor="let note of notesList">
+        {{note|json}}
         <div class="note-card-title">
           <div>
-            <span>Note 1 - text only</span><br/>
-            <span style="font-size: 0.9em; color: gray; font-style: italic;">01/01/2017</span>
+            <span>{{note.title}}</span><br/>
+            <span style="font-size: 0.9em; color: gray; font-style: italic;">{{note.createdAt|date:"dd/MM/yyyy"}}</span>
           </div>
           <div class="fill-remaining-space"></div>
-          <button mat-icon-button [matMenuTriggerFor]="itemMenu" style="font-size: 1em;">
-            <i class="fa fa-ellipsis-v" style="font-size: 1.5em;" aria-hidden="true"></i>
-          </button>
-          <mat-menu #itemMenu="matMenu">
-            <button mat-menu-item>
-              <span>Move to top</span>
-            </button>
-            <button mat-menu-item>
-              <span>Move to bottom</span>
-            </button>
-            <button mat-menu-item>
-              <span>Edit</span>
-            </button>
-            <button mat-menu-item>
-              <span>Delete</span>
-            </button>
-          </mat-menu>
-        </div>
-        <div class="note-card-content">Content note 1: Click on the color wheel to choose a primary (1) and accent (2)
-          color to preview the theme below. When you’ve selected a color combination you like.
-        </div>
-      </div>
-
-      <div class="note-card">
-        <div class="note-card-title">
-          <div>
-            <span>Note 2 - todo list</span><br/>
-            <span style="font-size: 0.9em; color: gray; font-style: italic;">01/01/2017</span>
-          </div>
-          <div class="fill-remaining-space"></div>
-          <mat-spinner mode="indeterminate" [diameter]="24"
+          <mat-spinner *ngIf="!isTextNode(note.type)" mode="indeterminate" [diameter]="24"
                        style="margin-top: auto; margin-bottom: auto;"></mat-spinner>
           <button mat-icon-button [matMenuTriggerFor]="itemMenu" style="font-size: 1em;">
             <i class="fa fa-ellipsis-v" style="font-size: 1.5em;" aria-hidden="true"></i>
@@ -107,116 +78,19 @@
             </button>
           </mat-menu>
         </div>
-        <div class="note-card-content">
-          <div>
-            <mat-checkbox color="primary">
-              Todo something 1
-            </mat-checkbox>
-          </div>
-          <div>
-            <mat-checkbox color="primary" checked="true" style="text-decoration: line-through; font-style: italic;">
-              Todo something 3
-            </mat-checkbox>
-          </div>
-          <div>
-            <mat-checkbox color="primary">
-              Todo something 4
+        <div *ngIf="isTextNode(note.type)" class="note-card-content">
+          {{note.content}}
+        </div>
+        <div *ngIf="!isTextNode(note.type)" class="note-card-content">
+          <div *ngFor="let todo of note.todoList">
+            <mat-checkbox color="primary" [checked]="todo.checked" [class.checked]="todo.checked"
+                          (change)="todo.checked=!todo.checked">
+              {{todo.content}} - {{todo.checked}}
             </mat-checkbox>
           </div>
         </div>
       </div>
 
-      <div class="note-card">
-        <div class="note-card-title">
-          <div>
-            <span>Note 2 - todo list</span><br/>
-            <span style="font-size: 0.9em; color: gray; font-style: italic;">01/01/2017</span>
-          </div>
-          <div class="fill-remaining-space"></div>
-          <mat-spinner mode="indeterminate" [diameter]="24"
-                       style="margin-top: auto; margin-bottom: auto;"></mat-spinner>
-          <button mat-icon-button [matMenuTriggerFor]="itemMenu2" style="font-size: 1em;">
-            <i class="fa fa-ellipsis-v" style="font-size: 1.5em;" aria-hidden="true"></i>
-          </button>
-          <mat-menu #itemMenu2="matMenu">
-            <button mat-menu-item>
-              <span>Move to top</span>
-            </button>
-            <button mat-menu-item>
-              <span>Move to bottom</span>
-            </button>
-            <button mat-menu-item>
-              <span>Edit</span>
-            </button>
-            <button mat-menu-item>
-              <span>Delete</span>
-            </button>
-          </mat-menu>
-        </div>
-        <div class="note-card-content">
-          <div>
-            <mat-checkbox color="primary">
-              Todo somthing 1
-            </mat-checkbox>
-          </div>
-          <div>
-            <mat-checkbox color="primary" checked="true" style="text-decoration: line-through; font-style: italic;">
-              Todo somthing 3
-            </mat-checkbox>
-          </div>
-          <div>
-            <mat-checkbox color="primary">
-              Todo somthing 4
-            </mat-checkbox>
-          </div>
-        </div>
-      </div>
-
-      <div class="note-card">
-        <div class="note-card-title">
-          <div>
-            <span>Note 2 - todo list</span><br/>
-            <span style="font-size: 0.9em; color: gray; font-style: italic;">01/01/2017</span>
-          </div>
-          <div class="fill-remaining-space"></div>
-          <mat-spinner mode="indeterminate" [diameter]="24"
-                       style="margin-top: auto; margin-bottom: auto;"></mat-spinner>
-          <button mat-icon-button [matMenuTriggerFor]="itemMenu3" style="font-size: 1em;">
-            <i class="fa fa-ellipsis-v" style="font-size: 1.5em;" aria-hidden="true"></i>
-          </button>
-          <mat-menu #itemMenu3="matMenu">
-            <button mat-menu-item>
-              <span>Move to top</span>
-            </button>
-            <button mat-menu-item>
-              <span>Move to bottom</span>
-            </button>
-            <button mat-menu-item>
-              <span>Edit</span>
-            </button>
-            <button mat-menu-item>
-              <span>Delete</span>
-            </button>
-          </mat-menu>
-        </div>
-        <div class="note-card-content">
-          <div>
-            <mat-checkbox color="primary">
-              Todo somthing 1
-            </mat-checkbox>
-          </div>
-          <div>
-            <mat-checkbox color="primary" checked="true" style="text-decoration: line-through; font-style: italic;">
-              Todo somthing 3
-            </mat-checkbox>
-          </div>
-          <div>
-            <mat-checkbox color="primary">
-              Todo somthing 4
-            </mat-checkbox>
-          </div>
-        </div>
-      </div>
     </div><!--End of Notes list-->
   </div>
 </div>

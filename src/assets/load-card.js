@@ -1,4 +1,4 @@
-$(window).ready(function() {
+$('.note-card').ready(function() {
   setTimeout(function() {
     $('.note-card').addClass('loaded');
   }, 700);
