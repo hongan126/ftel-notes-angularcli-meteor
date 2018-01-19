@@ -13,6 +13,7 @@ import {NoteGroupAddComponent} from './note-group/note-group.add.component';
 import {NoteGroupRemoveComponent} from './note-group/note-group.remove.component';
 import {ShareManagerRemoveComponent} from "./share-manager/share-manager.remove.component";
 import {NoteDetailsComponent} from './note-details/note-details.component';
+import {NoteRemoveComponent} from "./note-details/note.remove.component";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {NoteDetailsComponent} from './note-details/note-details.component';
     NoteGroupAddComponent,
     NoteGroupRemoveComponent,
     ShareManagerRemoveComponent,
-    NoteDetailsComponent
+    NoteDetailsComponent,
+    NoteRemoveComponent
   ],
   imports: [
     BrowserModule,

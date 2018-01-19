@@ -18,6 +18,7 @@ export class NoteDetailsComponent implements OnInit {
   groupName: string;
 
   model: any = {};
+  note: Note;
 
   constructor(public dialogRef: MatDialogRef<NoteDetailsComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
@@ -32,6 +33,12 @@ export class NoteDetailsComponent implements OnInit {
       noteContent: ['', [Validators.required]]
     });
     this.groupName = this.data.groupName;
+    if (this.data.note) {
+      this.note = this.data.note;
+      this.todoList = this.note.todoList;
+      this.note.type === NoteType.TEXT ? this.noteType = 'text' : this.noteType = 'todo';
+
+    }
   }
 
   onCancel(): void {

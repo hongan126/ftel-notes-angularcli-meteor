@@ -19,17 +19,19 @@
                          (click)="loadNoteList(group)"
                          [selected]="group===selectedGroup"
                          [class.selectedGroup]="group===selectedGroup">
-          {{group.name +" - "+ group._id}}
+          {{group.name}}
+          <!--+" - "+ group._id-->
         </mat-list-option>
       </mat-selection-list>
-      {{newNote|json}}
-      {{max}}
+      <!--Todo delete-->
+      <!--{{newNote|json}}-->
+      <!--{{max}}-->
     </div>
 
   </div><!--End of NoteGroup list-->
 
   <!--Notes list DIV-->
-  <div class="mdl-cell mdl-cell--9-col notes-list-layout" [hidden]="!selectedGroup">
+  <div class="mdl-cell mdl-cell--9-col notes-list-layout" *ngIf="selectedGroup">
     <div class="head-menu-bar">
       <span class="padding-left-font-bold">{{selectedGroup.name}}</span>
       <button mat-button [matMenuTriggerFor]="shareMenu" style="font-size: 1em;">
@@ -50,13 +52,14 @@
 
     <!--New note Button-->
     <div style="display: inline;">
-      <button mat-raised-button (click)="openNewNoteDialog()" class="btn-new-note">New note</button>
+      <button mat-raised-button (click)="openNoteDialog()" class="btn-new-note">New note</button>
     </div>
 
     <!--List note-->
     <div class="notes-list">
       <div class="note-card" *ngFor="let note of notesList">
-        {{ note | json }}
+        <!--todo delete-->
+        <!--{{ note | json }}-->
         <div class="note-card-title">
           <div>
             <span>{{note.title}}</span><br/>
@@ -75,10 +78,10 @@
             <button mat-menu-item>
               <span>Move to bottom</span>
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="openNoteDialog(note)">
               <span>Edit</span>
             </button>
-            <button mat-menu-item (click)="deleteNote(note._id)">
+            <button mat-menu-item (click)="openRemoveNoteDialog(note)">
               <span>Delete</span>
             </button>
           </mat-menu>
@@ -89,8 +92,9 @@
         <div *ngIf="!isTextNote(note.type)" class="note-card-content">
           <div *ngFor="let todo of note.todoList">
             <mat-checkbox color="primary" [checked]="todo.checked" [class.checked]="todo.checked"
-                          (change)="todo.checked=!todo.checked">
-              {{todo.content}} - {{todo.checked}}
+                          (change)="todoItemChange(todo, note)">
+              {{todo.content}}
+              <!--- {{todo.checked}}-->
             </mat-checkbox>
           </div>
         </div>

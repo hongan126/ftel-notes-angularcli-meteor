@@ -4,11 +4,11 @@ import {MatDialog} from '@angular/material';
 import {NoteGroupRemoveComponent} from '../note-group/note-group.remove.component';
 import {ShareManagerRemoveComponent} from '../share-manager/share-manager.remove.component';
 import {NoteDetailsComponent} from '../note-details/note-details.component';
-import {Note, NoteGroup, NoteType} from '../../../api/server/models';
+import {Note, NoteGroup, NoteType, Todo} from '../../../api/server/models';
 import {Notes} from '../../../api/server/collections';
 import {NoteGroups} from '../../../api/server/collections/groups';
-import {delay} from 'rxjs/operators';
 import {MeteorObservable} from 'meteor-rxjs';
+import {NoteRemoveComponent} from "../note-details/note.remove.component";
 
 @Component({
   selector: 'app-notes-manager',
@@ -38,6 +38,10 @@ export class NotesManagerComponent implements OnInit {
   }
 
   loadNoteList(group: NoteGroup) {
+    if (group === this.selectedGroup) {
+      this.selectedGroup = null;
+      return;
+    }
     this.selectedGroup = group;
     Notes.find({groupId: group._id}, {sort: {createdAt: -1}}).subscribe((notes: Note[]) => {
       this.notesList = notes;
@@ -90,23 +94,51 @@ export class NotesManagerComponent implements OnInit {
     });
   }
 
-  openNewNoteDialog(): void {
-    const dialogRef = this.dialog.open(NoteDetailsComponent, {
+  openNoteDialog(note: Note): void {
+    if (note) {
+      const dialogRef = this.dialog.open(NoteDetailsComponent, {
+        width: '40%',
+        data: {typeDialog: 'edit-note', note: note, groupName: this.selectedGroup.name}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The Edit note dialog was closed');
+
+      });
+
+    } else {
+      const dialogRef = this.dialog.open(NoteDetailsComponent, {
+        width: '40%',
+        data: {typeDialog: 'add-new-note', groupName: this.selectedGroup.name, groupId: this.selectedGroup._id}
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The New note dialog was closed');
+        this.newNote = <Note>result;
+        MeteorObservable.call('addNote', this.newNote).zone()
+          .subscribe(() => {
+          });
+      });
+    }
+  }
+
+  openRemoveNoteDialog(note: Note): void {
+    const dialogRef = this.dialog.open(NoteRemoveComponent, {
       width: '40%',
-      data: {type: 'add-new-note', groupName: this.selectedGroup.name, groupId: this.selectedGroup._id}
+      data: {groupName: this.selectedGroup.name, noteTitle: note.title, id: note._id}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The New note dialog was closed');
-      this.newNote = <Note>result;
-      MeteorObservable.call('addNote', this.newNote).zone()
+      console.log('The Remove note dialog was closed');
+      MeteorObservable.call('removeNote', result.id).zone()
         .subscribe(() => {
         });
     });
   }
 
-  deleteNote(id: any): void {
-    MeteorObservable.call('removeNote', id).zone()
+  todoItemChange(todo: Todo, note: Note): void {
+    todo.checked = !todo.checked;
+    MeteorObservable.call('updateCheckedTodoInNote', note._id, todo._id, todo.checked).zone()
       .subscribe(() => {
       });
   }
@@ -118,12 +150,5 @@ export class NotesManagerComponent implements OnInit {
     return false;
   }
 
-  loadNoteCard(): boolean {
-    delay(1000);
-    return true;
-  }
 
-  // findNote(): Observable<Note[]> {
-  //   return Notes.find();
-  // }
 }

@@ -46,5 +46,13 @@ Meteor.methods({
   addNote(note: Note): void {
     note.createdAt = new Date();
     Notes.insert(note);
+  },
+  updateCheckedTodoInNote(noteId: string, todoId: number, checked: boolean): void {
+    Notes.update(
+      {_id: noteId, 'todoList._id': todoId},
+      {
+        $set: {'todoList.$.checked': checked}
+      }
+    );
   }
 });
