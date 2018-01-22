@@ -10,6 +10,7 @@ import {
   MatMenuModule,
   MatProgressSpinnerModule,
   MatRadioModule,
+  MatTextareaAutosize,
   MatToolbarModule
 } from '@angular/material';
 import {CdkTableModule} from '@angular/cdk/table';
@@ -42,7 +43,8 @@ import {CdkTableModule} from '@angular/cdk/table';
     MatProgressSpinnerModule,
     MatDialogModule,
     CdkTableModule,
-    MatRadioModule
+    MatRadioModule,
+    MatTextareaAutosize
   ],
 })
 export class AppMaterialModule {

@@ -55,6 +55,8 @@ mongo-id@1.0.6
 npm-mongo@2.2.33
 observe-sequence@1.0.16
 ordered-dict@1.0.9
+percolate:momentum@0.7.2
+percolate:velocityjs@1.1.0
 promise@0.10.0
 random@1.0.10
 reactive-var@1.0.11

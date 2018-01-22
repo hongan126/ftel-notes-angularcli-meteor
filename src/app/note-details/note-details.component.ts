@@ -58,22 +58,29 @@ export class NoteDetailsComponent implements OnInit {
   }
 
   returnNote(): Note {
-    if (this.noteType === 'text') {
-      this.newNote = {
-        groupId: this.data.groupId,
-        title: this.model.title,
-        type: NoteType.TEXT,
-        content: this.model.noteContent
-      };
+    if (this.data.typeDialog === 'add-new-note') {
+      if (this.noteType === 'text') {
+        this.newNote = {
+          groupId: this.data.groupId,
+          title: this.model.title,
+          type: NoteType.TEXT,
+          content: this.model.noteContent
+        };
+      } else {
+        this.newNote = {
+          groupId: this.data.groupId,
+          title: this.model.title,
+          type: NoteType.TODO,
+          todoList: this.todoList
+        };
+      }
+      return this.newNote;
     } else {
-      this.newNote = {
-        groupId: this.data.groupId,
-        title: this.model.title,
-        type: NoteType.TODO,
-        todoList: this.todoList
-      };
+      if (this.note.type === NoteType.TODO) {
+        this.note.todoList = this.todoList;
+      }
+      return this.note;
     }
-    return this.newNote;
   }
 
   getTodoId(): number {

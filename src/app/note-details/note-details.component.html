@@ -18,56 +18,58 @@
 
     <div *ngIf="noteType=='text'">
       <mat-form-field>
-        <textarea formControlName="noteContent" [(ngModel)]="model.noteContent" rows="6" matInput
+        <textarea formControlName="noteContent" matInput matTextareaAutosize
+                  matAutosizeMinRows="6" [(ngModel)]="model.noteContent"
                   placeholder="Content"></textarea>
       </mat-form-field>
     </div>
 
-    <!--Todo list div-->
-    <div class="todo-list-add" *ngIf="noteType!='text'">
-      <!--Todo list-->
-      <div class="todo-item" *ngFor="let item of todoList">
-        <mat-checkbox [checked]="item.checked" (change)="item.checked = !item.checked"
-                      [class.checked]="item.checked"
-                      color="primary">
-          {{item.content}}
-        </mat-checkbox>
-        {{item.checked}}
-        <div class="fill-remaining-space"></div>
-        <a (click)="removeTodoItem(item)" mat-icon-button class="icon-btn-size-xm">
-          <i class="fa fa-times-circle fa-2x" aria-hidden="true"></i>
-        </a>
-      </div>
+      <!--Todo list div-->
+      <div class="todo-list-add" *ngIf="noteType!='text'">
+        <!--Todo list-->
+        <div class="todo-item" *ngFor="let item of todoList">
+          <mat-checkbox [checked]="item.checked" (change)="item.checked = !item.checked"
+                        [class.checked]="item.checked"
+                        color="primary">
+            {{item.content}}
+          </mat-checkbox>
+          <!--Todo delete-->
+          <!--{{item.checked}}-->
+          <div class="fill-remaining-space"></div>
+          <a (click)="removeTodoItem(item)" mat-icon-button class="icon-btn-size-xm">
+            <i class="fa fa-times-circle fa-2x" aria-hidden="true"></i>
+          </a>
+        </div>
 
-      <!--Add new todo DIV-->
-      <div class="add-new-item-div">
-        <mat-form-field style="width: 50%;">
-          <input formControlName="todoName" [(ngModel)]="model.todoItem" (keyup.enter)="addTodoItem()"
-                 matInput
-                 placeholder="Type a todo">
-          <mat-error *ngIf="noteDetailsFg.get('todoName').hasError('required')">
-            Todo name is <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-        <button type="button" mat-icon-button (click)="addTodoItem(todoItem)"
-                [disabled]="noteDetailsFg.get('todoName').invalid">
-          <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
-        </button>
+        <!--Add new todo DIV-->
+        <div class="add-new-item-div">
+          <mat-form-field style="width: 50%;">
+            <input formControlName="todoName" [(ngModel)]="model.todoItem" (keyup.enter)="addTodoItem()"
+                   matInput
+                   placeholder="Type a todo">
+            <mat-error *ngIf="noteDetailsFg.get('todoName').hasError('required')">
+              Todo name is <strong>required</strong>
+            </mat-error>
+          </mat-form-field>
+          <button type="button" mat-icon-button (click)="addTodoItem(todoItem)"
+                  [disabled]="noteDetailsFg.get('todoName').invalid">
+            <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
-    </div>
-
   </form>
 </div>
 <div *ngIf="data.typeDialog==='add-new-note'" mat-dialog-actions style="float: right;">
   <button type="button" tabindex="2" mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
-  <button type="button" [disabled]="noteDetailsFg.get('title').invalid" tabindex="3" mat-raised-button class="add-button"
+  <button type="button" [disabled]="noteDetailsFg.get('title').invalid" tabindex="3" mat-raised-button
+          class="add-button"
           [mat-dialog-close]="returnNote()" cdkFocusInitial>Add
   </button>
 </div>
 
 <h3 *ngIf="data.typeDialog==='edit-note'" mat-dialog-title>Edit note {{data.note.title}} of {{groupName}}</h3>
 <div *ngIf="data.typeDialog==='edit-note'" mat-dialog-content class="dialog-content">
-  <form novalidate name="form-note-details" [formGroup]="noteDetailsFg">
+  <form novalidate name="form-note-edit" [formGroup]="noteDetailsFg">
     <mat-form-field>
       <input matInput placeholder="Title" formControlName="title" name="title" [(ngModel)]="note.title">
       <mat-error *ngIf="noteDetailsFg.get('title').hasError('required')">
@@ -85,7 +87,9 @@
 
     <div *ngIf="noteType=='text'">
       <mat-form-field>
-        <textarea formControlName="noteContent" [(ngModel)]="note.content" rows="6" matInput
+        <textarea formControlName="noteContent" matInput
+                  matTextareaAutosize matAutosizeMinRows="6"
+                  [(ngModel)]="note.content"
                   placeholder="Content">{{note.content}}</textarea>
       </mat-form-field>
     </div>
@@ -128,7 +132,8 @@
 </div>
 <div *ngIf="data.typeDialog==='edit-note'" mat-dialog-actions style="float: right;">
   <button type="button" tabindex="2" mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
-  <button type="button" [disabled]="noteDetailsFg.get('title').invalid" tabindex="3" mat-raised-button class="add-button"
+  <button type="button" [disabled]="noteDetailsFg.get('title').invalid" tabindex="3" mat-raised-button
+          class="add-button"
           [mat-dialog-close]="returnNote()" cdkFocusInitial>Edit
   </button>
 </div>

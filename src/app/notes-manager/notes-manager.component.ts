@@ -8,13 +8,26 @@ import {Note, NoteGroup, NoteType, Todo} from '../../../api/server/models';
 import {Notes} from '../../../api/server/collections';
 import {NoteGroups} from '../../../api/server/collections/groups';
 import {MeteorObservable} from 'meteor-rxjs';
-import {NoteRemoveComponent} from "../note-details/note.remove.component";
+import {NoteRemoveComponent} from '../note-details/note.remove.component';
+import {animate, keyframes, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
   selector: 'app-notes-manager',
   templateUrl: './notes-manager.component.html',
   styleUrls: ['./notes-manager.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger('loadState', [
+      state('in', style({transform: 'translateX(0)'})),
+      transition('void => *', [
+        animate(1000, keyframes([
+          style({opacity: 0, transform: 'translateX(0)', offset: 0}),
+          style({opacity: 1, transform: 'translateX(0)', offset: 0.1}),
+          style({opacity: 1, transform: 'translateX(0)', offset: 1.0})
+        ]))
+      ])
+    ])
+  ]
 })
 export class NotesManagerComponent implements OnInit {
   noteGroups: NoteGroup[];
@@ -44,11 +57,12 @@ export class NotesManagerComponent implements OnInit {
     }
     this.selectedGroup = group;
     Notes.find({groupId: group._id}, {sort: {createdAt: -1}}).subscribe((notes: Note[]) => {
+      this.notesList = [];
       this.notesList = notes;
     });
   }
 
-  // Add Note Group
+//Dialog: Add Note Group
   openNoteGroupAddDialog(): void {
     const dialogRef = this.dialog.open(NoteGroupAddComponent, {
       width: '40%'
@@ -65,6 +79,7 @@ export class NotesManagerComponent implements OnInit {
     });
   }
 
+//Dialog: Remove Group
   openNoteGroupRemoveDialog(): void {
     const dialogRef = this.dialog.open(NoteGroupRemoveComponent, {
       width: '40%',
@@ -81,6 +96,7 @@ export class NotesManagerComponent implements OnInit {
     });
   }
 
+//Dialog: Remove a member can edit note from group
   openShareManagerRemoveDialog(): void {
     const dialogRef = this.dialog.open(ShareManagerRemoveComponent, {
       width: '40%',
@@ -94,7 +110,9 @@ export class NotesManagerComponent implements OnInit {
     });
   }
 
+//Dialog: NEW NOTE, or Note Details to Edit
   openNoteDialog(note: Note): void {
+    //note!=null => edit note
     if (note) {
       const dialogRef = this.dialog.open(NoteDetailsComponent, {
         width: '40%',
@@ -103,10 +121,14 @@ export class NotesManagerComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         console.log('The Edit note dialog was closed');
-
+        MeteorObservable.call('updateNote', <Note>result).zone()
+          .subscribe(() => {
+          });
       });
 
-    } else {
+    }
+    //note==null => new note
+    else {
       const dialogRef = this.dialog.open(NoteDetailsComponent, {
         width: '40%',
         data: {typeDialog: 'add-new-note', groupName: this.selectedGroup.name, groupId: this.selectedGroup._id}
@@ -122,6 +144,7 @@ export class NotesManagerComponent implements OnInit {
     }
   }
 
+//Dialog: Remove note
   openRemoveNoteDialog(note: Note): void {
     const dialogRef = this.dialog.open(NoteRemoveComponent, {
       width: '40%',
@@ -136,6 +159,7 @@ export class NotesManagerComponent implements OnInit {
     });
   }
 
+//update checked field of to-do item in mongoDb
   todoItemChange(todo: Todo, note: Note): void {
     todo.checked = !todo.checked;
     MeteorObservable.call('updateCheckedTodoInNote', note._id, todo._id, todo.checked).zone()
@@ -150,5 +174,9 @@ export class NotesManagerComponent implements OnInit {
     return false;
   }
 
-
+  setPositionForNote(groupId: string, noteId: string, moveTop: boolean): void {
+    MeteorObservable.call('setCreatedDate', groupId, noteId, moveTop).zone()
+      .subscribe(() => {
+      });
+  }
 }
