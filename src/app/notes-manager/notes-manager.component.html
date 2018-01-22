@@ -1,6 +1,6 @@
 <div class="mdl-grid mdl-grid--no-spacing content-notes-manager">
   <!--Note Group list DIV-->
-  <div class="mdl-cell mdl-cell--3-col note-group-layout">
+  <div class="mdl-cell mdl-cell--3-col mdl-cell--2-col-tablet mdl-cell--1-col-phone note-group-layout">
     <!--menu of NoteGroup-->
     <div class="head-menu-bar" style="background-color: #E0E0E0;">
       <span class="padding-left-font-bold">Group</span>
@@ -15,7 +15,7 @@
 
     <div class="note-group-list">
       <mat-selection-list aria-multiselectable="false" color="primary">
-        <mat-list-option *ngFor="let group of noteGroups"
+        <mat-list-option *ngFor="let group of noteGroups | async"
                          (click)="loadNoteList(group)"
                          [selected]="group===selectedGroup"
                          [class.selectedGroup]="group===selectedGroup">
@@ -31,7 +31,7 @@
   </div><!--End of NoteGroup list-->
 
   <!--Notes list DIV-->
-  <div class="mdl-cell mdl-cell--9-col notes-list-layout" *ngIf="selectedGroup">
+  <div class="mdl-cell mdl-cell--9-col mdl-cell--6-col-tablet mdl-cell--3-col-phone notes-list-layout" *ngIf="selectedGroup">
     <div class="head-menu-bar">
       <span class="padding-left-font-bold">{{selectedGroup.name}}</span>
       <button mat-button [matMenuTriggerFor]="shareMenu" style="font-size: 1em;">
@@ -57,7 +57,7 @@
 
     <!--List note-->
     <div class="notes-list">
-      <div class="note-card" *ngFor="let note of notesList" >
+      <div class="note-card" *ngFor="let note of notesList | async" >
         <!--todo delete-->
         <!--{{ note | json }}-->
         <div class="note-card-title">

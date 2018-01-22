@@ -9,7 +9,7 @@ import {Notes} from '../../../api/server/collections';
 import {NoteGroups} from '../../../api/server/collections/groups';
 import {MeteorObservable} from 'meteor-rxjs';
 import {NoteRemoveComponent} from '../note-details/note.remove.component';
-import {animate, keyframes, state, style, transition, trigger} from "@angular/animations";
+import {animate, keyframes, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-notes-manager',
@@ -30,9 +30,9 @@ import {animate, keyframes, state, style, transition, trigger} from "@angular/an
   ]
 })
 export class NotesManagerComponent implements OnInit {
-  noteGroups: NoteGroup[];
+  noteGroups;
   selectedGroup: NoteGroup;
-  notesList: Note[];
+  notesList;
   newNote: Note;
 
   groupName;
@@ -45,21 +45,17 @@ export class NotesManagerComponent implements OnInit {
   }
 
   loadNoteGroup() {
-    NoteGroups.find({}, {sort: {createdAt: -1}}).subscribe((groups: NoteGroup[]) => {
-      this.noteGroups = groups;
-    });
+    this.noteGroups = NoteGroups.find({}, {sort: {createdAt: -1}});
   }
 
   loadNoteList(group: NoteGroup) {
     if (group === this.selectedGroup) {
       this.selectedGroup = null;
-      return;
-    }
-    this.selectedGroup = group;
-    Notes.find({groupId: group._id}, {sort: {createdAt: -1}}).subscribe((notes: Note[]) => {
       this.notesList = [];
-      this.notesList = notes;
-    });
+    } else {
+      this.selectedGroup = group;
+      this.notesList = Notes.find({groupId: group._id}, {sort: {createdAt: -1}});
+    }
   }
 
 //Dialog: Add Note Group
@@ -70,6 +66,7 @@ export class NotesManagerComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The Note NoteGroup Add dialog was closed');
+      if (!result) return;
       this.groupName = result;
       MeteorObservable.call('addGroup', this.groupName).zone()
         .subscribe(() => {
@@ -88,6 +85,7 @@ export class NotesManagerComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The Note NoteGroup Remove dialog was closed');
+      if (!result) return;
       MeteorObservable.call('removeGroup', result).zone()
         .subscribe(() => {
           //Null selected group
@@ -105,8 +103,7 @@ export class NotesManagerComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The Share Manager Remove dialog was closed');
-      // this.projectName = result;
-
+      if (!result) return;
     });
   }
 
@@ -121,6 +118,7 @@ export class NotesManagerComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         console.log('The Edit note dialog was closed');
+        if (!result) return;
         MeteorObservable.call('updateNote', <Note>result).zone()
           .subscribe(() => {
           });
@@ -136,6 +134,7 @@ export class NotesManagerComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
         console.log('The New note dialog was closed');
+        if (!result) return;
         this.newNote = <Note>result;
         MeteorObservable.call('addNote', this.newNote).zone()
           .subscribe(() => {
@@ -153,6 +152,7 @@ export class NotesManagerComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The Remove note dialog was closed');
+      if (!result) return;
       MeteorObservable.call('removeNote', result.id).zone()
         .subscribe(() => {
         });
