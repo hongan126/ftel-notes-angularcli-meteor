@@ -18,15 +18,15 @@
       <span class="fill-remaining-space"></span>
 
       <!--Login/Sign up-->
-      <div [hidden]="user">
-        <button mat-button routerLink="/login" class="white">Login</button>
-        <button mat-button routerLink="/signup" class="white">Sign up</button>
-      </div>
+      <!--<div [hidden]="user">-->
+        <button [hidden]="user" mat-button routerLink="/login" class="white">Login</button>
+        <button [hidden]="user" mat-button routerLink="/signup" class="white">Sign up</button>
+      <!--</div>-->
 
       <!--User/Logout-->
       <div [hidden]="!user">
-        <span class="white">{{ user }}</span>
-        <button class="white" mat-button (click)="logout()"><p>Logout</p></button>
+        <span  class="white">{{ user.profile.firstName + ' ' + user.profile.lastName }}</span>
+        <button  class="white" mat-button (click)="logout()">Logout</button>
       </div>
     </mat-toolbar>
   </div>

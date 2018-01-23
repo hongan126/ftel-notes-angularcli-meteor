@@ -36,7 +36,7 @@ export class NotesManagerComponent implements OnInit {
   notesList;
   newNote: Note;
   groupName;
-  user: any;
+  user: User;
 
   constructor(public dialog: MatDialog) {
   }
@@ -46,10 +46,6 @@ export class NotesManagerComponent implements OnInit {
     console.log(Meteor.userId());
     console.log(Meteor.user());
     this.user = Meteor.user();
-  }
-
-  getUserS = () => {
-
   }
 
   loadNoteGroup() {
