@@ -4,13 +4,13 @@ import {MatDialog} from '@angular/material';
 import {NoteGroupRemoveComponent} from '../note-group/note-group.remove.component';
 import {ShareManagerRemoveComponent} from '../share-manager/share-manager.remove.component';
 import {NoteDetailsComponent} from '../note-details/note-details.component';
-import {Note, NoteGroup, NoteType, Todo} from '../../../api/server/models';
+import {Note, NoteGroup, NoteType, Todo, User} from '../../../api/server/models';
 import {Notes} from '../../../api/server/collections';
 import {NoteGroups} from '../../../api/server/collections/groups';
 import {MeteorObservable} from 'meteor-rxjs';
 import {NoteRemoveComponent} from '../note-details/note.remove.component';
 import {animate, keyframes, state, style, transition, trigger} from '@angular/animations';
-import {Meteor} from 'meteor/meteor';
+import {Users} from '../../../api/server/collections/users';
 
 @Component({
   selector: 'app-notes-manager',
@@ -36,6 +36,7 @@ export class NotesManagerComponent implements OnInit {
   notesList;
   newNote: Note;
   groupName;
+  user: any;
 
   constructor(public dialog: MatDialog) {
   }
@@ -43,6 +44,12 @@ export class NotesManagerComponent implements OnInit {
   ngOnInit() {
     this.loadNoteGroup();
     console.log(Meteor.userId());
+    console.log(Meteor.user());
+    this.user = Meteor.user();
+  }
+
+  getUserS = () => {
+
   }
 
   loadNoteGroup() {

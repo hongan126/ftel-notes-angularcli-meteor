@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
           if (err) {
             this.error = err.reason;
           } else {
+            // console.log(Meteor.user());
             this.router.navigate(['/']);
           }
         });
