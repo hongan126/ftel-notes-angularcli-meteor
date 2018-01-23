@@ -1,6 +1,6 @@
 <div>
   <form novalidate name="form" class="mdc-elevation--z5 register-form"
-        [formGroup]="loginFg">
+        [formGroup]="loginFg" (ngSubmit)="login()">
 
     <h3 class="align-canter">Login to your account</h3>
 
@@ -38,6 +38,7 @@
 
     <mat-checkbox color="primary">Remember my account</mat-checkbox>
 
+    <span class="error" [hidden]="error == ''">{{error}}</span>
     <div style="width: 100%; text-align: center; margin-top: 10px;">
       <button
         style="width: 90%;"

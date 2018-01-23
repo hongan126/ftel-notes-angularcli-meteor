@@ -11,10 +11,10 @@ import {NoteRemoveComponent} from './note-details/note.remove.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
-  // {path: '', component: NotesManagerComponent},
+  {path: '', component: NotesManagerComponent},
   // canActivate:[AuthGuard]
   {path: 'signup', component: SignupComponent},
-  {path: 'notes', component: NotesManagerComponent},
+  // {path: 'notes', component: NotesManagerComponent},
   {path: 'group-add', component: NoteGroupAddComponent},
   {path: 'group-remove', component: NoteGroupRemoveComponent},
   {path: 'share-remove', component: ShareManagerRemoveComponent},
