@@ -30,6 +30,13 @@ export interface Note {
   createdAt?: Date;
 }
 
+export interface User extends Meteor.User {
+  profile?: {
+    firstName?: string;
+    lastName?: string;
+  };
+}
+
 
 
 

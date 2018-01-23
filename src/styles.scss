@@ -39,4 +39,8 @@ body {
   text-decoration: line-through;
 }
 
+.error{
+  color:red;
+}
+
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";

@@ -1,5 +1,10 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, NgZone, OnInit, ViewEncapsulation} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Accounts} from 'meteor/accounts-base';
+import {Router} from '@angular/router';
+import {User} from "../../../api/server/models";
+
+// import { Meteor } from 'meteor/meteor';
 
 export function forbiddenUsername(u: AbstractControl) {
   const users = ['manager', 'admin', 'manager@gmail.com', 'admin@gmail.com'];
@@ -17,11 +22,11 @@ export function forbiddenUsername(u: AbstractControl) {
 })
 export class SignupComponent implements OnInit {
   fgSignup: FormGroup;
-  model: any = {};
   hide = true;
   confPass: string;
+  error;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router, private zone: NgZone) {
   }
 
   ngOnInit() {
@@ -34,4 +39,25 @@ export class SignupComponent implements OnInit {
     });
   }
 
+  signup() {
+    Accounts.createUser({
+      email: this.fgSignup.value.username,
+      password: this.fgSignup.value.password,
+      profile: {
+        firstName: this.fgSignup.value.firstName,
+        lastName: this.fgSignup.value.lastName
+      }
+    }, (err) => {
+      if (err) {
+        this.zone.run(() => {
+          this.error = err.reason;
+          console.log(err);
+        });
+      } else {
+        this.error = '';
+        console.log('Signup - ' + this.fgSignup.value.username);
+        this.router.navigate(['/notes']);
+      }
+    });
+  }
 }

@@ -13,8 +13,15 @@
     "skipLibCheck": true,
     "stripInternal": true,
     "noImplicitAny": false,
+//    "paths": {
+//      "api/*": [
+//        "./api/server/*"
+//      ]
+//    },
     "typeRoots": [
-      "node_modules/@types"
+      "node_modules/@types",
+      "@types/meteor",
+      "@types/meteor-accounts"
     ],
     "lib": [
       "es2017",
