@@ -1,7 +1,7 @@
 import {Component, NgZone, OnInit, ViewEncapsulation} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Accounts} from 'meteor/accounts-base';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {User} from "../../../api/server/models";
 
 // import { Meteor } from 'meteor/meteor';
@@ -24,9 +24,11 @@ export class SignupComponent implements OnInit {
   fgSignup: FormGroup;
   hide = true;
   confPass: string;
-  error;
+  error = '';
 
-  constructor(private fb: FormBuilder, private router: Router, private zone: NgZone) {
+  constructor(private fb: FormBuilder,
+              private router: Router,
+              private zone: NgZone) {
   }
 
   ngOnInit() {
@@ -37,6 +39,7 @@ export class SignupComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPass: [this.confPass, [Validators.required, Validators.minLength(8), Validators.pattern(this.confPass)]]
     });
+
   }
 
   signup() {
@@ -54,9 +57,11 @@ export class SignupComponent implements OnInit {
           console.log(err);
         });
       } else {
-        this.error = '';
-        console.log('Signup - ' + this.fgSignup.value.username);
-        this.router.navigate(['/notes']);
+        this.zone.run(() => {
+          this.error = '';
+          console.log('Signup - ' + this.fgSignup.value.username);
+          this.router.navigate(['/login']);
+        });
       }
     });
   }

@@ -1,8 +1,7 @@
-<!--(ngSubmit)="register()"-->
 <form novalidate name="form"
+      (ngSubmit)="signup()"
       [formGroup]="fgSignup"
-      class="mdc-elevation--z5 register-form"
-      (ngSubmit)="signup()">
+      class="mdc-elevation--z5 register-form">
 
   <h3 class="align-canter">Create new account</h3>
 
@@ -76,7 +75,7 @@
     </mat-error>
   </mat-form-field>
 
-  <span class="error" *ngIf="error">{{error}}</span>
+  <span class="error" [hidden]="error == ''">{{error}}</span>
   <div style="width: 100%; text-align: right;">
 
     <button
@@ -94,5 +93,4 @@
   <div style="width: 100%; text-align: right; margin-top: 10px;">
     <a routerLink="/login">I have a account</a>
   </div>
-
 </form>
