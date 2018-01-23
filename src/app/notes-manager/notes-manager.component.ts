@@ -10,6 +10,7 @@ import {NoteGroups} from '../../../api/server/collections/groups';
 import {MeteorObservable} from 'meteor-rxjs';
 import {NoteRemoveComponent} from '../note-details/note.remove.component';
 import {animate, keyframes, state, style, transition, trigger} from '@angular/animations';
+import {Meteor} from 'meteor/meteor';
 
 @Component({
   selector: 'app-notes-manager',
@@ -34,7 +35,6 @@ export class NotesManagerComponent implements OnInit {
   selectedGroup: NoteGroup;
   notesList;
   newNote: Note;
-
   groupName;
 
   constructor(public dialog: MatDialog) {
@@ -42,6 +42,7 @@ export class NotesManagerComponent implements OnInit {
 
   ngOnInit() {
     this.loadNoteGroup();
+    console.log(Meteor.userId());
   }
 
   loadNoteGroup() {

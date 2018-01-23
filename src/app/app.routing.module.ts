@@ -8,11 +8,11 @@ import {NoteGroupRemoveComponent} from './note-group/note-group.remove.component
 import {ShareManagerRemoveComponent} from './share-manager/share-manager.remove.component';
 import {NoteDetailsComponent} from './note-details/note-details.component';
 import {NoteRemoveComponent} from './note-details/note.remove.component';
+import {AuthGuard} from "./_auth-guard/AuthGuard";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
-  {path: '', component: NotesManagerComponent},
-  // canActivate:[AuthGuard]
+  {path: '', component: NotesManagerComponent, canActivate: [AuthGuard]},
   {path: 'signup', component: SignupComponent},
   // {path: 'notes', component: NotesManagerComponent},
   {path: 'group-add', component: NoteGroupAddComponent},
@@ -20,7 +20,12 @@ const routes: Routes = [
   {path: 'share-remove', component: ShareManagerRemoveComponent},
   {path: 'note-details', component: NoteDetailsComponent},
   {path: 'note-remove', component: NoteRemoveComponent}
-];
+]
+
+export const ROUTES_PROVIDERS = [{
+  provide: 'canActivateForLoggedIn',
+  useValue: () => !!Meteor.userId()
+}];
 
 @NgModule({
   imports: [
