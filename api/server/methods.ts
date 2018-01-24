@@ -1,7 +1,7 @@
 import {check, Match} from 'meteor/check';
 import {NoteGroups} from './collections/groups';
 import {Notes} from './collections/notes';
-import {Note, NoteType} from './models';
+import {Note, NoteGroup, NoteType} from './models';
 
 const nonEmptyString = Match.Where((str) => {
   check(str, String);
@@ -10,10 +10,10 @@ const nonEmptyString = Match.Where((str) => {
 
 Meteor.methods({
   addGroup(groupName: string): void {
-    // if (!this.userId) {
-    //   throw new Meteor.Error('unauthorized',
-    //     'User must be logged-in to create a new chat');
-    // }
+    if (!Meteor.userId()) {
+      throw new Meteor.Error('unauthorized',
+        'User must be logged-in to create a new group');
+    }
 
     check(groupName, nonEmptyString);
 
@@ -28,23 +28,27 @@ Meteor.methods({
 
     const newGroup = {
       name: groupName,
-      createdAt: new Date()
+      createdAt: new Date(),
+      ownerId: Meteor.userId()
     };
 
     NoteGroups.insert(newGroup);
   },
-  removeGroup(groupName: string): void {
-    // if (!this.userId) {
-    //   throw new Meteor.Error('unauthorized',
-    //     'User must be logged-in to create a new chat');
-    // }
-    NoteGroups.remove({name: groupName});
+  removeGroup(notesGroupId: string): void {
+    const group = NoteGroups.findOne({_id: notesGroupId});
+    if (Meteor.userId() !== group.ownerId){
+      throw new Meteor.Error('not-owned',
+        'You are not own this group.');
+    }
+    Notes.remove({groupId: notesGroupId})
+    NoteGroups.remove({_id: notesGroupId});
   },
   removeNote(noteId: string): void {
     Notes.remove({_id: noteId});
   },
   addNote(note: Note): void {
     note.createdAt = new Date();
+    note.ownerId = Meteor.userId();
     Notes.insert(note);
   },
   updateCheckedTodoInNote(noteId: string, todoId: number, checked: boolean): void {

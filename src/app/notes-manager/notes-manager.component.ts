@@ -10,7 +10,6 @@ import {NoteGroups} from '../../../api/server/collections/groups';
 import {MeteorObservable} from 'meteor-rxjs';
 import {NoteRemoveComponent} from '../note-details/note.remove.component';
 import {animate, keyframes, state, style, transition, trigger} from '@angular/animations';
-import {Users} from '../../../api/server/collections/users';
 
 @Component({
   selector: 'app-notes-manager',
@@ -43,12 +42,10 @@ export class NotesManagerComponent implements OnInit {
 
   ngOnInit() {
     this.loadNoteGroup();
-    console.log(Meteor.user());
-    this.user = Meteor.user();
   }
 
   loadNoteGroup() {
-    this.noteGroups = NoteGroups.find({}, {sort: {createdAt: -1}});
+    this.noteGroups = NoteGroups.find({ownerId: Meteor.userId()}, {sort: {createdAt: -1}});
   }
 
   loadNoteList(group: NoteGroup) {
@@ -83,7 +80,7 @@ export class NotesManagerComponent implements OnInit {
   openNoteGroupRemoveDialog(): void {
     const dialogRef = this.dialog.open(NoteGroupRemoveComponent, {
       width: '40%',
-      data: {projectName: this.selectedGroup.name}
+      data: {notesGroup: this.selectedGroup}
     });
 
     dialogRef.afterClosed().subscribe(result => {
