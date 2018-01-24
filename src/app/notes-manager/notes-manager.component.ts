@@ -43,7 +43,6 @@ export class NotesManagerComponent implements OnInit {
 
   ngOnInit() {
     this.loadNoteGroup();
-    console.log(Meteor.userId());
     console.log(Meteor.user());
     this.user = Meteor.user();
   }

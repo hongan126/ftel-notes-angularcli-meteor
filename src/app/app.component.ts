@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, Component, NgZone, OnChanges, OnInit} from '@angular/core';
 import {User} from '../../api/server/models';
 import {Router} from '@angular/router';
 import {Meteor} from 'meteor/meteor';
@@ -9,17 +9,25 @@ import {Meteor} from 'meteor/meteor';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  user: User;
+  user: User = null;
 
-  constructor(public router: Router) {
-    this.user = Meteor.user();
+  constructor(public router: Router,
+              public zone: NgZone) {
   }
 
   ngOnInit() {
-
+    this.setUserToShow();
   }
 
   logout() {
-    Meteor.logout();
+    this.zone.run(() => {
+      Meteor.logout();
+      this.router.navigate(['/login']);
+    });
+    this.user = null;
+  }
+
+  setUserToShow() {
+    !!Meteor.userId() ? this.user = Meteor.user() : this.user = null;
   }
 }

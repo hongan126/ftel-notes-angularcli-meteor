@@ -25,7 +25,7 @@
 
       <!--User/Logout-->
       <div [hidden]="!user">
-        <span  class="white">{{ user.profile.firstName + ' ' + user.profile.lastName }}</span>
+        <span *ngIf="user" class="white">{{ user.profile.firstName + ' ' + user.profile.lastName }}</span>
         <button  class="white" mat-button (click)="logout()">Logout</button>
       </div>
     </mat-toolbar>
