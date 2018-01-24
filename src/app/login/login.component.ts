@@ -2,7 +2,7 @@ import {Component, NgZone, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Meteor} from 'meteor/meteor';
-import {AppComponent} from "../app.component";
+import {AppComponent} from '../app.component';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private router: Router,
               private zone: NgZone,
-              private app : AppComponent) {
+              private app: AppComponent) {
   }
 
   ngOnInit() {
