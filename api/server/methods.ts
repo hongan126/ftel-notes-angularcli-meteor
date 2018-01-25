@@ -1,7 +1,8 @@
 import {check, Match} from 'meteor/check';
 import {NoteGroups} from './collections/groups';
 import {Notes} from './collections/notes';
-import {Note, NoteGroup, NoteType} from './models';
+import {Note, NoteGroup, NoteType, User} from './models';
+import {Users} from "./collections/users";
 
 const nonEmptyString = Match.Where((str) => {
   check(str, String);
@@ -29,14 +30,15 @@ Meteor.methods({
     const newGroup = {
       name: groupName,
       createdAt: new Date(),
-      ownerId: Meteor.userId()
+      ownerId: Meteor.userId(),
+      memberIds: []
     };
 
     NoteGroups.insert(newGroup);
   },
   removeGroup(notesGroupId: string): void {
     const group = NoteGroups.findOne({_id: notesGroupId});
-    if (Meteor.userId() !== group.ownerId){
+    if (Meteor.userId() !== group.ownerId) {
       throw new Meteor.Error('not-owned',
         'You are not own this group.');
     }
@@ -87,5 +89,17 @@ Meteor.methods({
         {$set: {createdAt: oldDate}}
       );
     }
+  },
+  findMemberEmail(memberEmail: string): User {
+    return Accounts.findUserByEmail(memberEmail);
+  },
+  addMember(groupId: string, memberId: string): void {
+    // let memberIds = NoteGroups.findOne({_id: groupId}).memberIds;
+    // memberIds.push(memberId);
+    NoteGroups.update({_id: groupId}, {$push: {memberIds: memberId}});
+  },
+  getMemberNameById(memberId: string): string {
+    const mem = Users.findOne({_id: memberId});
+    return mem.profile.firstName + ' ' + mem.profile.lastName;
   }
 });

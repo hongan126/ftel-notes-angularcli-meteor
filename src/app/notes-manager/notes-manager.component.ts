@@ -10,6 +10,8 @@ import {NoteGroups} from '../../../api/server/collections/groups';
 import {MeteorObservable} from 'meteor-rxjs';
 import {NoteRemoveComponent} from '../note-details/note.remove.component';
 import {animate, keyframes, state, style, transition, trigger} from '@angular/animations';
+import {NoteGroupInviteMemberComponent} from '../note-group/note-group.invite-member.component';
+import {Users} from '../../../api/server/collections/users';
 
 @Component({
   selector: 'app-notes-manager',
@@ -31,8 +33,9 @@ import {animate, keyframes, state, style, transition, trigger} from '@angular/an
 })
 export class NotesManagerComponent implements OnInit {
   noteGroups;
-  selectedGroup: NoteGroup;
   notesList;
+  members;
+  selectedGroup: NoteGroup;
   newNote: Note;
   groupName;
   user: User;
@@ -45,16 +48,23 @@ export class NotesManagerComponent implements OnInit {
   }
 
   loadNoteGroup() {
-    this.noteGroups = NoteGroups.find({ownerId: Meteor.userId()}, {sort: {createdAt: -1}});
+    this.noteGroups = NoteGroups.find({
+      $or: [
+        {ownerId: Meteor.userId()},
+        {memberIds: Meteor.userId()}
+      ]
+    }, {sort: {createdAt: -1}});
   }
 
   loadNoteList(group: NoteGroup) {
     if (group === this.selectedGroup) {
       this.selectedGroup = null;
       this.notesList = [];
+      this.members = [];
     } else {
       this.selectedGroup = group;
       this.notesList = Notes.find({groupId: group._id}, {sort: {createdAt: -1}});
+      this.members = Users.find({_id: {$in: this.selectedGroup.memberIds}});
     }
   }
 
@@ -90,20 +100,46 @@ export class NotesManagerComponent implements OnInit {
         .subscribe(() => {
           //Null selected group
           this.selectedGroup = null;
+        }, (err) => {
+          console.log(err.reason);
+        });
+    });
+  }
+
+//Dialog: Invite Member
+  openInviteMemberDialog(): void {
+    const dialogRef = this.dialog.open(NoteGroupInviteMemberComponent, {
+      width: '40%',
+      data: {groupName: this.selectedGroup.name}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The Invite Member dialog was closed');
+      if (!result) return;
+      const memberId: string = result;
+      MeteorObservable.call('addMember', this.selectedGroup._id, memberId).zone()
+        .subscribe(() => {
+          //Do some thing
+        }, (err) => {
+          console.log(err.reason);
         });
     });
   }
 
 //Dialog: Remove a member can edit note from group
-  openShareManagerRemoveDialog(): void {
+  openShareManagerRemoveDialog(member: User): void {
     const dialogRef = this.dialog.open(ShareManagerRemoveComponent, {
       width: '40%',
-      data: {personName: 'Person a demo'}
+      data: {
+        memberName: member.profile.firstName + ' ' + member.profile.lastName,
+        memberId: member._id
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The Share Manager Remove dialog was closed');
       if (!result) return;
+      console.log(result);
     });
   }
 
@@ -178,5 +214,11 @@ export class NotesManagerComponent implements OnInit {
     MeteorObservable.call('setCreatedDate', groupId, noteId, moveTop).zone()
       .subscribe(() => {
       });
+  }
+
+  isOwned(ownerId: string): boolean {
+    if (this.selectedGroup.memberIds.length <= 0)
+      return true;
+    return ownerId !== Meteor.userId();
   }
 }

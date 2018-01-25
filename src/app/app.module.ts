@@ -15,6 +15,7 @@ import {ShareManagerRemoveComponent} from './share-manager/share-manager.remove.
 import {NoteDetailsComponent} from './note-details/note-details.component';
 import {NoteRemoveComponent} from './note-details/note.remove.component';
 import {AuthGuard} from "./_auth-guard/AuthGuard";
+import {NoteGroupInviteMemberComponent} from "./note-group/note-group.invite-member.component";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {AuthGuard} from "./_auth-guard/AuthGuard";
     NoteGroupRemoveComponent,
     ShareManagerRemoveComponent,
     NoteDetailsComponent,
-    NoteRemoveComponent
+    NoteRemoveComponent,
+    NoteGroupInviteMemberComponent
   ],
   imports: [
     BrowserModule,

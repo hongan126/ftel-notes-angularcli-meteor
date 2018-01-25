@@ -36,24 +36,27 @@
     <div class="head-menu-bar">
       <span class="padding-left-font-bold">{{selectedGroup.name}}</span>
       <button mat-button [matMenuTriggerFor]="shareMenu" style="font-size: 1em;">
-        Public (2) <i class="fa fa-caret-down" aria-hidden="true"></i>
+        <span *ngIf="selectedGroup.memberIds.length>0">Public ({{selectedGroup.memberIds.length}})</span>
+        <span *ngIf="selectedGroup.memberIds.length<=0">Private</span>
+        <i class="fa fa-caret-down" aria-hidden="true"></i>
       </button>
       <mat-menu #shareMenu="matMenu">
-        <button mat-menu-item>
+        <button mat-menu-item (click)="openInviteMemberDialog()">
           <span>Invite...</span>
         </button>
-        <button mat-menu-item disabled>
+        <button mat-menu-item [disabled]="isOwned(selectedGroup.ownerId)">
           <span>Set private</span>
         </button>
-        <button mat-menu-item (click)="openShareManagerRemoveDialog()">
-          <span>Nguyễn Văn A</span>
+        <button mat-menu-item *ngFor="let mem of members | async" (click)="openShareManagerRemoveDialog(mem)">
+          <span>{{mem.profile.firstName+ ' '+ mem.profile.lastName}}</span>
         </button>
       </mat-menu>
     </div>
 
     <!--New note Button-->
     <div style="display: inline;">
-      <button mat-raised-button (click)="openNoteDialog()" class="btn-new-note">New note</button>
+      <button mat-raised-button (click)="openNoteDialog()" class="btn-new-note">New note <i
+        class="fa fa-pencil icon-btn-size-xm" aria-hidden="true"></i></button>
     </div>
 
     <!--List note-->
