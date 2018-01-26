@@ -94,12 +94,17 @@ Meteor.methods({
     return Accounts.findUserByEmail(memberEmail);
   },
   addMember(groupId: string, memberId: string): void {
-    // let memberIds = NoteGroups.findOne({_id: groupId}).memberIds;
-    // memberIds.push(memberId);
     NoteGroups.update({_id: groupId}, {$push: {memberIds: memberId}});
   },
-  getMemberNameById(memberId: string): string {
-    const mem = Users.findOne({_id: memberId});
-    return mem.profile.firstName + ' ' + mem.profile.lastName;
-  }
+  removeMember(noteGroupId: string, memberId: string): void {
+    NoteGroups.update({_id: noteGroupId}, {$pull: {memberIds: memberId}});
+  },
+  setPrivateNoteGroup(noteGroupId: string): void {
+    const group = NoteGroups.findOne({_id: noteGroupId});
+    if (Meteor.userId() !== group.ownerId) {
+      throw new Meteor.Error('not-owned',
+        'You are not own this group.');
+    }
+    NoteGroups.update({_id: noteGroupId}, {$set: {memberIds: []}});
+  },
 });

@@ -15,9 +15,9 @@
 
     <div class="note-group-list">
       <mat-selection-list aria-multiselectable="false" color="primary">
-        <mat-list-option *ngFor="let group of noteGroups | async"
+        <mat-list-option *ngFor="let group of groupList | async"
                          (click)="loadNoteList(group)"
-                         [selected]="group===selectedGroup"
+                         [selected]="checkGroup(group._id)"
                          [class.selectedGroup]="group===selectedGroup">
           {{group.name}}
           <!--+" - "+ group._id-->
@@ -44,7 +44,8 @@
         <button mat-menu-item (click)="openInviteMemberDialog()">
           <span>Invite...</span>
         </button>
-        <button mat-menu-item [disabled]="isOwned(selectedGroup.ownerId)">
+        <button mat-menu-item [disabled]="isOwned(selectedGroup.ownerId)&&isEmptyMember()"
+                (click)="setPrivateNoteGroup()">
           <span>Set private</span>
         </button>
         <button mat-menu-item *ngFor="let mem of members | async" (click)="openShareManagerRemoveDialog(mem)">

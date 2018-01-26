@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnChanges, OnInit, ViewEncapsulation} from '@angular/core';
 import {NoteGroupAddComponent} from '../note-group/note-group.add.component';
 import {MatDialog} from '@angular/material';
 import {NoteGroupRemoveComponent} from '../note-group/note-group.remove.component';
@@ -32,23 +32,38 @@ import {Users} from '../../../api/server/collections/users';
   ]
 })
 export class NotesManagerComponent implements OnInit {
-  noteGroups;
+  groupList;
   notesList;
   members;
   selectedGroup: NoteGroup;
   newNote: Note;
   groupName;
   user: User;
+  rememberSelectedGroupId;
+
 
   constructor(public dialog: MatDialog) {
   }
 
   ngOnInit() {
     this.loadNoteGroup();
+    const that = this;
+    this.groupList.observeChanges({
+      changed(id, fieldsChanged) {
+        if (that.selectedGroup._id === id) {
+          that.selectedGroup = that.groupList._data.find(g => g._id === id);
+          that.selectedGroup.memberIds = fieldsChanged.memberIds;
+          that.loadMember();
+        }
+      },
+      removed() {
+        that.loadNoteList(that.selectedGroup);
+      }
+    });
   }
 
   loadNoteGroup() {
-    this.noteGroups = NoteGroups.find({
+    this.groupList = NoteGroups.find({
       $or: [
         {ownerId: Meteor.userId()},
         {memberIds: Meteor.userId()}
@@ -64,19 +79,25 @@ export class NotesManagerComponent implements OnInit {
     } else {
       this.selectedGroup = group;
       this.notesList = Notes.find({groupId: group._id}, {sort: {createdAt: -1}});
-      this.members = Users.find({_id: {$in: this.selectedGroup.memberIds}});
+      this.loadMember();
     }
   }
 
-//Dialog: Add Note Group
+  loadMember() {
+    this.members = Users.find({_id: {$in: this.selectedGroup.memberIds}});
+  }
+
+// Dialog: Add Note Group
   openNoteGroupAddDialog(): void {
     const dialogRef = this.dialog.open(NoteGroupAddComponent, {
-      width: '40%'
+      width: '60%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The Note NoteGroup Add dialog was closed');
-      if (!result) return;
+      if (!result) {
+        return;
+      }
       this.groupName = result;
       MeteorObservable.call('addGroup', this.groupName).zone()
         .subscribe(() => {
@@ -86,19 +107,22 @@ export class NotesManagerComponent implements OnInit {
     });
   }
 
-//Dialog: Remove Group
+// Dialog: Remove Group
   openNoteGroupRemoveDialog(): void {
     const dialogRef = this.dialog.open(NoteGroupRemoveComponent, {
-      width: '40%',
+      width: '60%',
       data: {notesGroup: this.selectedGroup}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The Note NoteGroup Remove dialog was closed');
-      if (!result) return;
+      if (!result) {
+        return;
+      }
       MeteorObservable.call('removeGroup', result).zone()
         .subscribe(() => {
-          //Null selected group
+          // Null selected group
+          this.loadNoteList(this.selectedGroup);
           this.selectedGroup = null;
         }, (err) => {
           console.log(err.reason);
@@ -106,30 +130,26 @@ export class NotesManagerComponent implements OnInit {
     });
   }
 
-//Dialog: Invite Member
+// Dialog: Invite Member
   openInviteMemberDialog(): void {
     const dialogRef = this.dialog.open(NoteGroupInviteMemberComponent, {
-      width: '40%',
+      width: '60%',
       data: {groupName: this.selectedGroup.name}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The Invite Member dialog was closed');
-      if (!result) return;
-      const memberId: string = result;
-      MeteorObservable.call('addMember', this.selectedGroup._id, memberId).zone()
+      this.rememberSelectedGroupId = this.selectedGroup._id;
+      MeteorObservable.call('addMember', this.selectedGroup._id, result).zone()
         .subscribe(() => {
-          //Do some thing
-        }, (err) => {
-          console.log(err.reason);
         });
     });
   }
 
-//Dialog: Remove a member can edit note from group
+// Dialog: Remove a member can edit note from group
   openShareManagerRemoveDialog(member: User): void {
     const dialogRef = this.dialog.open(ShareManagerRemoveComponent, {
-      width: '40%',
+      width: '60%',
       data: {
         memberName: member.profile.firstName + ' ' + member.profile.lastName,
         memberId: member._id
@@ -138,39 +158,49 @@ export class NotesManagerComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The Share Manager Remove dialog was closed');
-      if (!result) return;
-      console.log(result);
+      if (!result) {
+        return;
+      }
+      const memberId: string = result;
+      MeteorObservable.call('removeMember', this.selectedGroup._id, memberId).zone()
+        .subscribe(() => {
+        }, (err) => {
+          console.log(err.reason);
+        });
     });
   }
 
-//Dialog: NEW NOTE, or Note Details to Edit
+// Dialog: NEW NOTE, or Note Details to Edit
   openNoteDialog(note: Note): void {
-    //note!=null => edit note
+    // note!=null => edit note
     if (note) {
       const dialogRef = this.dialog.open(NoteDetailsComponent, {
-        width: '40%',
+        width: '60%',
         data: {typeDialog: 'edit-note', note: note, groupName: this.selectedGroup.name}
       });
 
       dialogRef.afterClosed().subscribe(result => {
         console.log('The Edit note dialog was closed');
-        if (!result) return;
+        if (!result) {
+          return;
+        }
         MeteorObservable.call('updateNote', <Note>result).zone()
           .subscribe(() => {
           });
       });
 
-    }
-    //note==null => new note
-    else {
+    } else {
+      // note==null => new note
       const dialogRef = this.dialog.open(NoteDetailsComponent, {
-        width: '40%',
+        width: '60%',
         data: {typeDialog: 'add-new-note', groupName: this.selectedGroup.name, groupId: this.selectedGroup._id}
       });
 
       dialogRef.afterClosed().subscribe(result => {
         console.log('The New note dialog was closed');
-        if (!result) return;
+        if (!result) {
+          return;
+        }
         this.newNote = <Note>result;
         MeteorObservable.call('addNote', this.newNote).zone()
           .subscribe(() => {
@@ -179,23 +209,25 @@ export class NotesManagerComponent implements OnInit {
     }
   }
 
-//Dialog: Remove note
+// Dialog: Remove note
   openRemoveNoteDialog(note: Note): void {
     const dialogRef = this.dialog.open(NoteRemoveComponent, {
-      width: '40%',
+      width: '60%',
       data: {groupName: this.selectedGroup.name, noteTitle: note.title, id: note._id}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The Remove note dialog was closed');
-      if (!result) return;
+      if (!result) {
+        return;
+      }
       MeteorObservable.call('removeNote', result.id).zone()
         .subscribe(() => {
         });
     });
   }
 
-//update checked field of to-do item in mongoDb
+// update checked field of to-do item in mongoDb
   todoItemChange(todo: Todo, note: Note): void {
     todo.checked = !todo.checked;
     MeteorObservable.call('updateCheckedTodoInNote', note._id, todo._id, todo.checked).zone()
@@ -217,8 +249,32 @@ export class NotesManagerComponent implements OnInit {
   }
 
   isOwned(ownerId: string): boolean {
-    if (this.selectedGroup.memberIds.length <= 0)
+    return ownerId === Meteor.userId();
+  }
+
+  isEmptyMember(): boolean {
+    if (this.selectedGroup.memberIds.length <= 0) {
       return true;
-    return ownerId !== Meteor.userId();
+    }
+    return false;
+  }
+
+  setPrivateNoteGroup() {
+    this.rememberSelectedGroupId = this.selectedGroup._id;
+    MeteorObservable.call('setPrivateNoteGroup', this.selectedGroup._id).zone()
+      .subscribe(() => {
+        this.selectedGroup = this.groupList._data.find(g => g._id === this.rememberSelectedGroupId);
+        this.loadMember();
+      });
+  }
+
+  checkGroup(id: string) {
+    if (!this.selectedGroup) {
+      return false;
+    }
+    if (id === this.selectedGroup._id) {
+      return true;
+    }
+    return false;
   }
 }

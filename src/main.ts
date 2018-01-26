@@ -8,9 +8,7 @@ import {environment} from './environments/environment';
 import {MeteorObservable} from 'meteor-rxjs';
 import {Meteor} from 'meteor/meteor';
 
-if (environment.production) {
-  enableProdMode();
-}
+
 
 Meteor.startup(() => {
   const subscription = MeteorObservable.autorun().subscribe(() => {
@@ -20,6 +18,9 @@ Meteor.startup(() => {
     }
 
     setTimeout(() => subscription.unsubscribe());
+    if (environment.production) {
+      enableProdMode();
+    }
     platformBrowserDynamic().bootstrapModule(AppModule)
       .catch(err => console.log(err));
   });
