@@ -1,31 +1,44 @@
 import {check, Match} from 'meteor/check';
 import {NoteGroups} from './collections/groups';
 import {Notes} from './collections/notes';
-import {Note, NoteGroup, NoteType, User} from './models';
-import {Users} from "./collections/users";
+import {Note, NoteType, User} from './models';
 
 const nonEmptyString = Match.Where((str) => {
   check(str, String);
   return str.length > 0;
 });
 
+const isOwned = (ownerId: string, msg: string) => {
+  if (Meteor.userId() !== ownerId) {
+    throw new Meteor.Error('not-owned',
+      'You are not own ' + msg + '.');
+  }
+};
+
+const isLoggingIn = () => {
+  if (!Meteor.userId()) {
+    throw new Meteor.Error('unauthorized',
+      'User must be logged-in.');
+  }
+};
+
+const isGroupExisted = (groupName: string) => {
+  const groupExists = !!NoteGroups.collection.find({
+    name: groupName,
+    ownerId: Meteor.userId()
+  }).count();
+
+  if (groupExists) {
+    throw new Meteor.Error('group-name-exists',
+      'Group name already exists');
+  }
+};
+
 Meteor.methods({
   addGroup(groupName: string): void {
-    if (!Meteor.userId()) {
-      throw new Meteor.Error('unauthorized',
-        'User must be logged-in to create a new group');
-    }
-
+    isLoggingIn();
     check(groupName, nonEmptyString);
-
-    const groupExists = !!NoteGroups.collection.find({
-      name: groupName
-    }).count();
-
-    if (groupExists) {
-      throw new Meteor.Error('group-name-exists',
-        'Group name already exists');
-    }
+    isGroupExisted(groupName);
 
     const newGroup = {
       name: groupName,
@@ -37,23 +50,39 @@ Meteor.methods({
     NoteGroups.insert(newGroup);
   },
   removeGroup(notesGroupId: string): void {
+    isLoggingIn();
     const group = NoteGroups.findOne({_id: notesGroupId});
-    if (Meteor.userId() !== group.ownerId) {
-      throw new Meteor.Error('not-owned',
-        'You are not own this group.');
+    if (!group) {
+      throw new Meteor.Error('group-not-exist', 'Group not exist.');
     }
-    Notes.remove({groupId: notesGroupId})
+    isOwned(group.ownerId, 'Group: "' + group.name + '"');
+    Notes.remove({groupId: notesGroupId});
     NoteGroups.remove({_id: notesGroupId});
   },
   removeNote(noteId: string): void {
+    isLoggingIn();
+    const note = Notes.findOne({_id: noteId});
+    if (!note) {
+      throw new Meteor.Error('note-not-exist', 'Note not exist.');
+    }
+    // Todo delete or keep
+    isOwned(note.ownerId, 'Note: "' + note.title + '"');
     Notes.remove({_id: noteId});
   },
   addNote(note: Note): void {
+    isLoggingIn();
     note.createdAt = new Date();
     note.ownerId = Meteor.userId();
     Notes.insert(note);
   },
   updateCheckedTodoInNote(noteId: string, todoId: number, checked: boolean): void {
+    isLoggingIn();
+    const note = Notes.findOne({_id: noteId});
+    if (!note) {
+      throw new Meteor.Error('note-not-exist', 'Note not exist.');
+    }
+    // Todo delete or keep
+    // isOwned(note.ownerId, note.title);
     Notes.update(
       {_id: noteId, 'todoList._id': todoId},
       {
@@ -62,6 +91,9 @@ Meteor.methods({
     );
   },
   updateNote(note: Note): void {
+    isLoggingIn();
+    // Todo delete or keep
+    // isOwned(note.ownerId, note.title);
     if (note.type === NoteType.TEXT) {
       Notes.update(
         {_id: note._id},
@@ -75,6 +107,7 @@ Meteor.methods({
     }
   },
   setCreatedDate(groupId: string, noteId: string, moveTop: boolean): void {
+    isLoggingIn();
     if (moveTop) {
       Notes.update(
         {_id: noteId},
@@ -82,7 +115,7 @@ Meteor.methods({
       );
     } else {
       const note = Notes.findOne({groupId: groupId}, {sort: {createdAt: 1}});
-      var oldDate: Date = new Date();
+      const oldDate: Date = new Date();
       oldDate.setDate((<Date>(note.createdAt)).getDate() - 1);
       Notes.update(
         {_id: noteId},
@@ -91,20 +124,25 @@ Meteor.methods({
     }
   },
   findMemberEmail(memberEmail: string): User {
+    isLoggingIn();
     return Accounts.findUserByEmail(memberEmail);
   },
   addMember(groupId: string, memberId: string): void {
+    isLoggingIn();
+    const group = NoteGroups.findOne({_id: groupId});
+    isOwned(group.ownerId, 'Group: "' + group.name + '"');
     NoteGroups.update({_id: groupId}, {$push: {memberIds: memberId}});
   },
   removeMember(noteGroupId: string, memberId: string): void {
+    isLoggingIn();
+    const group = NoteGroups.findOne({_id: noteGroupId});
+    isOwned(group.ownerId, 'Group: "' + group.name + '"');
     NoteGroups.update({_id: noteGroupId}, {$pull: {memberIds: memberId}});
   },
   setPrivateNoteGroup(noteGroupId: string): void {
+    isLoggingIn();
     const group = NoteGroups.findOne({_id: noteGroupId});
-    if (Meteor.userId() !== group.ownerId) {
-      throw new Meteor.Error('not-owned',
-        'You are not own this group.');
-    }
+    isOwned(group.ownerId, 'Group: "' + group.name + '"');
     NoteGroups.update({_id: noteGroupId}, {$set: {memberIds: []}});
   },
 });
