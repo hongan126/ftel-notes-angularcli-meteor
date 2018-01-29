@@ -56,8 +56,10 @@ export class NotesManagerComponent implements OnInit {
           that.loadMember();
         }
       },
-      removed() {
-        that.loadNoteList(that.selectedGroup);
+      removed(id) {
+        if (that.selectedGroup._id === id) {
+          that.loadNoteList(that.selectedGroup);
+        }
       }
     });
   }

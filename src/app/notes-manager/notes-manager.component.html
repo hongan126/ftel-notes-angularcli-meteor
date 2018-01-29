@@ -20,12 +20,8 @@
                          [selected]="checkGroup(group._id)"
                          [class.selectedGroup]="group===selectedGroup">
           {{group.name}}
-          <!--+" - "+ group._id-->
         </mat-list-option>
       </mat-selection-list>
-      <!--Todo delete-->
-      <!--{{newNote|json}}-->
-      <!--{{max}}-->
     </div>
 
   </div><!--End of NoteGroup list-->
@@ -41,15 +37,18 @@
         <i class="fa fa-caret-down" aria-hidden="true"></i>
       </button>
       <mat-menu #shareMenu="matMenu">
-        <button mat-menu-item (click)="openInviteMemberDialog()">
+        <button mat-menu-item [disabled]="!isOwned(selectedGroup.ownerId)" (click)="openInviteMemberDialog()">
           <span>Invite...</span>
         </button>
-        <button mat-menu-item [disabled]="isOwned(selectedGroup.ownerId)&&isEmptyMember()"
+        <button mat-menu-item [disabled]="(!isOwned(selectedGroup.ownerId))||isEmptyMember()"
                 (click)="setPrivateNoteGroup()">
           <span>Set private</span>
         </button>
-        <button mat-menu-item *ngFor="let mem of members | async" (click)="openShareManagerRemoveDialog(mem)">
-          <span>{{mem.profile.firstName+ ' '+ mem.profile.lastName}}</span>
+        <button mat-menu-item
+                [disabled]="!isOwned(selectedGroup.ownerId)"
+                *ngFor="let mem of members | async"
+                (click)="openShareManagerRemoveDialog(mem)">
+          <span>{{ mem.profile.firstName + ' ' + mem.profile.lastName }}</span>
         </button>
       </mat-menu>
     </div>
@@ -63,12 +62,11 @@
     <!--List note-->
     <div class="notes-list">
       <div class="note-card" *ngFor="let note of notesList | async">
-        <!--todo delete-->
-        <!--{{ note | json }}-->
         <div class="note-card-title">
           <div>
             <span>{{note.title}}</span><br/>
-            <span style="font-size: 0.9em; color: gray; font-style: italic;">{{note.createdAt|date:"dd/MM/yyyy"}}</span>
+            <span
+              style="font-size: 0.9em; color: gray; font-style: italic;">{{ note.createdAt | date:"dd/MM/yyyy" }}</span>
           </div>
           <div class="fill-remaining-space"></div>
           <mat-spinner [@loadState]="state" mode="indeterminate" [diameter]="24"
@@ -98,8 +96,7 @@
           <div *ngFor="let todo of note.todoList">
             <mat-checkbox color="primary" [checked]="todo.checked" [class.checked]="todo.checked"
                           (change)="todoItemChange(todo, note)">
-              {{todo.content}}
-              <!--- {{todo.checked}}-->
+              <span class="mat-checkbox-fix-text">{{todo.content}}</span>
             </mat-checkbox>
           </div>
         </div>
