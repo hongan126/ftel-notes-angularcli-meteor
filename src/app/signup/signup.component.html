@@ -42,7 +42,7 @@
     <input matInput placeholder="Password" name="password"
            [type]="hide ? 'password':'text'"
            formControlName="password"
-           pattern="{{confPass}}"
+           [(ngModel)]="confPass"
     />
     <mat-icon
       matSuffix (click)="hide = !hide">{{hide?'visibility':'visibility_off'}}
@@ -57,12 +57,12 @@
 
   <mat-form-field class="full-width-signin">
     <input matInput placeholder="Confirm password" name="confirm-password"
-           [type]="hide ? 'password':'text'"
+           [type]="hide2 ? 'password':'text'"
            formControlName="confirmPass"
            pattern="{{confPass}}"
     />
     <mat-icon
-      matSuffix (click)="hide = !hide">{{hide?'visibility':'visibility_off'}}
+      matSuffix (click)="hide2 = !hide2">{{hide2?'visibility':'visibility_off'}}
     </mat-icon>
     <mat-error *ngIf="fgSignup.get('confirmPass').hasError('required')">
       Passs is <strong>required</strong>
@@ -79,7 +79,7 @@
   <div style="width: 100%; text-align: right;">
 
     <button
-      class="signup-button"
+      class="change-button"
       [disabled]="
       fgSignup.get('firstName').invalid ||
       fgSignup.get('lastName').invalid ||

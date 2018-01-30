@@ -16,7 +16,7 @@ import {ChangePasswordComponent} from "./change-password/change-password.compone
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: '', component: NotesManagerComponent, canActivate: [AuthGuard]},
-  {path: 'signup', component: SignupComponent},
+  {path: 'changePass', component: SignupComponent},
   // {path: 'notes', component: NotesManagerComponent},
   {path: 'group-add', component: NoteGroupAddComponent},
   {path: 'group-remove', component: NoteGroupRemoveComponent},

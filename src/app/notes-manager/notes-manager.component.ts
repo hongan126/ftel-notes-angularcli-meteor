@@ -264,7 +264,7 @@ export class NotesManagerComponent implements OnInit {
 // Open alert dialog
   openAlert(msg: string) {
     this.dialog.open(AlertComponent, {
-      data: {reason: msg}
+      data: {reason: msg, type: 'error'}
     });
   }
 

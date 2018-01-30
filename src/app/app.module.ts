@@ -18,6 +18,7 @@ import {AuthGuard} from "./_guards/AuthGuard";
 import {NoteGroupInviteMemberComponent} from "./note-group/note-group.invite-member.component";
 import {AlertComponent} from "./_alert/alert.component";
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { ChangePasswordComponent } from './change-password/change-password.compo
     NoteRemoveComponent,
     NoteGroupInviteMemberComponent,
     AlertComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

@@ -36,7 +36,7 @@
         <span *ngIf="selectedGroup.memberIds.length<=0">Private</span>
         <i class="fa fa-caret-down" aria-hidden="true"></i>
       </button>
-      <mat-menu #shareMenu="matMenu">
+      <mat-menu #shareMenu="matMenu" [overlapTrigger]="false">
         <button mat-menu-item [disabled]="!isOwned(selectedGroup.ownerId)" (click)="openInviteMemberDialog()">
           <span>Invite...</span>
         </button>

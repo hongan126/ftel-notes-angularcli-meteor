@@ -23,6 +23,7 @@ export function forbiddenUsername(u: AbstractControl) {
 export class SignupComponent implements OnInit {
   fgSignup: FormGroup;
   hide = true;
+  hide2 = true;
   confPass: string;
   error = '';
 
