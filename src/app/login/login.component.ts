@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Meteor} from 'meteor/meteor';
 import {AppComponent} from '../app.component';
+import {Accounts} from "meteor/accounts-base";
 
 @Component({
   selector: 'app-login',
@@ -43,6 +44,16 @@ export class LoginComponent implements OnInit {
         this.app.setUserToShow();
       });
     }
+  }
+
+  forgotPassword() {
+    Accounts.forgotPassword({email: this.loginFg.value.username}, (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log('Done forgot email');
+      }
+    });
   }
 
 }

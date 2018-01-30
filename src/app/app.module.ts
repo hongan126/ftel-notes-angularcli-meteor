@@ -19,6 +19,7 @@ import {NoteGroupInviteMemberComponent} from "./note-group/note-group.invite-mem
 import {AlertComponent} from "./_alert/alert.component";
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { ProfileComponent } from './profile/profile.component';
     NoteGroupInviteMemberComponent,
     AlertComponent,
     ChangePasswordComponent,
-    ProfileComponent
+    ProfileComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
