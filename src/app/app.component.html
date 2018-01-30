@@ -11,8 +11,8 @@
       </a>
 
       <!--Search box-->
-      <input class="search-box" type="text" placeholder="search">
-      <button mat-button class="search-btn"><i class="material-icons white">search</i></button>
+      <input [hidden]="!user" class="search-box" type="text" placeholder="search">
+      <button [hidden]="!user" mat-button class="search-btn"><i class="material-icons white">search</i></button>
 
 
       <span class="fill-remaining-space"></span>

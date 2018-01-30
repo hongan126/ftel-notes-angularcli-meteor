@@ -13,6 +13,7 @@ import {NoteGroupInviteMemberComponent} from "./note-group/note-group.invite-mem
 import {AlertComponent} from "./_alert/alert.component";
 import {ChangePasswordComponent} from "./change-password/change-password.component";
 import {ProfileComponent} from "./profile/profile.component";
+import {ResetPasswordComponent} from "./reset-password/reset-password.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -27,7 +28,8 @@ const routes: Routes = [
   {path: 'invite-member', component: NoteGroupInviteMemberComponent},
   {path: 'alert', component: AlertComponent},
   {path: 'change-pass', component: ChangePasswordComponent, canActivate: [AuthGuard]},
-  {path: 'profile', component: ProfileComponent}
+  {path: 'profile', component: ProfileComponent},
+  {path: 'reset-password', component: ResetPasswordComponent}
 ]
 
 export const ROUTES_PROVIDERS = [{
