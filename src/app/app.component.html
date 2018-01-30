@@ -25,15 +25,15 @@
 
       <!--User/Logout-->
       <div [hidden]="!user">
-        <button mat-button>
-        <span mat-button *ngIf="user" [matMenuTriggerFor]="userMenu" class="white" style="font-size: 1.25em;">
+        <button mat-button [matMenuTriggerFor]="userMenu">
+        <span mat-button *ngIf="user" class="white" style="font-size: 1.25em;">
           <i class="fa fa-user-circle-o" aria-hidden="true"></i>
           {{ user.profile.firstName + ' ' + user.profile.lastName }}
           <i class="fa fa-angle-down" aria-hidden="true"></i>
         </span>
         </button>
         <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
-          <button mat-menu-item disabled>
+          <button mat-menu-item routerLink="/profile">
             <mat-icon><i class="fa fa-user" aria-hidden="true"></i></mat-icon>
             <span> Profile</span>
           </button>

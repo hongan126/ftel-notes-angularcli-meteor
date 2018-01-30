@@ -12,6 +12,7 @@ import {AuthGuard} from "./_guards/AuthGuard";
 import {NoteGroupInviteMemberComponent} from "./note-group/note-group.invite-member.component";
 import {AlertComponent} from "./_alert/alert.component";
 import {ChangePasswordComponent} from "./change-password/change-password.component";
+import {ProfileComponent} from "./profile/profile.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -25,7 +26,8 @@ const routes: Routes = [
   {path: 'note-remove', component: NoteRemoveComponent},
   {path: 'invite-member', component: NoteGroupInviteMemberComponent},
   {path: 'alert', component: AlertComponent},
-  {path: 'change-pass', component: ChangePasswordComponent, canActivate:[AuthGuard]}
+  {path: 'change-pass', component: ChangePasswordComponent, canActivate: [AuthGuard]},
+  {path: 'profile', component: ProfileComponent}
 ]
 
 export const ROUTES_PROVIDERS = [{

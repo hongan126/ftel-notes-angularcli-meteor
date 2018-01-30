@@ -2,6 +2,7 @@ import {AfterViewChecked, AfterViewInit, Component, NgZone, OnChanges, OnInit} f
 import {User} from '../../api/server/models';
 import {Router} from '@angular/router';
 import {Meteor} from 'meteor/meteor';
+import {Users} from "../../api/server/collections/users";
 
 @Component({
   selector: 'app-root',

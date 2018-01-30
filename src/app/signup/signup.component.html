@@ -1,7 +1,7 @@
 <form novalidate name="form"
       (ngSubmit)="signup()"
       [formGroup]="fgSignup"
-      class="mdc-elevation--z5 register-form">
+      class="mdc-elevation--z5 profile-form">
 
   <h3 class="align-canter">Create new account</h3>
 
@@ -79,7 +79,7 @@
   <div style="width: 100%; text-align: right;">
 
     <button
-      class="change-button"
+      class="edit-button"
       [disabled]="
       fgSignup.get('firstName').invalid ||
       fgSignup.get('lastName').invalid ||
