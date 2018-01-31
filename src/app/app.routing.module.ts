@@ -29,7 +29,7 @@ const routes: Routes = [
   {path: 'alert', component: AlertComponent},
   {path: 'change-pass', component: ChangePasswordComponent, canActivate: [AuthGuard]},
   {path: 'profile', component: ProfileComponent},
-  {path: 'reset-password', component: ResetPasswordComponent}
+  {path: 'reset-password/:token', component: ResetPasswordComponent}
 ]
 
 export const ROUTES_PROVIDERS = [{

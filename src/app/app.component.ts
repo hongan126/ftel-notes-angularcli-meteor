@@ -18,10 +18,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.setUserToShow();
-    Accounts.onResetPasswordLink((a) => {
-      console.log(a);
-      console.log('CCCCC');
-    });
   }
 
   logout() {
