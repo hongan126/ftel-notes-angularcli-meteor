@@ -2,7 +2,7 @@ import {Component, NgZone, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Accounts} from "meteor/accounts-base";
-import {AlertComponent} from "../_alert/alert.component";
+import {AlertComponent} from "../../_alert/alert.component";
 import {MatDialog} from "@angular/material";
 
 @Component({

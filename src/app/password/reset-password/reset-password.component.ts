@@ -2,7 +2,7 @@ import {Component, NgZone, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from "@angular/material";
-import {AlertComponent} from "../_alert/alert.component";
+import {AlertComponent} from "../../_alert/alert.component";
 
 @Component({
   selector: 'app-reset-password',

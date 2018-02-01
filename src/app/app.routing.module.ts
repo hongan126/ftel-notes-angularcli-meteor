@@ -8,12 +8,13 @@ import {NoteGroupRemoveComponent} from './note-group/note-group.remove.component
 import {ShareManagerRemoveComponent} from './share-manager/share-manager.remove.component';
 import {NoteDetailsComponent} from './note-details/note-details.component';
 import {NoteRemoveComponent} from './note-details/note.remove.component';
-import {AuthGuard} from "./_guards/AuthGuard";
-import {NoteGroupInviteMemberComponent} from "./note-group/note-group.invite-member.component";
-import {AlertComponent} from "./_alert/alert.component";
-import {ChangePasswordComponent} from "./change-password/change-password.component";
-import {ProfileComponent} from "./profile/profile.component";
-import {ResetPasswordComponent} from "./reset-password/reset-password.component";
+import {AuthGuard} from './_guards/AuthGuard';
+import {NoteGroupInviteMemberComponent} from './note-group/note-group.invite-member.component';
+import {AlertComponent} from './_alert/alert.component';
+import {ChangePasswordComponent} from './password/change-password/change-password.component';
+import {ProfileComponent} from './profile/profile.component';
+import {ResetPasswordComponent} from './password/reset-password/reset-password.component';
+import {ForgotPasswordComponent} from './password/forgot-password/forgot-password.component';
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -29,13 +30,9 @@ const routes: Routes = [
   {path: 'alert', component: AlertComponent},
   {path: 'change-pass', component: ChangePasswordComponent, canActivate: [AuthGuard]},
   {path: 'profile', component: ProfileComponent},
-  {path: 'reset-password/:token', component: ResetPasswordComponent}
-]
-
-export const ROUTES_PROVIDERS = [{
-  provide: 'canActivateForLoggedIn',
-  useValue: () => !!Meteor.userId()
-}];
+  {path: 'reset-password/:token', component: ResetPasswordComponent},
+  {path: 'forgot-password', component: ForgotPasswordComponent},
+];
 
 @NgModule({
   imports: [
