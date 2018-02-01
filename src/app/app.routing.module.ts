@@ -19,7 +19,7 @@ import {ForgotPasswordComponent} from './password/forgot-password/forgot-passwor
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: '', component: NotesManagerComponent, canActivate: [AuthGuard]},
-  {path: 'changePass', component: SignupComponent},
+  {path: 'signup', component: SignupComponent},
   // {path: 'notes', component: NotesManagerComponent},
   {path: 'group-add', component: NoteGroupAddComponent},
   {path: 'group-remove', component: NoteGroupRemoveComponent},

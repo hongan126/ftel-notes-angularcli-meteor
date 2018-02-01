@@ -49,7 +49,7 @@
     </div>
 
     <div style="width: 100%; margin-top: 10px;">
-      <a style="text-align: left;" (click)="forgotPassword()" class="btn btn-link">Forgot password</a>
+      <a style="text-align: left;" [routerLink]="['/forgot-password']" class="btn btn-link">Forgot password</a>
       <span class="fill-remaining-space"></span>
       <a style="float: right;" [routerLink]="['/signup']" class="btn btn-link">Create new account</a>
     </div>

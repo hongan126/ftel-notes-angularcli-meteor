@@ -124,7 +124,7 @@ Meteor.methods({
     }
   },
   findMemberEmail(memberEmail: string): User {
-    isLoggingIn();
+    // isLoggingIn();
     return Accounts.findUserByEmail(memberEmail);
   },
   addMember(groupId: string, memberId: string): void {

@@ -46,15 +46,16 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  forgotPassword() {
-    console.log(this.loginFg.value.username);
-    Accounts.forgotPassword({email: this.loginFg.value.username}, (err) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('Done forgot email');
-      }
-    });
-  }
+  // Todo delete
+  // forgotPassword() {
+  //   console.log(this.loginFg.value.username);
+  //   Accounts.forgotPassword({email: this.loginFg.value.username}, (err) => {
+  //     if (err) {
+  //       console.log(err);
+  //     } else {
+  //       console.log('Done forgot email');
+  //     }
+  //   });
+  // }
 
 }
