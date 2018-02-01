@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
   }
 
   forgotPassword() {
+    console.log(this.loginFg.value.username);
     Accounts.forgotPassword({email: this.loginFg.value.username}, (err) => {
       if (err) {
         console.log(err);
