@@ -41,7 +41,7 @@ export class ResetPasswordComponent implements OnInit {
           if (!err) {
             this.router.navigate(['/login']);
             this.dialog.open(AlertComponent, {
-              data: {reason: 'Change password successful!', type: 'success'}
+              data: {reason: 'Reset password successful!', type: 'success'}
             });
           } else {
             this.dialog.open(AlertComponent, {
