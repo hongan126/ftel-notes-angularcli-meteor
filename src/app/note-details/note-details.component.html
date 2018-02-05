@@ -2,16 +2,16 @@
 <div *ngIf="data.typeDialog==='add-new-note'" mat-dialog-content class="dialog-content">
   <form novalidate name="form-note-details" [formGroup]="noteDetailsFg">
     <mat-form-field>
-      <input matInput placeholder="Title" formControlName="title" name="title" [(ngModel)]="model.title">
+      <input matInput placeholder="Title" formControlName="title" name="title" [(ngModel)]="model.title" cdkFocusInitial>
       <mat-error *ngIf="noteDetailsFg.get('title').hasError('required')">
         Title is <strong>required</strong>
       </mat-error>
     </mat-form-field>
-    <mat-radio-group>
-      <mat-radio-button color="primary" value="text" checked="true" (click)="noteType='text'">
+    <mat-radio-group formControlName="noteType" [(ngModel)]="noteType">
+      <mat-radio-button color="primary" value="text">
         Text
       </mat-radio-button>
-      <mat-radio-button color="primary" value="todo" (click)="noteType='todo'">
+      <mat-radio-button color="primary" value="todo">
         Todo list
       </mat-radio-button>
     </mat-radio-group>
@@ -63,15 +63,16 @@
   <button type="button" tabindex="2" mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
   <button type="button" [disabled]="noteDetailsFg.get('title').invalid" tabindex="3" mat-raised-button
           class="add-button"
-          [mat-dialog-close]="returnNote()" cdkFocusInitial>Add
+          [mat-dialog-close]="returnNote()">Add
   </button>
 </div>
 
+<!--Edit note-->
 <h3 *ngIf="data.typeDialog==='edit-note'" mat-dialog-title>Edit note {{data.note.title}} of {{groupName}}</h3>
 <div *ngIf="data.typeDialog==='edit-note'" mat-dialog-content class="dialog-content">
   <form novalidate name="form-note-edit" [formGroup]="noteDetailsFg">
     <mat-form-field>
-      <input matInput placeholder="Title" formControlName="title" name="title" [(ngModel)]="note.title">
+      <input matInput placeholder="Title" cdkFocusInitial formControlName="title" name="title" [(ngModel)]="note.title">
       <mat-error *ngIf="noteDetailsFg.get('title').hasError('required')">
         Title is <strong>required</strong>
       </mat-error>
@@ -134,6 +135,6 @@
   <button type="button" tabindex="2" mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
   <button type="button" [disabled]="noteDetailsFg.get('title').invalid" tabindex="3" mat-raised-button
           class="add-button"
-          [mat-dialog-close]="returnNote()" cdkFocusInitial>Edit
+          [mat-dialog-close]="returnNote()">Edit
   </button>
 </div>

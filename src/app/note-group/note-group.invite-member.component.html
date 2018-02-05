@@ -4,7 +4,7 @@
   <mat-form-field style="width:100%;">
     <input matInput tabindex="1" style="width:100%;" required placeholder="The member's email"
            [(ngModel)]="memberEmail"
-           (keyup)="findMemberEmail()">
+           (keyup)="findMemberEmail()" cdkFocusInitial>
   </mat-form-field>
   <div style="line-height: 40px; height: 40px">
     <p [@fadeInOut]="state" *ngIf="showError" style="color: red;">Not found! <i class="fa fa-exclamation-circle"
@@ -15,7 +15,6 @@
 </div>
 <div mat-dialog-actions style="float: right;">
   <button tabindex="2" mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
-  <button tabindex="3" mat-raised-button [disabled]="!memberId" class="add-button" [mat-dialog-close]="memberId"
-          cdkFocusInitial>Add
+  <button tabindex="3" mat-raised-button [disabled]="!memberId" class="add-button" [mat-dialog-close]="memberId">Add
   </button>
 </div>

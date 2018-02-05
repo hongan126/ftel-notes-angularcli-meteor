@@ -12,7 +12,7 @@ import {Note, NoteType, Todo} from '../../../api/server/models';
 export class NoteDetailsComponent implements OnInit {
   noteDetailsFg: FormGroup;
   todoItem: any;
-  noteType = 'text';
+  noteType: string;
   todoList: Todo[] = [];
   newNote: Note;
   groupName: string;
@@ -28,6 +28,7 @@ export class NoteDetailsComponent implements OnInit {
   ngOnInit() {
     this.noteDetailsFg = this.fb.group({
       title: ['', [Validators.required]],
+      noteType: ['', [Validators.required]],
       todoName: ['', [Validators.required]],
       todoItems: this.fb.array([this.fb.control('')]),
       noteContent: ['', [Validators.required]]
@@ -39,6 +40,7 @@ export class NoteDetailsComponent implements OnInit {
       this.note.type === NoteType.TEXT ? this.noteType = 'text' : this.noteType = 'todo';
 
     }
+    this.noteType = 'text';
   }
 
   onCancel(): void {
@@ -91,5 +93,9 @@ export class NoteDetailsComponent implements OnInit {
     } else {
       return 1;
     }
+  }
+
+  onChangeRdo(noteType) {
+    console.log(noteType);
   }
 }

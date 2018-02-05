@@ -1,5 +1,5 @@
 <h3 mat-dialog-title>Remove note: {{data.noteTitle}}<br/>of group: {{data.groupName}} <br/>Are you sure?</h3>
 <div mat-dialog-actions style="float: right;">
   <button tabindex="2" mat-raised-button color="primary" (click)="onCancel()">Cancel</button>
-  <button tabindex="3" mat-raised-button style="background-color: red; color: white;" [mat-dialog-close]="data" cdkFocusInitial>Remove</button>
+  <button tabindex="3" mat-raised-button style="background-color: red; color: white;" [mat-dialog-close]="data">Remove</button>
 </div>

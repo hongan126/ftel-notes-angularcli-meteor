@@ -324,7 +324,8 @@ export class NotesManagerComponent implements OnInit {
     //     ]
     //   },
     //   {sort: {createdAt: -1}});
-    console.log(this.notesList);
+    const notes = this.notesList;
+    console.log(notes);
     console.log('Done Search');
   }
 }
