@@ -37,7 +37,6 @@
     </div>
 
     <mat-checkbox color="primary" [(checked)]="rememberMyAcc" (change)="rememberMyAcc=!rememberMyAcc">Remember my account</mat-checkbox>
-    {{rememberMyAcc | json}}
     <span class="error" [hidden]="error == ''">{{error}}</span>
     <div style="width: 100%; text-align: center; margin-top: 10px;">
       <button

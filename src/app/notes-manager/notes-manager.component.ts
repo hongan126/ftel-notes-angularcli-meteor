@@ -149,6 +149,9 @@ export class NotesManagerComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The Invite Member dialog was closed');
+      if (!result) {
+        return;
+      }
       this.rememberSelectedGroupId = this.selectedGroup._id;
       MeteorObservable.call('addMember', this.selectedGroup._id, result).zone()
         .subscribe(() => {
