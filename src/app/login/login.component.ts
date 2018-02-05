@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Meteor} from 'meteor/meteor';
 import {AppComponent} from '../app.component';
-import {Accounts} from "meteor/accounts-base";
 
 @Component({
   selector: 'app-login',
@@ -16,6 +15,7 @@ export class LoginComponent implements OnInit {
   hide = true;
   model: any = {};
   error = '';
+  rememberMyAcc = false;
 
   constructor(private fb: FormBuilder,
               private router: Router,
@@ -37,7 +37,10 @@ export class LoginComponent implements OnInit {
           if (err) {
             this.error = err.reason;
           } else {
-            // console.log(Meteor.user());
+            if (this.rememberMyAcc === false) {
+              Accounts._unstoreLoginToken();
+              Accounts._autoLoginEnabled = false;
+            }
             this.router.navigate(['/']);
           }
         });

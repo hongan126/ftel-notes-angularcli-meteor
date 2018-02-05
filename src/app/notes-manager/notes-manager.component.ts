@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Injectable, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {NoteGroupAddComponent} from '../note-group/note-group.add.component';
 import {MatDialog} from '@angular/material';
 import {NoteGroupRemoveComponent} from '../note-group/note-group.remove.component';
@@ -32,6 +32,7 @@ import {AlertComponent} from '../_alert/alert.component';
     ])
   ]
 })
+
 export class NotesManagerComponent implements OnInit {
   groupList;
   notesList;
@@ -41,7 +42,6 @@ export class NotesManagerComponent implements OnInit {
   groupName;
   user: User;
   rememberSelectedGroupId;
-
 
   constructor(public dialog: MatDialog) {
   }
@@ -83,6 +83,7 @@ export class NotesManagerComponent implements OnInit {
       this.selectedGroup = group;
       this.notesList = Notes.find({groupId: group._id}, {sort: {createdAt: -1}});
       this.loadMember();
+      // console.log(this.notesList);
     }
   }
 
@@ -306,5 +307,21 @@ export class NotesManagerComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  // Search Funtion Todo remove
+  searchNote(searchStr: string) {
+    // const that = this;
+    console.log('-  ' + searchStr);
+    // this.notesList = Notes.find({
+    //     $or: [
+    //       {title: {'$regex': '.*' + searchStr + '.*'}},
+    //       {content: {'$regex': '.*' + searchStr + '.*'}},
+    //       {'todoList.content': {'$regex': '.*' + searchStr + '.*'}}
+    //     ]
+    //   },
+    //   {sort: {createdAt: -1}});
+    console.log(this.notesList);
+    console.log('Done Search');
   }
 }

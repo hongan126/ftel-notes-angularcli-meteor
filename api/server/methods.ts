@@ -93,7 +93,7 @@ Meteor.methods({
   updateNote(note: Note): void {
     isLoggingIn();
     // Todo delete or keep
-    // isOwned(note.ownerId, note.title);
+    isOwned(note.ownerId, note.title);
     if (note.type === NoteType.TEXT) {
       Notes.update(
         {_id: note._id},
