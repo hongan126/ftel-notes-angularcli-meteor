@@ -11,14 +11,6 @@ import {Meteor} from 'meteor/meteor';
 
 
 Meteor.startup(() => {
-  if (Meteor.isServer) {
-    Accounts.emailTemplates.resetPassword.text = function (user, url) {
-      return `Hello,\n\nTo reset your password, simply click the link below.\n\n${url.replace("#/", "")}\n\nThanks.`;
-    };
-    Accounts.onResetPasswordLink(() => {
-      console.log('sdfsdfsdfsd');
-    });
-  }
   const subscription = MeteorObservable.autorun().subscribe(() => {
 
     if (Meteor.loggingIn()) {
