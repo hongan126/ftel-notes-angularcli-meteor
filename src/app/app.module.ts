@@ -14,14 +14,14 @@ import {NoteGroupRemoveComponent} from './note-group/note-group.remove.component
 import {ShareManagerRemoveComponent} from './share-manager/share-manager.remove.component';
 import {NoteDetailsComponent} from './note-details/note-details.component';
 import {NoteRemoveComponent} from './note-details/note.remove.component';
-import {AuthGuard} from "./_guards/AuthGuard";
-import {NoteGroupInviteMemberComponent} from "./note-group/note-group.invite-member.component";
-import {AlertComponent} from "./_alert/alert.component";
+import {AuthGuard} from './_guards/auth.guard';
+import {NoteGroupInviteMemberComponent} from './note-group/note-group.invite-member.component';
+import {AlertComponent} from './_alert/alert.component';
 import {ChangePasswordComponent} from './password/change-password/change-password.component';
 import {ProfileComponent} from './profile/profile.component';
 import {ResetPasswordComponent} from './password/reset-password/reset-password.component';
 import {ForgotPasswordComponent} from './password/forgot-password/forgot-password.component';
-import {SearchService} from "./search.service";
+import {SearchService} from './search.service';
 
 @NgModule({
   declarations: [

@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {Meteor} from 'meteor/meteor';
 import {AppComponent} from '../app.component';
+import {Accounts} from 'meteor/accounts-base';
 
 @Component({
   selector: 'app-login',

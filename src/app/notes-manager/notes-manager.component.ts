@@ -199,8 +199,8 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
 // Dialog: NEW NOTE, or Note Details to Edit
   openNoteDialog(note: Note): void {
     // note!=null => edit note
-    const noteGroup = NoteGroups.findOne({_id: note.groupId});
     if (note) {
+      const noteGroup = NoteGroups.findOne({_id: note.groupId});
       const dialogRef = this.dialog.open(NoteDetailsComponent, {
         width: '60%',
         data: {typeDialog: 'edit-note', note: note, groupName: noteGroup.name}
@@ -222,7 +222,7 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
       // note==null => new note
       const dialogRef = this.dialog.open(NoteDetailsComponent, {
         width: '60%',
-        data: {typeDialog: 'add-new-note', groupName: noteGroup.name, groupId: this.selectedGroup._id}
+        data: {typeDialog: 'add-new-note', groupName: this.selectedGroup.name, groupId: this.selectedGroup._id}
       });
 
       dialogRef.afterClosed().subscribe(result => {
