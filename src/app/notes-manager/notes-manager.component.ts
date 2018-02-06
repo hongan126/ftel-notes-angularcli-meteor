@@ -1,4 +1,4 @@
-import {Component, Injectable, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, Injectable, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {NoteGroupAddComponent} from '../note-group/note-group.add.component';
 import {MatDialog} from '@angular/material';
 import {NoteGroupRemoveComponent} from '../note-group/note-group.remove.component';
@@ -13,6 +13,8 @@ import {animate, keyframes, state, style, transition, trigger} from '@angular/an
 import {NoteGroupInviteMemberComponent} from '../note-group/note-group.invite-member.component';
 import {Users} from '../../../api/server/collections/users';
 import {AlertComponent} from '../_alert/alert.component';
+import {SearchService} from '../search.service';
+import {CommonChild, eventSubscriber} from '../common-child.interface';
 
 @Component({
   selector: 'app-notes-manager',
@@ -33,9 +35,10 @@ import {AlertComponent} from '../_alert/alert.component';
   ]
 })
 
-export class NotesManagerComponent implements OnInit {
+export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
   groupList;
   notesList;
+  foundNotes;
   members;
   selectedGroup: NoteGroup;
   newNote: Note;
@@ -43,7 +46,10 @@ export class NotesManagerComponent implements OnInit {
   user: User;
   rememberSelectedGroupId;
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog,
+              private searchService: SearchService) {
+    this.searchNote = this.searchNote.bind(this);
+    eventSubscriber(searchService.subscription, this.searchNote);
   }
 
   ngOnInit() {
@@ -65,6 +71,10 @@ export class NotesManagerComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    eventSubscriber(this.searchService.subscription, this.searchNote, true);
+  }
+
   loadNoteGroup() {
     this.groupList = NoteGroups.find({
       $or: [
@@ -75,9 +85,10 @@ export class NotesManagerComponent implements OnInit {
   }
 
   loadNoteList(group: NoteGroup) {
+    this.foundNotes = null;
     if (group === this.selectedGroup) {
       this.selectedGroup = null;
-      this.notesList = [];
+      this.notesList = null;
       this.members = [];
     } else {
       this.selectedGroup = group;
@@ -312,20 +323,18 @@ export class NotesManagerComponent implements OnInit {
     return false;
   }
 
-  // Search Funtion Todo remove
   searchNote(searchStr: string) {
-    // const that = this;
-    console.log('-  ' + searchStr);
-    // this.notesList = Notes.find({
-    //     $or: [
-    //       {title: {'$regex': '.*' + searchStr + '.*'}},
-    //       {content: {'$regex': '.*' + searchStr + '.*'}},
-    //       {'todoList.content': {'$regex': '.*' + searchStr + '.*'}}
-    //     ]
-    //   },
-    //   {sort: {createdAt: -1}});
-    const notes = this.notesList;
-    console.log(notes);
-    console.log('Done Search');
+    this.selectedGroup = null;
+    console.log('- ' + searchStr);
+    this.foundNotes = Notes.find({
+        $or: [
+          {title: {'$regex': '.*' + searchStr + '.*'}},
+          {content: {'$regex': '.*' + searchStr + '.*'}},
+          {'todoList.content': {'$regex': '.*' + searchStr + '.*'}}
+        ]
+      },
+      {sort: {createdAt: -1}});
+    console.log(this.foundNotes);
+    console.log('***Done Search***');
   }
 }

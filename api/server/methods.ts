@@ -115,8 +115,9 @@ Meteor.methods({
       );
     } else {
       const note = Notes.findOne({groupId: groupId}, {sort: {createdAt: 1}});
-      const oldDate: Date = new Date();
+      const oldDate: Date = <Date>(note.createdAt);
       oldDate.setDate((<Date>(note.createdAt)).getDate() - 1);
+      // console.log(oldDate.get);
       Notes.update(
         {_id: noteId},
         {$set: {createdAt: oldDate}}

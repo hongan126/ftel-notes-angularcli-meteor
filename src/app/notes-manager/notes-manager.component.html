@@ -101,7 +101,54 @@
           </div>
         </div>
       </div>
+    </div><!--End of Notes list-->
+  </div>
 
+<!--Search Note-->
+  <div class="mdl-cell mdl-cell--9-col mdl-cell--6-col-tablet mdl-cell--3-col-phone notes-list-layout"
+       *ngIf="foundNotes">
+    <!--List note-->
+    <div class="notes-list">
+      <div class="note-card" *ngFor="let note of foundNotes | async">
+        <div class="note-card-title">
+          <div>
+            <span>{{note.title}}</span><br/>
+            <span
+              style="font-size: 0.9em; color: gray; font-style: italic;">{{ note.createdAt | date:"dd/MM/yyyy" }}</span>
+          </div>
+          <div class="fill-remaining-space"></div>
+          <mat-spinner [@loadState]="state" mode="indeterminate" [diameter]="24"
+                       style="margin-top: auto; margin-bottom: auto; opacity: 0;"></mat-spinner>
+          <button mat-icon-button [matMenuTriggerFor]="itemMenu" style="font-size: 1em;">
+            <i class="fa fa-ellipsis-v" style="font-size: 1.5em;" aria-hidden="true"></i>
+          </button>
+          <mat-menu #itemMenu="matMenu">
+            <button mat-menu-item (click)="setPositionForNote(note.groupId, note._id, true)">
+              <span>Move to top</span>
+            </button>
+            <button mat-menu-item (click)="setPositionForNote(note.groupId, note._id, false)">
+              <span>Move to bottom</span>
+            </button>
+            <button mat-menu-item (click)="openNoteDialog(note)">
+              <span>Edit</span>
+            </button>
+            <button mat-menu-item (click)="openRemoveNoteDialog(note)">
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </div>
+        <div *ngIf="isTextNote(note.type)" class="note-card-content">
+          {{note.content}}
+        </div>
+        <div *ngIf="!isTextNote(note.type)" class="note-card-content">
+          <div *ngFor="let todo of note.todoList">
+            <mat-checkbox color="primary" [checked]="todo.checked" [class.checked]="todo.checked"
+                          (change)="todoItemChange(todo, note)">
+              <span class="mat-checkbox-fix-text">{{todo.content}}</span>
+            </mat-checkbox>
+          </div>
+        </div>
+      </div>
     </div><!--End of Notes list-->
   </div>
 </div>

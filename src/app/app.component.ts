@@ -3,21 +3,20 @@ import {User} from '../../api/server/models';
 import {Router} from '@angular/router';
 import {Meteor} from 'meteor/meteor';
 import {NotesManagerComponent} from './notes-manager/notes-manager.component';
+import {SearchService} from './search.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
-  providers: [NotesManagerComponent]
+  styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
   user: User = null;
   searchStr: string;
-  @ContentChild(NotesManagerComponent)
-  private notesMgn: NotesManagerComponent;
 
   constructor(public router: Router,
-              public zone: NgZone) {
+              public zone: NgZone,
+              private searchService: SearchService) {
   }
 
   ngOnInit() {
@@ -37,6 +36,7 @@ export class AppComponent implements OnInit {
   }
 
   onSearch() {
-    this.notesMgn.searchNote(this.searchStr);
+    // this.notesMgn.searchNote(this.searchStr);
+    this.searchService.searchNote(this.searchStr);
   }
 }

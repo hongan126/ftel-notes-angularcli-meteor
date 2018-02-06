@@ -33,14 +33,13 @@ export class NoteDetailsComponent implements OnInit {
       todoItems: this.fb.array([this.fb.control('')]),
       noteContent: ['', [Validators.required]]
     });
+    this.noteType = 'text';
     this.groupName = this.data.groupName;
     if (this.data.note) {
       this.note = this.data.note;
       this.todoList = this.note.todoList;
       this.note.type === NoteType.TEXT ? this.noteType = 'text' : this.noteType = 'todo';
-
     }
-    this.noteType = 'text';
   }
 
   onCancel(): void {
@@ -93,9 +92,5 @@ export class NoteDetailsComponent implements OnInit {
     } else {
       return 1;
     }
-  }
-
-  onChangeRdo(noteType) {
-    console.log(noteType);
   }
 }

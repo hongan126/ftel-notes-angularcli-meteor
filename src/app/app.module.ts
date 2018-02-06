@@ -21,6 +21,7 @@ import {ChangePasswordComponent} from './password/change-password/change-passwor
 import {ProfileComponent} from './profile/profile.component';
 import {ResetPasswordComponent} from './password/reset-password/reset-password.component';
 import {ForgotPasswordComponent} from './password/forgot-password/forgot-password.component';
+import {SearchService} from "./search.service";
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import {ForgotPasswordComponent} from './password/forgot-password/forgot-passwor
     ReactiveFormsModule
   ],
   providers: [
-    AuthGuard
+    AuthGuard,
+    SearchService
   ],
   bootstrap: [AppComponent]
 })
