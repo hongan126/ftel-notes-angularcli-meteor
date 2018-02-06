@@ -1,4 +1,4 @@
-import {Component, Injectable, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {NoteGroupAddComponent} from '../note-group/note-group.add.component';
 import {MatDialog} from '@angular/material';
 import {NoteGroupRemoveComponent} from '../note-group/note-group.remove.component';
@@ -199,10 +199,11 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
 // Dialog: NEW NOTE, or Note Details to Edit
   openNoteDialog(note: Note): void {
     // note!=null => edit note
+    const noteGroup = NoteGroups.findOne({_id: note.groupId});
     if (note) {
       const dialogRef = this.dialog.open(NoteDetailsComponent, {
         width: '60%',
-        data: {typeDialog: 'edit-note', note: note, groupName: this.selectedGroup.name}
+        data: {typeDialog: 'edit-note', note: note, groupName: noteGroup.name}
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -221,7 +222,7 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
       // note==null => new note
       const dialogRef = this.dialog.open(NoteDetailsComponent, {
         width: '60%',
-        data: {typeDialog: 'add-new-note', groupName: this.selectedGroup.name, groupId: this.selectedGroup._id}
+        data: {typeDialog: 'add-new-note', groupName: noteGroup.name, groupId: this.selectedGroup._id}
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -325,16 +326,20 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
 
   searchNote(searchStr: string) {
     this.selectedGroup = null;
-    console.log('- ' + searchStr);
+    let ownedAndSharedGroupIds = [];
+    this.groupList._data.forEach((group) => {
+      ownedAndSharedGroupIds.push(group._id);
+    });
+    console.log(ownedAndSharedGroupIds);
     this.foundNotes = Notes.find({
         $or: [
-          {title: {'$regex': '.*' + searchStr + '.*'}},
-          {content: {'$regex': '.*' + searchStr + '.*'}},
-          {'todoList.content': {'$regex': '.*' + searchStr + '.*'}}
-        ]
+          {title: {'$regex': '.*' + searchStr + '.*', '$options': 'i'}},
+          {content: {'$regex': '.*' + searchStr + '.*', '$options': 'i'}},
+          {'todoList.content': {'$regex': '.*' + searchStr + '.*', '$options': 'i'}}
+        ],
+        groupId: {$in: ownedAndSharedGroupIds}
       },
       {sort: {createdAt: -1}});
     console.log(this.foundNotes);
-    console.log('***Done Search***');
   }
 }
