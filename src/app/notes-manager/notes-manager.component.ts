@@ -242,10 +242,9 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
 
 // Dialog: Remove note
   openRemoveNoteDialog(note: Note): void {
-    const noteGroup = NoteGroups.findOne({_id: note.groupId});
     const dialogRef = this.dialog.open(NoteRemoveComponent, {
       width: '60%',
-      data: {groupName: noteGroup.name, noteTitle: note.title, id: note._id}
+      data: {groupName: this.selectedGroup.name, noteTitle: note.title, id: note._id}
     });
 
     dialogRef.afterClosed().subscribe(result => {

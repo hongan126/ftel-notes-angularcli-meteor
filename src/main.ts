@@ -8,8 +8,6 @@ import {environment} from './environments/environment';
 import {MeteorObservable} from 'meteor-rxjs';
 import {Meteor} from 'meteor/meteor';
 
-
-
 Meteor.startup(() => {
   const subscription = MeteorObservable.autorun().subscribe(() => {
 
