@@ -14,7 +14,8 @@
     "e2e": "protractor ./protractor.conf.js",
     "api": "cd api && meteor",
     "api:reset": "cd api && meteor reset",
-    "meteor-client:bundle": "meteor-client bundle -s api"
+    "meteor-client:bundle": "meteor-client bundle -s api",
+    "postinstall": "meteor-client bundle -s api && cd api && meteor"
   },
   "private": true,
   "dependencies": {
