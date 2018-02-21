@@ -39,8 +39,8 @@ export class LoginComponent implements OnInit {
             this.error = err.reason;
           } else {
             if (this.rememberMyAcc === false) {
-              Accounts._unstoreLoginToken();
-              Accounts._autoLoginEnabled = false;
+              // Accounts._unstoreLoginToken();
+              // Accounts._autoLoginEnabled = false;
             }
             this.router.navigate(['/']);
           }
