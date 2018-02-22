@@ -16,7 +16,7 @@
     "api:reset": "cd api && meteor reset",
     "meteor-client:bundle": "meteor-client bundle -s api",
     "preinstall": "npm install -g http-server",
-    "postinstall": "webpack && mv dist/* ."
+    "postinstall": "meteor-client bundle -s api && webpack && mv dist/* ."
   },
   "private": true,
   "dependencies": {
