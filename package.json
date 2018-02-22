@@ -1,6 +1,6 @@
 {
   "name": "ftel-notes-angularcli-meteor",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -8,13 +8,15 @@
     "pree2e": "webdriver-manager update --standalone false --gecko false --quiet",
     "build": "webpack",
     "build-prod": "webpack --config webpack.config.js.prod",
-    "start": "webpack-dev-server --port=4200",
+    "start": "http-server",
     "start-prod": "webpack-dev-server --port=4200 --config webpack.config.js.prod",
     "test": "karma start ./karma.conf.js",
     "e2e": "protractor ./protractor.conf.js",
     "api": "cd api && meteor",
     "api:reset": "cd api && meteor reset",
-    "meteor-client:bundle": "meteor-client bundle -s api"
+    "meteor-client:bundle": "meteor-client bundle -s api",
+    "preinstall": "npm install -g http-server",
+    "postinstall": "webpack && mv dist/* ."
   },
   "private": true,
   "dependencies": {
@@ -38,9 +40,7 @@
     "meteor-rxjs": "^0.4.8",
     "moment": "^2.20.1",
     "rxjs": "^5.5.2",
-    "zone.js": "^0.8.20"
-  },
-  "devDependencies": {
+    "zone.js": "^0.8.20",
     "@angular/cli": "1.6.2",
     "@angular/compiler-cli": "^5.2.0",
     "@angular/language-service": "^5.2.0",
@@ -85,5 +85,7 @@
     "url-loader": "^0.6.2",
     "webpack": "~3.10.0",
     "webpack-dev-server": "~2.9.3"
+  },
+  "devDependencies": {
   }
 }
