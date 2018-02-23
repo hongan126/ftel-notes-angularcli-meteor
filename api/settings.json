@@ -1,0 +1,8 @@
+{
+  "galaxy.meteor.com": {
+    "env": {
+      "MONGO_URL": "mongodb://hongan1206:pc120696@ds125628.mlab.com:25628/ftel-notes-db",
+      "MAIL_URL": "smtps://nsa1667%40gmail.com:65312%23%26gM@smtp.gmail.com:465/"
+    }
+  }
+}

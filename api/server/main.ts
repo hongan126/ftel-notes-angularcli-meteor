@@ -2,13 +2,15 @@ import {Meteor} from 'meteor/meteor';
 import {WebApp} from 'meteor/webapp';
 
 Meteor.startup(() => {
+
+  WebApp.rawConnectHandlers.use(function (req, res, next) {
+    if (req._parsedUrl.pathname.match(/(sockjs)/)) {
+      res.setHeader('Access-Control-Allow-Origin', '*');
+    }
+    next();
+  });
+
   if (Meteor.isServer) {
-    WebApp.rawConnectHandlers.use(function (req, res, next) {
-      if (req._parsedUrl.pathname.match(/(sockjs)/)) {
-        res.setHeader('Access-Control-Allow-Origin', '*');
-      }
-      next();
-    });
     Accounts.config({
       loginExpirationInDays: null
     });
@@ -18,7 +20,7 @@ Meteor.startup(() => {
   Accounts.emailTemplates.from = 'ftelnotes@fpt.com';
   Accounts.emailTemplates.resetPassword = {
     subject() {
-      return "Reset Your Password - FTEL Notes";
+      return 'Reset Your Password - FTEL Notes';
     },
     text(user, url) {
       const username = user.profile.firstName + ' ' + user.profile.lastName,

@@ -5,26 +5,22 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ProgressPlugin = require('webpack/lib/ProgressPlugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const rxPaths = require('rxjs/_esm5/path-mapping');
 const autoprefixer = require('autoprefixer');
 const postcssUrl = require('postcss-url');
 const cssnano = require('cssnano');
 const customProperties = require('postcss-custom-properties');
 
-const { NoEmitOnErrorsPlugin, EnvironmentPlugin, HashedModuleIdsPlugin } = require('webpack');
-const { BaseHrefWebpackPlugin, SuppressExtractedTextChunksWebpackPlugin } = require('@angular/cli/plugins/webpack');
-const { CommonsChunkPlugin, ModuleConcatenationPlugin } = require('webpack').optimize;
-const { LicenseWebpackPlugin } = require('license-webpack-plugin');
-const { PurifyPlugin } = require('@angular-devkit/build-optimizer');
+const { NoEmitOnErrorsPlugin, SourceMapDevToolPlugin, NamedModulesPlugin } = require('webpack');
+const { NamedLazyChunksWebpackPlugin, BaseHrefWebpackPlugin } = require('@angular/cli/plugins/webpack');
+const { CommonsChunkPlugin } = require('webpack').optimize;
 const { AngularCompilerPlugin } = require('@ngtools/webpack');
 
 const nodeModules = path.join(process.cwd(), 'node_modules');
 const realNodeModules = fs.realpathSync(nodeModules);
 const genDirNodeModules = path.join(process.cwd(), 'src', '$$_gendir', 'node_modules');
 const entryPoints = ["inline","polyfills","sw-register","styles","vendor","main"];
-const minimizeCss = true;
+const minimizeCss = false;
 const baseHref = "";
 const deployUrl = "";
 const postcssPlugins = function () {
@@ -115,8 +111,8 @@ module.exports = {
   },
   "output": {
     "path": path.join(process.cwd(), "dist"),
-    "filename": "[name].[chunkhash:20].bundle.js",
-    "chunkFilename": "[id].[chunkhash:20].chunk.js",
+    "filename": "[name].bundle.js",
+    "chunkFilename": "[id].chunk.js",
     "crossOriginLoading": false
   },
   "module": {
@@ -140,17 +136,6 @@ module.exports = {
           "name": "[name].[hash:20].[ext]",
           "limit": 10000
         }
-      },
-      {
-        "test": /\.js$/,
-        "use": [
-          {
-            "loader": "@angular-devkit/build-optimizer/webpack-loader",
-            "options": {
-              "sourceMap": false
-            }
-          }
-        ]
       },
       {
         "exclude": [
@@ -274,137 +259,121 @@ module.exports = {
           path.join(process.cwd(), "src/styles.scss")
         ],
         "test": /\.css$/,
-        "loaders": ExtractTextPlugin.extract({
-          "use": [
-            {
-              "loader": "css-loader",
-              "options": {
-                "sourceMap": false,
-                "importLoaders": 1
-              }
-            },
-            {
-              "loader": "postcss-loader",
-              "options": {
-                "ident": "postcss",
-                "plugins": postcssPlugins,
-                "sourceMap": false
-              }
+        "use": [
+          "style-loader",
+          {
+            "loader": "css-loader",
+            "options": {
+              "sourceMap": false,
+              "importLoaders": 1
             }
-          ],
-          "publicPath": ""
-        })
+          },
+          {
+            "loader": "postcss-loader",
+            "options": {
+              "ident": "postcss",
+              "plugins": postcssPlugins,
+              "sourceMap": false
+            }
+          }
+        ]
       },
       {
         "include": [
           path.join(process.cwd(), "src/styles.scss")
         ],
         "test": /\.scss$|\.sass$/,
-        "loaders": ExtractTextPlugin.extract({
-          "use": [
-            {
-              "loader": "css-loader",
-              "options": {
-                "sourceMap": false,
-                "importLoaders": 1
-              }
-            },
-            {
-              "loader": "postcss-loader",
-              "options": {
-                "ident": "postcss",
-                "plugins": postcssPlugins,
-                "sourceMap": false
-              }
-            },
-            {
-              "loader": "sass-loader",
-              "options": {
-                "sourceMap": false,
-                "precision": 8,
-                "includePaths": []
-              }
+        "use": [
+          "style-loader",
+          {
+            "loader": "css-loader",
+            "options": {
+              "sourceMap": false,
+              "importLoaders": 1
             }
-          ],
-          "publicPath": ""
-        })
+          },
+          {
+            "loader": "postcss-loader",
+            "options": {
+              "ident": "postcss",
+              "plugins": postcssPlugins,
+              "sourceMap": false
+            }
+          },
+          {
+            "loader": "sass-loader",
+            "options": {
+              "sourceMap": false,
+              "precision": 8,
+              "includePaths": []
+            }
+          }
+        ]
       },
       {
         "include": [
           path.join(process.cwd(), "src/styles.scss")
         ],
         "test": /\.less$/,
-        "loaders": ExtractTextPlugin.extract({
-          "use": [
-            {
-              "loader": "css-loader",
-              "options": {
-                "sourceMap": false,
-                "importLoaders": 1
-              }
-            },
-            {
-              "loader": "postcss-loader",
-              "options": {
-                "ident": "postcss",
-                "plugins": postcssPlugins,
-                "sourceMap": false
-              }
-            },
-            {
-              "loader": "less-loader",
-              "options": {
-                "sourceMap": false
-              }
+        "use": [
+          "style-loader",
+          {
+            "loader": "css-loader",
+            "options": {
+              "sourceMap": false,
+              "importLoaders": 1
             }
-          ],
-          "publicPath": ""
-        })
+          },
+          {
+            "loader": "postcss-loader",
+            "options": {
+              "ident": "postcss",
+              "plugins": postcssPlugins,
+              "sourceMap": false
+            }
+          },
+          {
+            "loader": "less-loader",
+            "options": {
+              "sourceMap": false
+            }
+          }
+        ]
       },
       {
         "include": [
           path.join(process.cwd(), "src/styles.scss")
         ],
         "test": /\.styl$/,
-        "loaders": ExtractTextPlugin.extract({
-          "use": [
-            {
-              "loader": "css-loader",
-              "options": {
-                "sourceMap": false,
-                "importLoaders": 1
-              }
-            },
-            {
-              "loader": "postcss-loader",
-              "options": {
-                "ident": "postcss",
-                "plugins": postcssPlugins,
-                "sourceMap": false
-              }
-            },
-            {
-              "loader": "stylus-loader",
-              "options": {
-                "sourceMap": false,
-                "paths": []
-              }
-            }
-          ],
-          "publicPath": ""
-        })
-      },
-      {
-        "test": /(?:\.ngfactory\.js|\.ngstyle\.js|\.ts)$/,
         "use": [
+          "style-loader",
           {
-            "loader": "@angular-devkit/build-optimizer/webpack-loader",
+            "loader": "css-loader",
             "options": {
+              "sourceMap": false,
+              "importLoaders": 1
+            }
+          },
+          {
+            "loader": "postcss-loader",
+            "options": {
+              "ident": "postcss",
+              "plugins": postcssPlugins,
               "sourceMap": false
             }
           },
-          "@ngtools/webpack"
+          {
+            "loader": "stylus-loader",
+            "options": {
+              "sourceMap": false,
+              "paths": []
+            }
+          }
         ]
+      },
+      {
+        "test": /\.ts$/,
+        "loader": "@ngtools/webpack"
       }
     ]
   },
@@ -442,6 +411,7 @@ module.exports = {
       "onDetected": false,
       "cwd": "/home/niko/WebstormProjects/angularcli-meteor"
     }),
+    new NamedLazyChunksWebpackPlugin(),
     new HtmlWebpackPlugin({
       "template": "./src/index.html",
       "filename": "./index.html",
@@ -449,11 +419,7 @@ module.exports = {
       "inject": true,
       "compile": true,
       "favicon": false,
-      "minify": {
-        "caseSensitive": true,
-        "collapseWhitespace": true,
-        "keepClosingSlash": true
-      },
+      "minify": false,
       "cache": true,
       "showErrors": true,
       "chunks": "all",
@@ -483,80 +449,41 @@ module.exports = {
     }),
     new CommonsChunkPlugin({
       "name": [
+        "vendor"
+      ],
+      "minChunks": (module) => {
+        return module.resource
+          && (module.resource.startsWith(nodeModules)
+            || module.resource.startsWith(genDirNodeModules)
+            || module.resource.startsWith(realNodeModules));
+      },
+      "chunks": [
+        "main"
+      ]
+    }),
+    new SourceMapDevToolPlugin({
+      "filename": "[file].map[query]",
+      "moduleFilenameTemplate": "[resource-path]",
+      "fallbackModuleFilenameTemplate": "[resource-path]?[hash]",
+      "sourceRoot": "webpack:///"
+    }),
+    new CommonsChunkPlugin({
+      "name": [
         "main"
       ],
       "minChunks": 2,
       "async": "common"
     }),
-    new ExtractTextPlugin({
-      "filename": "[name].[contenthash:20].bundle.css"
-    }),
-    new SuppressExtractedTextChunksWebpackPlugin(),
-    new EnvironmentPlugin({
-      "NODE_ENV": "production"
-    }),
-    new HashedModuleIdsPlugin({
-      "hashFunction": "md5",
-      "hashDigest": "base64",
-      "hashDigestLength": 4
-    }),
-    new ModuleConcatenationPlugin({}),
-    new LicenseWebpackPlugin({
-      "licenseFilenames": [
-        "LICENSE",
-        "LICENSE.md",
-        "LICENSE.txt",
-        "license",
-        "license.md",
-        "license.txt"
-      ],
-      "perChunkOutput": false,
-      "outputTemplate": "./node_modules/license-webpack-plugin/output.template.ejs",
-      "outputFilename": "3rdpartylicenses.txt",
-      "suppressErrors": true,
-      "includePackagesWithoutLicense": false,
-      "abortOnUnacceptableLicense": false,
-      "addBanner": false,
-      "bannerTemplate": "/*! 3rd party license information is available at <%- filename %> */",
-      "includedChunks": [],
-      "excludedChunks": [],
-      "additionalPackages": [],
-      "pattern": /^(MIT|ISC|BSD.*)$/
-    }),
-    new PurifyPlugin(),
-    new UglifyJsPlugin({
-      "test": /\.js$/i,
-      "extractComments": false,
-      "sourceMap": false,
-      "cache": false,
-      "parallel": false,
-      "uglifyOptions": {
-        "output": {
-          "ascii_only": true,
-          "comments": false,
-          "webkit": true
-        },
-        "ecma": 5,
-        "warnings": false,
-        "ie8": false,
-        "mangle": {
-          "safari10": true
-        },
-        "compress": {
-          "typeofs": false,
-          "pure_getters": true,
-          "passes": 3
-        }
-      }
-    }),
+    new NamedModulesPlugin({}),
     new AngularCompilerPlugin({
       "mainPath": "main.ts",
       "platform": 0,
       "hostReplacementPaths": {
-        "environments/environment.ts": "environments/environment.prod.ts"
+        "environments/environment.ts": "environments/environment.ts"
       },
-      "sourceMap": false,
+      "sourceMap": true,
       "tsConfigPath": "src/tsconfig.app.json",
+      "skipCodeGeneration": true,
       "compilerOptions": {}
     }),
     new webpack.ProvidePlugin({
