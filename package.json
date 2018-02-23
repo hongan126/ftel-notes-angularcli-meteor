@@ -10,13 +10,15 @@
     "build-prod": "webpack --config webpack.config.js.prod",
     "start": "http-server",
     "start-prod": "webpack-dev-server --port=4200 --config webpack.config.js.prod",
+    "start2": "webpack-dev-server --port=4200",
     "test": "karma start ./karma.conf.js",
     "e2e": "protractor ./protractor.conf.js",
     "api": "cd api && meteor",
     "api:reset": "cd api && meteor reset",
-    "meteor-client:bundle": "meteor-client bundle -s api",
+    "meteor-client:bundle": "meteor-client bundle -s api --config bundler.config.json",
+    "meteor-client:bundle2": "meteor-client bundle -s api",
     "preinstall": "npm install -g http-server",
-    "postinstall": "meteor-client bundle -s api && webpack && mv dist/* ."
+    "postinstall": "mv dist/* ."
   },
   "private": true,
   "dependencies": {
