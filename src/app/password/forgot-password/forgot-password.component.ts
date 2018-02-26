@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {MeteorObservable} from 'meteor-rxjs';
 import {MatDialog} from '@angular/material';
 import {AlertComponent} from '../../_alert/alert.component';
+import {Accounts} from 'meteor/accounts-base';
 
 @Component({
   selector: 'app-forgot-password',
@@ -36,6 +37,8 @@ export class ForgotPasswordComponent implements OnInit {
     MeteorObservable.call('findMemberEmail', this.fgForgotPass.value.username).subscribe((response) => {
       if (!response) {
         this.error = 'Can not find your email!';
+        this.disableBtn = false;
+        this.hidenLoading = true;
       } else {
         this.error = '';
         Accounts.forgotPassword({email: this.fgForgotPass.value.username}, (err) => {
