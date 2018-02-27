@@ -24,7 +24,7 @@ Meteor.startup(() => {
     },
     text(user, url) {
       const username = user.profile.firstName + ' ' + user.profile.lastName,
-        urlWithOutHash = url.replace('http://localhost:3000/#', 'http://localhost:4200');
+        urlWithOutHash = url.replace('https://ftel-notes-api.herokuapp.com/#', 'https://ftel-notes.herokuapp.com');
       const emailBody = `Hello ` + username +
         `,\n\nTo reset your password, simply click the link below.\n\n` +
         urlWithOutHash +
