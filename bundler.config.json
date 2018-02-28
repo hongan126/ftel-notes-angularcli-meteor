@@ -1,8 +1,0 @@
-{
-  "runtime": {
-    "DDP_DEFAULT_CONNECTION_URL": "https://ftel-notes-api.herokuapp.com/"
-  },
-  "import": [
-    "meteor-base"
-  ]
-}
