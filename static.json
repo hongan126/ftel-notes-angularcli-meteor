@@ -1,0 +1,12 @@
+{
+  "root": "dist/",
+  "proxies": {
+    "/api/": {
+      "origin": "https://ftelnotesapi.meteorapp.com"
+    }
+  },
+  "routes": {
+    "/**": "index.html"
+  },
+  "https_only": true
+}
