@@ -1,4 +1,4 @@
-# ftel-notes-angularcli-meteor
+# api-meteor-to-deploy
 
 'api' folder of FTEL Notes Project split out here.
 
