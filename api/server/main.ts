@@ -14,7 +14,10 @@ Meteor.startup(() => {
     Accounts.config({
       loginExpirationInDays: null
     });
-    process.env.MAIL_URL = 'smtps://nsa1667%40gmail.com:65312%23%26gM@smtp.gmail.com:465/';
+    // Todo delete
+    // Config for sent email when run on local
+    // process.env.MAIL_URL = 'smtps://<your-email>:<your-password>@smtp.gmail.com:465/';
+    // Encode and Decode Url (Exam: '@' encode -> '%40'): https://www.url-encode-decode.com/
   }
   Accounts.emailTemplates.siteName = 'FTEL Notes Tm.';
   Accounts.emailTemplates.from = 'ftelnotes@fpt.com';
