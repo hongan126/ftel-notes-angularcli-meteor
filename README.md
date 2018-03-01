@@ -1,8 +1,29 @@
-# FtelNotesAngularcliMeteor
+# FTEL Notes AngularCli-Meteor
 
 This project was begin from [angularcli-meteor](https://github.com/Urigo/angular-meteor/tree/master/examples/angularcli-meteor) of Urigo.
 
 And the same: [angularcli-meteor](https://github.com/darkbasic/angularcli-meteor) of darkbasic.
+
+## How to run on local?
+
+### Prerequisites
+- Install NodeJS: https://nodejs.org/en/download/
+- Install [AngularCLI](https://github.com/angular/angular-cli): `npm install -g @angular/cli`
+- Install Meteor: https://www.meteor.com/install
+- Install [Link Shell Extension](http://schinagl.priv.at/nt/hardlinkshellext/linkshellextension.html), if you run this project on Windows.
+
+### Let's start
+1. First run `npm install`
+2. (Windows only) Recreate symbolic link in `~/api/` for **node_module, package.json, package-lock.json** from project directory and **declarations.d.ts** from `~/src/declarations.d.ts` by use [Link Shell Extension](http://schinagl.priv.at/nt/hardlinkshellext/linkshellextension.html)
+3. `npm run api`
+4. Open other terminal run cmd: `npm run meteor-client:bundle`, and then run `npm run start`
+
+### Video
+[![Watch the video](https://lh6.googleusercontent.com/LcvGcwQH0IeEWkcDCvAuO3A9XjTWrOmeTxuWTRkVyWpk49Vfbp4-6dtmXQg4byr8yeVbt-kXJIENkQ=w1366-h647)](https://youtu.be/-Zwjk-u7XYI)
+
+## Deployment
+1. Deploy 'api' (Meteor) directory: https://github.com/hongan126/ftelnotes-api-meteor
+2. Deploy 'client' (Angular): https://github.com/hongan126/ftelnotes-client-angular-dist
 
 ## Meteor server
 
