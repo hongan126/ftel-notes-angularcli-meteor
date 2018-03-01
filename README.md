@@ -19,7 +19,7 @@ And the same: [angularcli-meteor](https://github.com/darkbasic/angularcli-meteor
 4. Open other terminal run cmd: `npm run meteor-client:bundle`, and then run `npm run start`
 
 ### Video
-[![Watch the video](https://lh6.googleusercontent.com/LcvGcwQH0IeEWkcDCvAuO3A9XjTWrOmeTxuWTRkVyWpk49Vfbp4-6dtmXQg4byr8yeVbt-kXJIENkQ=w1366-h647)](https://youtu.be/-Zwjk-u7XYI)
+[![Watch the video](https://lh6.googleusercontent.com/L1mgvXZQZL72fVDuE0Ycgj6qQTPTtPcu8Oju_Ijg1IXuE2vBGWD8PUSXNe_dQ0T6WLScYvfkU8LDpQ=w1366-h672)](https://youtu.be/edrMI95Bnaw)
 
 ## Deployment
 1. Deploy 'api' (Meteor) directory: https://github.com/hongan126/ftelnotes-api-meteor
