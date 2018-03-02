@@ -2,7 +2,9 @@
 
 This project was begin from [angularcli-meteor](https://github.com/Urigo/angular-meteor/tree/master/examples/angularcli-meteor) of Urigo.
 
-And the same: [angularcli-meteor](https://github.com/darkbasic/angularcli-meteor) of darkbasic.
+And the same: [angularcli-meteor](https://github.com/darkbasic/angularcli-meteor) of Darkbasic.
+
+![](https://lh3.googleusercontent.com/St_CpfFvPj7X8da5dOm39jL3k4ckw4hlskEJXm3mqjiu3zrlcUL0DPjQhPH5E72QssLSt-I0v_npTQ=w1366-h672-rw)
 
 ## How to run on local?
 
@@ -56,4 +58,4 @@ Run `npm run test` to execute the unit tests via [Karma](https://karma-runner.gi
 
 Run `npm run e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## ~/api/settings.json for deploy on Heroku
+## ~/api/settings.json for deploy on Galaxy
