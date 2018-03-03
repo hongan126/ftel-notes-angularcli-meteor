@@ -5,7 +5,7 @@
 # How to deploy this?
 
 ## Tutorial video for deployment
-[![Watch the video](https://lh3.googleusercontent.com/qGsGLLq3tx0ny752dsDOCZXniHri2D49cTzMCYJaH2ABAWV8EP70izxz6R1UjPA9S7yLOzYi_b_aZw=w1366-h647)](https://youtu.be/F8C1dot2t9o)
+[![Watch the video](https://image.ibb.co/f0s1yS/Scr_1_29_2018_9_49_18_AM3_1_2018_3_59_13_PM.png)](https://youtu.be/F8C1dot2t9o)
 
 ## Deploy on Heroku
 
@@ -35,7 +35,7 @@ Meteor Buildpack Horse:
 Use command: `heroku ps:scale web=1 -a <app-name>`
 
 - Fix error `No 'Access-Control-Allow-Origin' header is present on the requested resource`
-![Fix erroer](https://lh6.googleusercontent.com/61wGCXNWCUVL344WZD0W8JrKHsAaZCv67F6wxYvCJr74L3OXnvZDNJJv5SAlBF6vZw1W5uOKiD87Jg=w1366-h647)
+![Fix erroer](https://image.ibb.co/c9LX57/Fix_No_Access_Control_Allow_Origin.png)
 
 - To fix `Error: Invalid login` for Gmail account: [Click here](https://productforums.google.com/forum/#!topic/gmail/9KCgzXY4G_c)
 
@@ -47,5 +47,4 @@ Just one Command line:
 
 Full tutorial: [Here](https://galaxy-guide.meteor.com/deploy-quickstart.html)
 
-![](https://lh3.googleusercontent.com/nFELCaDjUl5dz5kU0wcS7g2AegNnRUyZXZtQBjAbawr_rsyLvVXYI_jwfYUFtl-Wv5_D77ZEzXIZbFi8Auqk=w1366-h647)
-
+![](https://image.ibb.co/fpzEJS/Deploy_galaxy.png)
