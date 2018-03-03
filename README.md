@@ -4,7 +4,7 @@ This project was begin from [angularcli-meteor](https://github.com/Urigo/angular
 
 And the same: [angularcli-meteor](https://github.com/darkbasic/angularcli-meteor) of Darkbasic.
 
-![](https://lh3.googleusercontent.com/St_CpfFvPj7X8da5dOm39jL3k4ckw4hlskEJXm3mqjiu3zrlcUL0DPjQhPH5E72QssLSt-I0v_npTQ=w1366-h672-rw)
+![](https://image.ibb.co/ecJKk7/Scr_1_29_2018_9_49_18_AM3_2_2018_8_35_50_AM.png)
 
 ## How to run on local?
 
@@ -21,7 +21,7 @@ And the same: [angularcli-meteor](https://github.com/darkbasic/angularcli-meteor
 4. Open other terminal run cmd: `npm run meteor-client:bundle`, and then run `npm run start`
 
 ### Video
-[![Watch the video](https://lh6.googleusercontent.com/L1mgvXZQZL72fVDuE0Ycgj6qQTPTtPcu8Oju_Ijg1IXuE2vBGWD8PUSXNe_dQ0T6WLScYvfkU8LDpQ=w1366-h672)](https://youtu.be/edrMI95Bnaw)
+[![Watch the video](https://image.ibb.co/iVkbXn/Scr_1_29_2018_9_49_18_AM3_2_2018_2_31_10_AM.png)](https://youtu.be/edrMI95Bnaw)
 
 ## Deployment
 1. Deploy 'api' (Meteor) directory: https://github.com/hongan126/ftelnotes-api-meteor
