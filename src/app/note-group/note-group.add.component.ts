@@ -16,4 +16,7 @@ export class NoteGroupAddComponent {
     this.dialogRef.close();
   }
 
+  onClose(): void {
+    this.dialogRef.close(this.groupName);
+  }
 }

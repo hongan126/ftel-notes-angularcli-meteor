@@ -15,6 +15,7 @@ import {ChangePasswordComponent} from './password/change-password/change-passwor
 import {ProfileComponent} from './profile/profile.component';
 import {ResetPasswordComponent} from './password/reset-password/reset-password.component';
 import {ForgotPasswordComponent} from './password/forgot-password/forgot-password.component';
+import {NoteGroupEditComponent} from "./note-group/note-group.edit.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -32,6 +33,7 @@ const routes: Routes = [
   {path: 'profile', component: ProfileComponent, canActivate: [AuthGuard]},
   {path: 'reset-password/:token', component: ResetPasswordComponent},
   {path: 'forgot-password', component: ForgotPasswordComponent},
+  {path: 'group-edit', component: NoteGroupEditComponent}
 ];
 
 @NgModule({

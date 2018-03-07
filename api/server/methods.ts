@@ -49,6 +49,13 @@ Meteor.methods({
 
     NoteGroups.insert(newGroup);
   },
+  editGroup(groupName: string, groupId: string): void {
+    isLoggingIn();
+    check(groupName, nonEmptyString);
+    isGroupExisted(groupName);
+
+    NoteGroups.update({_id: groupId}, {$set: {name: groupName}});
+  },
   removeGroup(notesGroupId: string): void {
     isLoggingIn();
     const group = NoteGroups.findOne({_id: notesGroupId});

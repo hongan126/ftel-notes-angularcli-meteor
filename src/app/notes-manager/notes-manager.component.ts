@@ -15,6 +15,7 @@ import {Users} from '../../../api/server/collections/users';
 import {AlertComponent} from '../_alert/alert.component';
 import {SearchService} from '../search.service';
 import {CommonChild, eventSubscriber} from '../common-child.interface';
+import {NoteGroupEditComponent} from '../note-group/note-group.edit.component';
 
 @Component({
   selector: 'app-notes-manager',
@@ -59,7 +60,12 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
       changed(id, fieldsChanged) {
         if (that.selectedGroup._id === id) {
           that.selectedGroup = that.groupList._data.find(g => g._id === id);
-          that.selectedGroup.memberIds = fieldsChanged.memberIds;
+          if (fieldsChanged.memberIds) {
+            that.selectedGroup.memberIds = fieldsChanged.memberIds;
+          }
+          if (fieldsChanged.name) {
+            that.selectedGroup.name = fieldsChanged.name;
+          }
           that.loadMember();
         }
       },
@@ -145,6 +151,33 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
           // Null selected group
           this.loadNoteList(this.selectedGroup);
           this.selectedGroup = null;
+        }, (err) => {
+          this.openAlert(err.reason);
+        });
+    });
+  }
+
+// Dialog: Edit Note Group
+  openNoteGroupEditDialog(): void {
+    if (!this.selectedGroup) {
+      this.openAlert('Please choice a note group!');
+      return;
+    }
+
+    const dialogRef = this.dialog.open(NoteGroupEditComponent, {
+      width: '60%',
+      data: {groupName: this.selectedGroup.name}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The Note NoteGroup Edit dialog was closed');
+      if (!result) {
+        return;
+      }
+      this.groupName = result;
+      MeteorObservable.call('editGroup', this.groupName, this.selectedGroup._id).zone()
+        .subscribe(() => {
+          this.groupName = '';
         }, (err) => {
           this.openAlert(err.reason);
         });
@@ -327,11 +360,10 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
 
   searchNote(searchStr: string) {
     this.selectedGroup = null;
-    let ownedAndSharedGroupIds = [];
+    const ownedAndSharedGroupIds = [];
     this.groupList._data.forEach((group) => {
       ownedAndSharedGroupIds.push(group._id);
     });
-    console.log(ownedAndSharedGroupIds);
     this.foundNotes = Notes.find({
         $or: [
           {title: {'$regex': '.*' + searchStr + '.*', '$options': 'i'}},

@@ -22,6 +22,7 @@ import {ProfileComponent} from './profile/profile.component';
 import {ResetPasswordComponent} from './password/reset-password/reset-password.component';
 import {ForgotPasswordComponent} from './password/forgot-password/forgot-password.component';
 import {SearchService} from './search.service';
+import {NoteGroupEditComponent} from "./note-group/note-group.edit.component";
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {SearchService} from './search.service';
     ChangePasswordComponent,
     ProfileComponent,
     ResetPasswordComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    NoteGroupEditComponent
   ],
   imports: [
     BrowserModule,

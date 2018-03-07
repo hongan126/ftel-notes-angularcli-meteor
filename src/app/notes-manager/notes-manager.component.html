@@ -5,6 +5,15 @@
     <div class="head-menu-bar" style="background-color: #E0E0E0;">
       <span class="padding-left-font-bold">Group</span>
       <div class="fill-remaining-space"></div>
+      <button mat-icon-button >
+        <i class="fa fa-angle-double-down fa-2x" aria-hidden="true"></i>
+      </button>
+      <button mat-icon-button >
+        <i class="fa fa-angle-double-up fa-2x" aria-hidden="true"></i>
+      </button>
+      <button mat-icon-button (click)="openNoteGroupEditDialog()">
+        <i class="fa fa-pencil icon-btn-size-m" aria-hidden="true"></i>
+      </button>
       <button mat-icon-button (click)="openNoteGroupRemoveDialog()">
         <i class="fa fa-minus icon-btn-size-m" aria-hidden="true"></i>
       </button>
@@ -18,7 +27,7 @@
         <mat-list-option *ngFor="let group of groupList | async"
                          (click)="loadNoteList(group)"
                          [selected]="checkGroup(group._id)"
-                         [class.selectedGroup]="group===selectedGroup">
+                         [class.selectedGroup]="checkGroup(group._id)">
           {{group.name}}
         </mat-list-option>
       </mat-selection-list>
