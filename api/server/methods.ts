@@ -66,6 +66,28 @@ Meteor.methods({
     Notes.remove({groupId: notesGroupId});
     NoteGroups.remove({_id: notesGroupId});
   },
+  setGroupCreatedDate(groupId: string, moveTop: boolean): void {
+    isLoggingIn();
+    if (moveTop) {
+      NoteGroups.update(
+        {_id: groupId},
+        {$set: {createdAt: new Date()}}
+      );
+    } else {
+      const group = NoteGroups.findOne({
+        $or: [
+          {ownerId: Meteor.userId()},
+          {memberIds: Meteor.userId()}
+        ]
+      }, {sort: {createdAt: 1}});
+      const oldDate: Date = <Date>(group.createdAt);
+      oldDate.setDate((<Date>(group.createdAt)).getDate() - 1);
+      NoteGroups.update(
+        {_id: groupId},
+        {$set: {createdAt: oldDate}}
+      );
+    }
+  },
   removeNote(noteId: string): void {
     isLoggingIn();
     const note = Notes.findOne({_id: noteId});
@@ -113,7 +135,7 @@ Meteor.methods({
       );
     }
   },
-  setCreatedDate(groupId: string, noteId: string, moveTop: boolean): void {
+  setNoteCreatedDate(groupId: string, noteId: string, moveTop: boolean): void {
     isLoggingIn();
     if (moveTop) {
       Notes.update(

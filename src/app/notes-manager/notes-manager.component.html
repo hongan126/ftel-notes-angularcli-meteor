@@ -5,10 +5,10 @@
     <div class="head-menu-bar" style="background-color: #E0E0E0;">
       <span class="padding-left-font-bold">Group</span>
       <div class="fill-remaining-space"></div>
-      <button mat-icon-button >
+      <button mat-icon-button (click)="setPositionForGroup(false)">
         <i class="fa fa-angle-double-down fa-2x" aria-hidden="true"></i>
       </button>
-      <button mat-icon-button >
+      <button mat-icon-button (click)="setPositionForGroup(true)">
         <i class="fa fa-angle-double-up fa-2x" aria-hidden="true"></i>
       </button>
       <button mat-icon-button (click)="openNoteGroupEditDialog()">

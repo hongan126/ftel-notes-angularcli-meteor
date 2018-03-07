@@ -319,7 +319,21 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
   }
 
   setPositionForNote(groupId: string, noteId: string, moveTop: boolean): void {
-    MeteorObservable.call('setCreatedDate', groupId, noteId, moveTop).zone()
+    MeteorObservable.call('setNoteCreatedDate', groupId, noteId, moveTop).zone()
+      .subscribe(() => {
+      }, (err) => {
+        this.openAlert(err.reason);
+      });
+  }
+
+  setPositionForGroup(moveTop: boolean): void {
+    if (!this.selectedGroup._id) {
+      this.openAlert('Please choice a note group!');
+      return;
+    }
+    console.log(this.selectedGroup._id);
+    console.log(this.selectedGroup.name);
+    MeteorObservable.call('setGroupCreatedDate', this.selectedGroup._id, moveTop).zone()
       .subscribe(() => {
       }, (err) => {
         this.openAlert(err.reason);
