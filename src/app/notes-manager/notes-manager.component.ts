@@ -102,7 +102,10 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
       this.selectedGroup = null;
       this.notesList = null;
       this.members = [];
-      return;
+    } else {
+      this.selectedGroup = group;
+      this.notesList = Notes.find({groupId: group._id}, {sort: {createdAt: -1}});
+      this.loadMember();
     }
   }
 
