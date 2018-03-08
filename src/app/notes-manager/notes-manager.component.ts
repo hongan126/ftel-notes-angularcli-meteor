@@ -92,15 +92,17 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
 
   loadNoteList(group: NoteGroup) {
     this.foundNotes = null;
-    if (group === this.selectedGroup) {
-      this.selectedGroup = null;
-      this.notesList = null;
-      this.members = [];
-    } else {
+    if (!this.selectedGroup) {
       this.selectedGroup = group;
       this.notesList = Notes.find({groupId: group._id}, {sort: {createdAt: -1}});
       this.loadMember();
-      // console.log(this.notesList);
+      return;
+    }
+    if (group._id === this.selectedGroup._id) {
+      this.selectedGroup = null;
+      this.notesList = null;
+      this.members = [];
+      return;
     }
   }
 
@@ -331,11 +333,14 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
       this.openAlert('Please choice a note group!');
       return;
     }
+    console.log("-------------------");
+    console.log(this.selectedGroup);
     MeteorObservable.call('setGroupCreatedDate', this.selectedGroup._id, moveTop).zone()
       .subscribe(() => {
       }, (err) => {
         this.openAlert(err.reason);
       });
+    console.log(this.selectedGroup);
   }
 
   isOwned(ownerId: string): boolean {
