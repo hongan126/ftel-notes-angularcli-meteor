@@ -26,13 +26,6 @@ export class NoteDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.noteDetailsFg = this.fb.group({
-      title: ['', [Validators.required]],
-      noteType: ['', [Validators.required]],
-      todoName: ['', [Validators.required]],
-      todoItems: this.fb.array([this.fb.control('')]),
-      noteContent: ['', [Validators.required]]
-    });
     this.noteType = 'text';
     this.groupName = this.data.groupName;
     if (this.data.note) {
@@ -40,6 +33,15 @@ export class NoteDetailsComponent implements OnInit {
       this.todoList = this.note.todoList;
       this.note.type === NoteType.TEXT ? this.noteType = 'text' : this.noteType = 'todo';
     }
+
+    this.noteDetailsFg = this.fb.group({
+      title: ['', [Validators.required]],
+      noteType: ['', [Validators.required]],
+      todoName: ['', [Validators.required]],
+      todoItems: this.fb.array([this.fb.control('')]),
+      noteContent: ['', [Validators.required]],
+      createdAt: [{value: '', disabled: true}, [Validators.required]]
+    });
   }
 
   onCancel(): void {

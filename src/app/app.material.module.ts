@@ -11,7 +11,9 @@ import {
   MatProgressSpinnerModule,
   MatRadioModule,
   MatTextareaAutosize,
-  MatToolbarModule
+  MatToolbarModule,
+  MatNativeDateModule,
+  MatDatepickerModule
 } from '@angular/material';
 import {CdkTableModule} from '@angular/cdk/table';
 
@@ -28,7 +30,9 @@ import {CdkTableModule} from '@angular/cdk/table';
     MatListModule,
     MatProgressSpinnerModule,
     MatDialogModule,
-    MatRadioModule
+    MatRadioModule,
+    MatNativeDateModule,
+    MatDatepickerModule
   ],
   exports: [
     MatButtonModule,
@@ -44,7 +48,9 @@ import {CdkTableModule} from '@angular/cdk/table';
     MatDialogModule,
     CdkTableModule,
     MatRadioModule,
-    MatTextareaAutosize
+    MatTextareaAutosize,
+    MatNativeDateModule,
+    MatDatepickerModule
   ],
 })
 export class AppMaterialModule {

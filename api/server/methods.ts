@@ -126,12 +126,12 @@ Meteor.methods({
     if (note.type === NoteType.TEXT) {
       Notes.update(
         {_id: note._id},
-        {$set: {title: note.title, content: note.content}}
+        {$set: {title: note.title, content: note.content, createdAt: note.createdAt}}
       );
     } else {
       Notes.update(
         {_id: note._id},
-        {$set: {title: note.title, todoList: note.todoList}}
+        {$set: {title: note.title, todoList: note.todoList, createdAt: note.createdAt}}
       );
     }
   },

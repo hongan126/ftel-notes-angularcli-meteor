@@ -75,6 +75,13 @@
 <h3 *ngIf="data.typeDialog==='edit-note'" mat-dialog-title>Edit note {{data.note.title}} of {{groupName}}</h3>
 <div *ngIf="data.typeDialog==='edit-note'" mat-dialog-content class="dialog-content">
   <form novalidate name="form-note-edit" [formGroup]="noteDetailsFg">
+    <mat-form-field style="width: auto;">
+      <input matInput
+             [matDatepicker]="dpe" placeholder="Created at"
+             [(ngModel)]="note.createdAt" formControlName="createdAt">
+      <mat-datepicker-toggle matSuffix [for]="dpe"></mat-datepicker-toggle>
+      <mat-datepicker #dpe disabled="false"></mat-datepicker>
+    </mat-form-field>
     <mat-form-field>
       <input matInput placeholder="Title" cdkFocusInitial formControlName="title" name="title" [(ngModel)]="note.title">
       <mat-error *ngIf="noteDetailsFg.get('title').hasError('required')">

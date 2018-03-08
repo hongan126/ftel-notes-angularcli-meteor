@@ -22,7 +22,10 @@ import {ProfileComponent} from './profile/profile.component';
 import {ResetPasswordComponent} from './password/reset-password/reset-password.component';
 import {ForgotPasswordComponent} from './password/forgot-password/forgot-password.component';
 import {SearchService} from './search.service';
-import {NoteGroupEditComponent} from "./note-group/note-group.edit.component";
+import {NoteGroupEditComponent} from './note-group/note-group.edit.component';
+import {DateFormat} from './date-format';
+import {DateAdapter} from '@angular/material';
+
 
 @NgModule({
   declarations: [
@@ -53,8 +56,13 @@ import {NoteGroupEditComponent} from "./note-group/note-group.edit.component";
   ],
   providers: [
     AuthGuard,
-    SearchService
+    SearchService,
+    {provide: DateAdapter, useClass: DateFormat}
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(private dateAdapter:DateAdapter<Date>) {
+    dateAdapter.setLocale('en-in'); // DD/MM/YYYY
+  }
+}
