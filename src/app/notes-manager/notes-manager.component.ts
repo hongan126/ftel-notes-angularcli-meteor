@@ -336,14 +336,11 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
       this.openAlert('Please choice a note group!');
       return;
     }
-    console.log("-------------------");
-    console.log(this.selectedGroup);
     MeteorObservable.call('setGroupCreatedDate', this.selectedGroup._id, moveTop).zone()
       .subscribe(() => {
       }, (err) => {
         this.openAlert(err.reason);
       });
-    console.log(this.selectedGroup);
   }
 
   isOwned(ownerId: string): boolean {
