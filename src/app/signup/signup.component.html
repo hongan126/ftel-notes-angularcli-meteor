@@ -12,6 +12,9 @@
     <mat-error *ngIf="fgSignup.get('firstName').hasError('required')">
       Firstname is <strong>required</strong>
     </mat-error>
+    <mat-error *ngIf="fgSignup.get('firstName').hasError('pattern')">
+      Firstname does not contain numbers and special characters.
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field class="full-width-signin">
@@ -20,12 +23,14 @@
     <mat-error *ngIf="fgSignup.get('lastName').hasError('required')">
       Lastname is <strong>required</strong>
     </mat-error>
+    <mat-error *ngIf="fgSignup.get('lastName').hasError('pattern')">
+      Lastname does not contain numbers and special characters.
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field class="full-width-signin">
     <input type="text" matInput placeholder="Email" name="username"
-           formControlName="username"
-    />
+           formControlName="username"/>
     <mat-error *ngIf="fgSignup.get('username').hasError('email') && !fgSignup.get('username').hasError('required')">
       Please enter a valid email address
     </mat-error>

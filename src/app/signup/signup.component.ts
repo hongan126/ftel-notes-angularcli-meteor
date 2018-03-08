@@ -34,13 +34,12 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {
     this.fgSignup = this.fb.group({
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
+      firstName: ['', [Validators.required, Validators.pattern('^([a-z\\ A-Z])+$')]],
+      lastName: ['', [Validators.required, Validators.pattern('^([a-z\\ A-Z])+$')]],
       username: ['', [Validators.required, Validators.email, forbiddenUsername]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPass: [this.confPass, [Validators.required, Validators.minLength(8), Validators.pattern(this.confPass)]]
     });
-
   }
 
   signup() {
