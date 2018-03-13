@@ -13,7 +13,8 @@ import {
   MatTextareaAutosize,
   MatToolbarModule,
   MatNativeDateModule,
-  MatDatepickerModule
+  MatDatepickerModule,
+  MatSidenavModule
 } from '@angular/material';
 import {CdkTableModule} from '@angular/cdk/table';
 
@@ -32,7 +33,8 @@ import {CdkTableModule} from '@angular/cdk/table';
     MatDialogModule,
     MatRadioModule,
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatSidenavModule
   ],
   exports: [
     MatButtonModule,
@@ -50,7 +52,8 @@ import {CdkTableModule} from '@angular/cdk/table';
     MatRadioModule,
     MatTextareaAutosize,
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatSidenavModule
   ],
 })
 export class AppMaterialModule {

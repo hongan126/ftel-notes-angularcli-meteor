@@ -46,6 +46,7 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
   groupName;
   user: User;
   rememberSelectedGroupId;
+  groupSlidenavOpened = false;
 
   constructor(public dialog: MatDialog,
               private searchService: SearchService) {

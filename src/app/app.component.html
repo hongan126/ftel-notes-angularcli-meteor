@@ -1,4 +1,4 @@
-<div class="mdl-layout mdl-js-layout layout all-of-page">
+<div class="all-of-page">
   <!--Header BEGIN-->
   <div>
     <mat-toolbar>
@@ -11,9 +11,10 @@
       </a>
 
       <!--Search box-->
-      <input [hidden]="!user" class="search-box" type="text" [(ngModel)]="searchStr" (keyup.enter)="onSearch()" placeholder="search">
-      <button [hidden]="!user" mat-button class="search-btn" (click)="onSearch()"><i class="material-icons white">search</i></button>
-
+      <input [hidden]="!user" class="search-box" type="text" [(ngModel)]="searchStr" (keyup.enter)="onSearch()"
+             placeholder="search">
+      <button [hidden]="!user" mat-button class="search-btn" (click)="onSearch()"><i
+        class="material-icons white">search</i></button>
 
       <span class="fill-remaining-space"></span>
 
@@ -26,11 +27,11 @@
       <!--User/Logout-->
       <div [hidden]="!user">
         <button mat-button [matMenuTriggerFor]="userMenu">
-        <span mat-button *ngIf="user" class="white" style="font-size: 1.25em;">
+          <span mat-button *ngIf="user" class="white" style="font-size: 1.25em;">
           <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-          {{ user.profile.firstName + ' ' + user.profile.lastName }}
-          <i class="fa fa-angle-down" aria-hidden="true"></i>
-        </span>
+            <span class="user-fullname">{{ user.profile.firstName + ' ' + user.profile.lastName }}</span>
+            <i class="fa fa-angle-down" aria-hidden="true"></i>
+          </span>
         </button>
         <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
           <button mat-menu-item routerLink="/profile">
@@ -51,47 +52,74 @@
   </div>
   <!--Header END-->
 
-  <!--<header class="mdl-layout__header mdl-layout__header--waterfall">-->
-  <!--&lt;!&ndash; Top row, always visible &ndash;&gt;-->
-  <!--<div class="mdl-layout__header-row">-->
-  <!--&lt;!&ndash; Title &ndash;&gt;-->
-  <!--<span class="mdl-layout-title">Title</span>-->
-  <!--<div class="mdl-layout-spacer"></div>-->
-  <!--<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable-->
-  <!--mdl-textfield--floating-label mdl-textfield--align-right">-->
-  <!--<label class="mdl-button mdl-js-button mdl-button--icon"-->
-  <!--for="waterfall-exp">-->
-  <!--<i class="material-icons">search</i>-->
-  <!--</label>-->
-  <!--<div class="mdl-textfield__expandable-holder">-->
-  <!--<input class="mdl-textfield__input" type="text" name="sample"-->
-  <!--id="waterfall-exp">-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--<nav class="mdl-navigation">-->
-  <!--<a class="mdl-navigation__link" href="">Link</a>-->
-  <!--<a class="mdl-navigation__link" href="">Link</a>-->
-  <!--<a class="mdl-navigation__link" href="">Link</a>-->
-  <!--<a class="mdl-navigation__link" href="">Link</a>-->
-  <!--</nav>-->
-  <!--</div>-->
-  <!--</header>-->
-
-  <!--<div class="mdl-layout__drawer">-->
-  <!--<span class="mdl-layout-title">Title</span>-->
-  <!--<nav class="mdl-navigation">-->
-  <!--<a class="mdl-navigation__link" href="">Link</a>-->
-  <!--<a class="mdl-navigation__link" href="">Link</a>-->
-  <!--<a class="mdl-navigation__link" href="">Link</a>-->
-  <!--<a class="mdl-navigation__link" href="">Link</a>-->
-  <!--</nav>-->
-  <!--</div>-->
-
   <!--Content-->
-  <main class="mdl-layout__content main-content">
+  <main class="main-content">
     <router-outlet></router-outlet>
   </main>
 </div>
+
+<!--&lt;!&ndash; Uses a header that scrolls with the text, rather than staying-->
+<!--locked at the top &ndash;&gt;-->
+<!--<div class="mdl-layout mdl-js-layout all-of-page">-->
+<!--<header class="mdl-layout__header mdl-layout__header--scroll">-->
+<!--<div class="mdl-layout__header-row">-->
+<!--&lt;!&ndash;Title&ndash;&gt;-->
+<!--<span class="mdl-layout-title"><a routerLink="/" class="toolbar-title">FTEL Notes</a></span>-->
+<!--&lt;!&ndash;Search box&ndash;&gt;-->
+<!--<input [hidden]="!user" class="search-box" type="text" [(ngModel)]="searchStr" (keyup.enter)="onSearch()"-->
+<!--placeholder="search">-->
+<!--<button [hidden]="!user" mat-button class="search-btn" (click)="onSearch()"><i-->
+<!--class="material-icons white">search</i></button>-->
+
+<!--&lt;!&ndash; Add spacer, to align navigation to the right &ndash;&gt;-->
+<!--<div class="mdl-layout-spacer"></div>-->
+
+<!--&lt;!&ndash;Login/Sign up&ndash;&gt;-->
+<!--&lt;!&ndash;<div [hidden]="user">&ndash;&gt;-->
+<!--<button [hidden]="user" mat-button routerLink="/login" class="white">Login</button>-->
+<!--<button [hidden]="user" mat-button routerLink="/signup" class="white">Sign up</button>-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;User/Logout&ndash;&gt;-->
+<!--<div [hidden]="!user">-->
+<!--<button mat-button [matMenuTriggerFor]="userMenu">-->
+<!--<span mat-button *ngIf="user" class="white" style="font-size: 1.25em;">-->
+<!--<i class="fa fa-user-circle-o" aria-hidden="true"></i>-->
+<!--{{ user.profile.firstName + ' ' + user.profile.lastName }}-->
+<!--<i class="fa fa-angle-down" aria-hidden="true"></i>-->
+<!--</span>-->
+<!--</button>-->
+<!--<mat-menu #userMenu="matMenu" [overlapTrigger]="false">-->
+<!--<button mat-menu-item routerLink="/profile">-->
+<!--<mat-icon><i class="fa fa-user" aria-hidden="true"></i></mat-icon>-->
+<!--<span> Profile</span>-->
+<!--</button>-->
+<!--<button mat-menu-item routerLink="/change-pass">-->
+<!--<mat-icon><i class="fa fa-unlock-alt" aria-hidden="true"></i></mat-icon>-->
+<!--<span> Change password</span>-->
+<!--</button>-->
+<!--<button mat-menu-item (click)="logout()">-->
+<!--<mat-icon><i class="fa fa-sign-out" aria-hidden="true"></i></mat-icon>-->
+<!--<span>Logout</span>-->
+<!--</button>-->
+<!--</mat-menu>-->
+<!--</div>-->
+<!--</div>-->
+<!--</header>-->
+<!--<div class="mdl-layout__drawer">-->
+<!--<span class="mdl-layout-title">Title</span>-->
+<!--<nav class="mdl-navigation">-->
+<!--<a class="mdl-navigation__link" href="">Link</a>-->
+<!--<a class="mdl-navigation__link" href="">Link</a>-->
+<!--<a class="mdl-navigation__link" href="">Link</a>-->
+<!--<a class="mdl-navigation__link" href="">Link</a>-->
+<!--</nav>-->
+<!--</div>-->
+<!--<main class="main-content">-->
+<!--<router-outlet></router-outlet>-->
+<!--</main>-->
+<!--</div>-->
+
 
 
 

@@ -1,3 +1,6 @@
+$break-desktop: 841px;
+$break-mobile: 840px;
+
 app-notes-manager{
   width: 100%;
 }
@@ -11,30 +14,80 @@ app-notes-manager{
 //}
 
 .content-notes-manager{
+  //box-sizing: border-box;
   display: flex;
-  flex:2;
   height: 100%;
   overflow: hidden;
+  padding: 0;
+  margin: 0;
 }
 
 .note-group-layout {
-  display: flex;
   flex-direction: column;
   background-color: rgba(255, 255, 255, 1);
   overflow-y: hidden;
   border-right: 1px solid gray;
-  //height: -webkit-fill-available;
+  padding: 0;
+  margin: 0;
+  @media screen and (min-width: $break-desktop) {
+    display: flex;
+    width: 265px;
+  }
+  @media screen and (max-width: $break-mobile) {
+    display: none;
+  }
 }
+
+.note-group-layout-slidenav{
+  flex-direction: column;
+  background-color: rgba(255, 255, 255, 1);
+  overflow-y: hidden;
+  border-right: 1px solid gray;
+  padding: 0;
+  margin: 0;
+  @media screen and (min-width: $break-desktop) {
+    display: none;
+    width: 265px;
+  }
+  @media screen and (max-width: $break-mobile) {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    z-index: 5;
+  }
+}
+
+
 .note-group-list{
   overflow-y: auto;
   overflow-x: hidden;
-  //height: 100%;
-  position: inherit;
 }
 
 .notes-list-layout{
-  overflow-y: auto;
-  //background-color: red;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  @media screen and (min-width: $break-desktop) {
+    overflow-y: auto;
+  }
+  @media screen and (max-width: $break-mobile) {
+    overflow-y: hidden;
+  }
+}
+
+.show-groups-btn{
+  @media screen and (min-width: $break-desktop) {
+    display: none;
+  }
+  @media screen and (max-width: $break-mobile) {
+
+  }
 }
 
 .notes-list{
@@ -109,4 +162,22 @@ app-notes-manager{
   white-space: normal !important;
 }
 
+.notegroup-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: rgba(255, 255, 255, 0);
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+}
 
+.notegroup-sidenav {
+  @media screen and (min-width: $break-desktop) {
+    display: none;
+  }
+  @media screen and (max-width: $break-mobile) {
+    width: 75%;
+  }
+}
