@@ -117,7 +117,6 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
 // Dialog: Add Note Group
   openNoteGroupAddDialog(): void {
     const dialogRef = this.dialog.open(NoteGroupAddComponent, {
-      width: '60%'
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -143,7 +142,6 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
     }
 
     const dialogRef = this.dialog.open(NoteGroupRemoveComponent, {
-      width: '60%',
       data: {notesGroup: this.selectedGroup}
     });
 
@@ -171,7 +169,6 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
     }
 
     const dialogRef = this.dialog.open(NoteGroupEditComponent, {
-      width: '60%',
       data: {groupName: this.selectedGroup.name}
     });
 
@@ -193,7 +190,6 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
 // Dialog: Invite Member
   openInviteMemberDialog(): void {
     const dialogRef = this.dialog.open(NoteGroupInviteMemberComponent, {
-      width: '60%',
       data: {groupName: this.selectedGroup.name}
     });
 
@@ -214,7 +210,6 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
 // Dialog: Remove a member can edit note from group
   openShareManagerRemoveDialog(member: User): void {
     const dialogRef = this.dialog.open(ShareManagerRemoveComponent, {
-      width: '60%',
       data: {
         memberName: member.profile.firstName + ' ' + member.profile.lastName,
         memberId: member._id
@@ -241,7 +236,6 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
     if (note) {
       const noteGroup = NoteGroups.findOne({_id: note.groupId});
       const dialogRef = this.dialog.open(NoteDetailsComponent, {
-        width: '60%',
         data: {typeDialog: 'edit-note', note: note, groupName: noteGroup.name}
       });
 
@@ -260,7 +254,6 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
     } else {
       // note==null => new note
       const dialogRef = this.dialog.open(NoteDetailsComponent, {
-        width: '60%',
         data: {typeDialog: 'add-new-note', groupName: this.selectedGroup.name, groupId: this.selectedGroup._id}
       });
 
@@ -283,7 +276,6 @@ export class NotesManagerComponent implements OnInit, OnDestroy, CommonChild {
   openRemoveNoteDialog(note: Note): void {
     const noteGroup = NoteGroups.findOne({_id: note.groupId});
     const dialogRef = this.dialog.open(NoteRemoveComponent, {
-      width: '60%',
       data: {groupName: noteGroup.name, noteTitle: note.title, id: note._id}
     });
 

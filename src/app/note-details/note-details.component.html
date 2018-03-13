@@ -44,7 +44,7 @@
 
       <!--Add new todo DIV-->
       <div class="add-new-item-div">
-        <mat-form-field style="width: 50%;">
+        <mat-form-field class="fill-remaining-space">
           <input formControlName="todoName" [(ngModel)]="model.todoItem" (keyup.enter)="addTodoItem()"
                  matInput
                  placeholder="Type a todo">
@@ -125,7 +125,7 @@
 
       <!--Add new todo DIV-->
       <div class="add-new-item-div">
-        <mat-form-field style="width: 50%;">
+        <mat-form-field class="fill-remaining-space">
           <input formControlName="todoName" [(ngModel)]="model.todoItem" (keyup.enter)="addTodoItem()"
                  matInput
                  placeholder="Type a todo">
