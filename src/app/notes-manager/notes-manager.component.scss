@@ -42,6 +42,7 @@ app-notes-manager{
   flex-direction: column;
   background-color: rgba(255, 255, 255, 1);
   overflow-y: hidden;
+  overflow-x: hidden;
   border-right: 1px solid gray;
   padding: 0;
   margin: 0;
@@ -62,7 +63,6 @@ app-notes-manager{
     z-index: 5;
   }
 }
-
 
 .note-group-list{
   overflow-y: auto;
@@ -174,6 +174,9 @@ app-notes-manager{
 }
 
 .notegroup-sidenav {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
   @media screen and (min-width: $break-desktop) {
     display: none;
   }
