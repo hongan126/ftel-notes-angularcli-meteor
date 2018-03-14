@@ -34,7 +34,7 @@ app-notes-manager{
   margin: 0;
   @media screen and (min-width: $break-desktop) {
     display: flex;
-    width: 265px;
+    min-width: 267px;
   }
   @media screen and (max-width: $break-mobile) {
     display: none;
@@ -108,7 +108,7 @@ app-notes-manager{
 .head-menu-bar {
   width: 100%;
   line-height: 40px;
-  display: -webkit-inline-box;
+  display: inline-block;
   vertical-align: middle;
   background-color: #E0E0E0;
 }

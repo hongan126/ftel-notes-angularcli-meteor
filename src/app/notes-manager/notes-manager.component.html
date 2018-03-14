@@ -42,7 +42,7 @@
       <!--menu of NoteGroup-->
       <div class="head-menu-bar">
         <span class="padding-left-font-bold">Group</span>
-        <div class="fill-remaining-space"></div>
+        <span class="fill-remaining-space"></span>
         <button mat-icon-button (click)="setPositionForGroup(false)">
           <i class="fa fa-angle-double-down fa-2x" aria-hidden="true"></i>
         </button>
@@ -84,8 +84,7 @@
             <i class="fa fa-angle-double-left fa-2x" aria-hidden="true"></i> Close Group
           </span>
         </button>
-        <div *ngIf="selectedGroup">
-          <span class="padding-left-font-bold">{{selectedGroup.name}}</span>
+        <span *ngIf="selectedGroup">
           <button mat-button [matMenuTriggerFor]="shareMenu" style="font-size: 1em;">
             <span *ngIf="selectedGroup.memberIds.length>0">Public ({{selectedGroup.memberIds.length}})</span>
             <span *ngIf="selectedGroup.memberIds.length<=0">Private</span>
@@ -106,7 +105,8 @@
               <span>{{ mem.profile.firstName + ' ' + mem.profile.lastName }}</span>
             </button>
           </mat-menu>
-        </div>
+          <span class="padding-left-font-bold">{{selectedGroup.name}}</span>
+        </span>
       </div>
 
       <!--New note Button-->
