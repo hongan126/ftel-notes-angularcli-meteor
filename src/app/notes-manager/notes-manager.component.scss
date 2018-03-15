@@ -89,7 +89,8 @@ app-notes-manager{
     display: none;
   }
   @media screen and (max-width: $break-mobile) {
-
+    color: #3f51b5;;
+    text-shadow: -1px -1px 1px #ffffff;
   }
 }
 
