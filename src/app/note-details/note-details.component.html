@@ -166,7 +166,7 @@
       <div *ngIf="selectedFile" (click)="deleteFile()" class="image-close">
         <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i> {{this.selectedFile.name}}
       </div>
-      <div *ngIf="note.image" (click)="deleteFile()" class="image-close">
+      <div *ngIf="note.image && !selectedFile" (click)="deleteFile()" class="image-close">
         <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i> Delete image
       </div>
       <input type="file" id="file-upload" (change)="selectFile($event)"/>

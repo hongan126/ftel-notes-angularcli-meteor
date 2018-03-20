@@ -32,6 +32,7 @@ export class NoteDetailsComponent implements OnInit {
   selectedFile: File;
   fileTypeError = false;
   imageLocation: string = '';
+  disableBtn = false;
 
   model: any = {};
   note: Note;
@@ -48,7 +49,11 @@ export class NoteDetailsComponent implements OnInit {
       this.note = this.data.note;
       this.todoList = this.note.todoList;
       this.note.type === NoteType.TEXT ? this.noteType = 'text' : this.noteType = 'todo';
-      this.imageLocation = this.note.image;
+      if (this.note.image) {
+        this.imageLocation =  this.note.image.toString();
+      } else {
+        this.note.image = '';
+      }
     }
 
     this.noteDetailsFg = this.fb.group({
@@ -85,7 +90,6 @@ export class NoteDetailsComponent implements OnInit {
           title: this.model.title,
           type: NoteType.TEXT,
           content: this.model.noteContent,
-          image: this.imageLocation
         };
       } else {
         this.newNote = {
@@ -93,13 +97,17 @@ export class NoteDetailsComponent implements OnInit {
           title: this.model.title,
           type: NoteType.TODO,
           todoList: this.todoList,
-          image: this.imageLocation
         };
+      }
+      if (this.imageLocation) {
+        this.newNote.image = this.imageLocation;
       }
       return this.newNote;
     } else {
       if (this.note.type === NoteType.TODO) {
         this.note.todoList = this.todoList;
+      }
+      if (this.imageLocation) {
         this.note.image = this.imageLocation;
       }
       return this.note;
@@ -121,6 +129,7 @@ export class NoteDetailsComponent implements OnInit {
   }
 
   selectFile(event) {
+    this.disableBtn = true;
     const files: FileList = event.target.files;
     this.selectedFile = files.item(0);
     console.log(this.selectedFile);
@@ -133,13 +142,14 @@ export class NoteDetailsComponent implements OnInit {
     this.uploadService.uploadfile(this.selectedFile).then((data: any) => {
       console.log(data.Location.toString());
       this.imageLocation = data.Location.toString();
+      this.disableBtn = false;
     });
   }
 
-  deleteFile(){
-    this.imageLocation = '';
+  deleteFile() {
+    this.imageLocation = null;
     this.selectedFile = null;
-    if(this.note){
+    if (this.note) {
       this.note.image = '';
     }
   }
