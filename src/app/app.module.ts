@@ -25,7 +25,7 @@ import {SearchService} from './search.service';
 import {NoteGroupEditComponent} from './note-group/note-group.edit.component';
 import {DateFormat} from './date-format';
 import {DateAdapter} from '@angular/material';
-
+import { UploadFileService } from './upload-file.service';
 
 @NgModule({
   declarations: [
@@ -57,7 +57,8 @@ import {DateAdapter} from '@angular/material';
   providers: [
     AuthGuard,
     SearchService,
-    {provide: DateAdapter, useClass: DateFormat}
+    {provide: DateAdapter, useClass: DateFormat},
+    UploadFileService
   ],
   bootstrap: [AppComponent]
 })

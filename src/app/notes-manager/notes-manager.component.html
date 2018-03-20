@@ -156,6 +156,9 @@
               </mat-checkbox>
             </div>
           </div>
+          <div *ngIf="note.image">
+            <img class="note-image" [src]="note.image">
+          </div>
         </div>
       </div><!--End of Notes list-->
     </div>

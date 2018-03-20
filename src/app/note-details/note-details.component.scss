@@ -52,3 +52,43 @@ form {
   //background-color: gray;
 }
 
+#file-upload{
+  background-color: #243ab3;
+  display: none;
+}
+
+.custom-file-upload{
+  cursor: pointer;
+  height: 50px;
+  width: 100%;
+  &:hover{
+    background-color: gainsboro;
+  }
+}
+
+.image-upload-div{
+  width: 100%;
+  text-align: center;
+}
+
+.mdl-button{
+  text-transform: none !important;
+}
+
+.uploaded-image{
+  min-width: 50px;
+  max-width: 90%;
+}
+
+.upfile-label{
+  color: #3f51b5;
+  font-weight: bold;
+}
+
+.image-close{
+  display: block;
+  &:hover{
+    cursor: pointer;
+    color: #d50000;
+  }
+}

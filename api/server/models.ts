@@ -27,6 +27,7 @@ export interface Note {
   type?: NoteType;
   content?: string;
   todoList?: Todo[];
+  image?: string;
   createdAt?: Date;
 }
 

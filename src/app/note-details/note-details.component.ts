@@ -2,12 +2,25 @@ import {Component, Inject, OnInit, ViewEncapsulation} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Note, NoteType, Todo} from '../../../api/server/models';
+import {UploadFileService} from '../upload-file.service';
+import {style, trigger, state, transition, animate, keyframes} from '@angular/animations';
 
 @Component({
   selector: 'app-note-details',
   templateUrl: './note-details.component.html',
   styleUrls: ['./note-details.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  animations: [
+    trigger('imgState', [
+      state('in', style({height: 0})),
+      transition('* => void', [
+        animate(2000, keyframes([
+          style({transform: 'translateY(-80%)', height: 0, offset: 0}),
+          style({transform: 'translateY(0)', height: '*', offset: 1.0})
+        ]))
+      ])
+    ])
+  ]
 })
 export class NoteDetailsComponent implements OnInit {
   noteDetailsFg: FormGroup;
@@ -16,13 +29,16 @@ export class NoteDetailsComponent implements OnInit {
   todoList: Todo[] = [];
   newNote: Note;
   groupName: string;
+  selectedFile: File;
+  fileTypeError = false;
+  imageLocation: string = '';
 
   model: any = {};
   note: Note;
 
   constructor(public dialogRef: MatDialogRef<NoteDetailsComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              public fb: FormBuilder) {
+              public fb: FormBuilder, private uploadService: UploadFileService) {
   }
 
   ngOnInit() {
@@ -32,6 +48,7 @@ export class NoteDetailsComponent implements OnInit {
       this.note = this.data.note;
       this.todoList = this.note.todoList;
       this.note.type === NoteType.TEXT ? this.noteType = 'text' : this.noteType = 'todo';
+      this.imageLocation = this.note.image;
     }
 
     this.noteDetailsFg = this.fb.group({
@@ -67,20 +84,23 @@ export class NoteDetailsComponent implements OnInit {
           groupId: this.data.groupId,
           title: this.model.title,
           type: NoteType.TEXT,
-          content: this.model.noteContent
+          content: this.model.noteContent,
+          image: this.imageLocation
         };
       } else {
         this.newNote = {
           groupId: this.data.groupId,
           title: this.model.title,
           type: NoteType.TODO,
-          todoList: this.todoList
+          todoList: this.todoList,
+          image: this.imageLocation
         };
       }
       return this.newNote;
     } else {
       if (this.note.type === NoteType.TODO) {
         this.note.todoList = this.todoList;
+        this.note.image = this.imageLocation;
       }
       return this.note;
     }
@@ -93,6 +113,34 @@ export class NoteDetailsComponent implements OnInit {
       })) + 1;
     } else {
       return 1;
+    }
+  }
+
+  uploadFile() {
+    const fileLocation = this.uploadService.uploadfile(this.selectedFile);
+  }
+
+  selectFile(event) {
+    const files: FileList = event.target.files;
+    this.selectedFile = files.item(0);
+    console.log(this.selectedFile);
+    if (this.selectedFile.type.includes('image')) {
+      this.fileTypeError = false;
+    } else {
+      this.fileTypeError = true;
+      return;
+    }
+    this.uploadService.uploadfile(this.selectedFile).then((data: any) => {
+      console.log(data.Location.toString());
+      this.imageLocation = data.Location.toString();
+    });
+  }
+
+  deleteFile(){
+    this.imageLocation = '';
+    this.selectedFile = null;
+    if(this.note){
+      this.note.image = '';
     }
   }
 }

@@ -31,6 +31,7 @@
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
     "angular2-moment": "^1.7.1",
+    "aws-sdk": "^2.209.0",
     "babel-runtime": "^6.26.0",
     "bcrypt": "^1.0.3",
     "core-js": "^2.4.1",

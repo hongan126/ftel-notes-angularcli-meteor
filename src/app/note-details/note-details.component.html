@@ -20,7 +20,7 @@
     <div *ngIf="noteType=='text'">
       <mat-form-field>
         <textarea formControlName="noteContent" matInput matTextareaAutosize
-                  matAutosizeMinRows="6" [(ngModel)]="model.noteContent"
+                  matAutosizeMinRows="2" [(ngModel)]="model.noteContent"
                   placeholder="Content"></textarea>
       </mat-form-field>
     </div>
@@ -58,6 +58,24 @@
         </button>
       </div>
     </div>
+
+    <!--Image upload div-->
+    <div class="image-upload-div">
+      <label *ngIf="!selectedFile" for="file-upload" class="mdl-button mdl-js-button mdl-js-ripple-effect upfile-label">
+        <i class="fa fa-upload"></i> Choose a image…
+      </label>
+      <div *ngIf="selectedFile" (click)="deleteFile()" class="image-close">
+        <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i> {{this.selectedFile.name}}
+      </div>
+      <input type="file" id="file-upload" (change)="selectFile($event)"/>
+      <mat-error *ngIf="fileTypeError">
+        This file is not image. Please choose a image!
+      </mat-error>
+      <div *ngIf="imageLocation">
+        <img class="uploaded-image" [src]="imageLocation">
+      </div>
+    </div>
+    <!--<button mat-button (click)="uploadFile()">Upload file!</button>-->
   </form>
 </div>
 <div *ngIf="data.typeDialog==='add-new-note'" mat-dialog-actions style="float: right;">
@@ -100,7 +118,7 @@
     <div *ngIf="noteType=='text'">
       <mat-form-field>
         <textarea formControlName="noteContent" matInput
-                  matTextareaAutosize matAutosizeMinRows="6"
+                  matTextareaAutosize matAutosizeMinRows="2"
                   [(ngModel)]="note.content"
                   placeholder="Content">{{note.content}}</textarea>
       </mat-form-field>
@@ -140,6 +158,25 @@
       </div>
     </div>
 
+    <!--Image upload div-->
+    <div class="image-upload-div">
+      <label *ngIf="!selectedFile && !imageLocation" for="file-upload" class="mdl-button mdl-js-button mdl-js-ripple-effect upfile-label">
+        <i class="fa fa-upload"></i> Choose a image…
+      </label>
+      <div *ngIf="selectedFile" (click)="deleteFile()" class="image-close">
+        <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i> {{this.selectedFile.name}}
+      </div>
+      <div *ngIf="note.image" (click)="deleteFile()" class="image-close">
+        <i class="fa fa-trash-o fa-2x" aria-hidden="true"></i> Delete image
+      </div>
+      <input type="file" id="file-upload" (change)="selectFile($event)"/>
+      <mat-error *ngIf="fileTypeError">
+        This file is not image. Please choose a image!
+      </mat-error>
+      <div *ngIf="imageLocation">
+        <img class="uploaded-image" [src]="imageLocation">
+      </div>
+    </div>
   </form>
 </div>
 <div *ngIf="data.typeDialog==='edit-note'" mat-dialog-actions style="float: right;">
